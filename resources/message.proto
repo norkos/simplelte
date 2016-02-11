@@ -1,0 +1,6 @@
+package lte;
+
+message AttachReq {
+    required int32 id = 1;
+}
+
