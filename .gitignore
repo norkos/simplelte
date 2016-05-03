@@ -4,6 +4,7 @@
 *.o
 *.obj
 
+*.kdev*
 # Precompiled Headers
 *.gch
 *.pch
@@ -26,3 +27,8 @@
 *.exe
 *.out
 *.app
+
+#python
+.cache
+*.pyc
+*.bak
