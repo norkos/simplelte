@@ -1,34 +1,11 @@
 # Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
+build
 *.kdev*
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
 
 #python
 .cache
 *.pyc
 *.bak
+
+#generated
+test/acceptance_test/messages_pb2.py
