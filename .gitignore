@@ -31,3 +31,4 @@
 #python
 .cache
 *.pyc
+*.bak

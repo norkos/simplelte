@@ -1,27 +1,44 @@
 #include <zmq.hpp>
 #include <string>
 #include <iostream>
+#include <messages.pb.h>
+#include <google/protobuf/text_format.h>
+
+#include "serialize.hpp"
 
 int main ()
 {
     //  Prepare our context and socket
     zmq::context_t context (1);
-    zmq::socket_t socket (context, ZMQ_REQ);
+    zmq::socket_t socket (context, ZMQ_PAIR);
 
-    std::cout << "Connecting to hello world server…" << std::endl;
+    std::cout << "Connecting" << std::endl;
     socket.connect ("tcp://localhost:5555");
 
     //  Do 10 requests, waiting each time for a response
     for (int request_nbr = 0; request_nbr != 10; request_nbr++) {
-        zmq::message_t request (6);
-        memcpy ((void *) request.data (), "Hello", 5);
-        std::cout << "Sending Hello " << request_nbr << "…" << std::endl;
+        lte::AttachReq attach_req;
+        attach_req.set_id(request_nbr);
+        
+        std::string message;
+        attach_req.SerializeToString(&message);
+    
+        zmq::message_t request(message.size());
+        memcpy((void*)request.data(),  message.c_str(), message.size());
+        
+         std::cout << "Client sends AttachReq" << std::endl;
         socket.send (request);
 
         //  Get the reply.
         zmq::message_t reply;
         socket.recv (&reply);
-        std::cout << "Received World " << request_nbr << std::endl;
+        
+         const lte::AttachResp& attach_resp =  deserialize<lte::AttachResp>(reply);
+        
+          std::cout << "Client sends AttachReq" << std::endl;
+        std::string result;
+        google::protobuf::TextFormat::PrintToString(attach_resp, &result);
+        std::cout << result << std::endl;
     }
     return 0;
 }

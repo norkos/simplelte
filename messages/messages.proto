@@ -4,3 +4,6 @@ message AttachReq {
     required int32 id = 1;
 }
 
+message AttachResp {
+    required int32 id = 1;
+}

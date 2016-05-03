@@ -13,6 +13,7 @@ ExternalProject_Add(project_zmg
     INSTALL_DIR ${CMAKE_BINARY_DIR}/install
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
 )
+SET(CMAKE_CXX_FLAGS "-g -Wall -std=c++1y")
 
 add_subdirectory (eNB)
 add_subdirectory (messages)
