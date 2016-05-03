@@ -16,4 +16,5 @@ def test_hallo():
     message = socket.recv()
     attach_resp = messages_pb2.AttachResp()
     attach_resp.ParseFromString(message)
-    print("Received reply %s [ %s ]" % (request, message))
+    
+    assert attach_resp.id == attach_req.id

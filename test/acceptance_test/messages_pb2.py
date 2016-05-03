@@ -13,7 +13,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='messages.proto',
   package='lte',
-  serialized_pb='\n\x0emessages.proto\x12\x03lte\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05')
+  serialized_pb='\n\x0emessages.proto\x12\x03lte\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"\x18\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05')
 
 
 
@@ -45,13 +45,48 @@ _ATTACHREQ = _descriptor.Descriptor(
   serialized_end=46,
 )
 
+
+_ATTACHRESP = _descriptor.Descriptor(
+  name='AttachResp',
+  full_name='lte.AttachResp',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='lte.AttachResp.id', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=48,
+  serialized_end=72,
+)
+
 DESCRIPTOR.message_types_by_name['AttachReq'] = _ATTACHREQ
+DESCRIPTOR.message_types_by_name['AttachResp'] = _ATTACHRESP
 
 class AttachReq(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _ATTACHREQ
 
   # @@protoc_insertion_point(class_scope:lte.AttachReq)
+
+class AttachResp(_message.Message):
+  __metaclass__ = _reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _ATTACHRESP
+
+  # @@protoc_insertion_point(class_scope:lte.AttachResp)
 
 
 # @@protoc_insertion_point(module_scope)
