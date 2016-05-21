@@ -2,7 +2,7 @@ import pytest
 import messages_pb2
 import zmq
 
-def test_hallo():
+def test_attach_request():
     context = zmq.Context()
 
     #  Socket to talk to server
@@ -18,3 +18,4 @@ def test_hallo():
     attach_resp.ParseFromString(message)
     
     assert attach_resp.id == attach_req.id
+    socket.close()
