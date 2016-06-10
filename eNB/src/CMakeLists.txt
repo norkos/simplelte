@@ -3,3 +3,4 @@ include_directories(${CMAKE_BINARY_DIR}/messages)
 #target_link_libraries (eNB messages)
 
 add_subdirectory (server)
+add_subdirectory (utils)

@@ -1,2 +1,4 @@
-add_subdirectory (src)
+include_directories(include)
 
+add_subdirectory (src)
+add_subdirectory(ut)
