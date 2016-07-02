@@ -1,14 +1,33 @@
 #ifndef MESSAGE_HANDLER_HPP
 #define MESSAGE_HANDLER_HPP
 
-#include <google/protobuf/message.h>
+#include <unordered_map>
+#include <typeindex>
 
-typedef google::protobuf::Message Message;
+#include "HandlerFunction.hpp"
 
+template<class MessageBaseT>
 class MessageHandler{
+
+typedef std::unordered_map<std::type_index, HandlerFunctionBase<MessageBaseT> *> Handler;
+    
 public:
-    void handleMessage(const Message*);
     ~MessageHandler(){}
+    
+    void handleMessage(const MessageBaseT& msg){
+        typename Handler::iterator it = handlers.find(typeid(msg));
+        if(it != handlers.end()){
+            it->second->execute(msg);
+        }
+    }
+    
+    template<class T, class MessageT>
+    void registerMessage(T* source, void (T::*memFun)(const MessageT&)){
+        handlers[typeid(MessageT)] = new HandlerFunction<T, MessageT, MessageBaseT>(source, memFun);
+    }
+     
+private:
+    Handler handlers;
 };
 
 #endif

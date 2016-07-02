@@ -8,24 +8,27 @@
 
 #include "serialize.hpp"
 #include "utils/MessageHandler.hpp"
+#include "Message.hpp"
 
-class Printer : public MessageHandler {
+class Printer : public MessageHandler<Message> {
     
 public:
  
     Printer() 
     {
+        registerMessage(this, &Printer::onAttachRequest);
+        registerMessage(this, &Printer::onAttachResponse);
     }
     
-    void onAttachRequest(const lte::AttachReq * attach_req)
+    void onAttachRequest(const lte::AttachReq& attach_req)
     {
         std::cout << "Server recives AttachReq" << std::endl;
         std::string result;
-        google::protobuf::TextFormat::PrintToString(*attach_req, &result);
+        google::protobuf::TextFormat::PrintToString(attach_req, &result);
         std::cout << result << std::endl;
     }
     
-    void onAttachResponse(const lte::AttachResp * attach_resp)
+    void onAttachResponse(const lte::AttachResp& attach_resp)
     {
         std::cout << "Server sends AttachResp" <<  std::endl;
     }
@@ -47,7 +50,7 @@ int main ()
         socket.recv (&request);
         
         const lte::AttachReq& attach_req =  deserialize<lte::AttachReq>(request);
-        printer.handleMessage(&attach_req);
+        printer.handleMessage(attach_req);
         
         
         lte::AttachResp attach_resp;
@@ -59,7 +62,7 @@ int main ()
         zmq::message_t response(message.size());
         memcpy((void*)response.data(),  message.c_str(), message.size());
         
-        printer.handleMessage(&attach_resp);
+        printer.handleMessage(attach_resp);
         socket.send (response);
     }
     return 0;
