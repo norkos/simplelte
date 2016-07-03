@@ -1,6 +1,6 @@
 file(GLOB SRCS *.cpp)
 
-add_executable(testutils MessageHandlerUT.cpp HandlerFunctionUT.cpp main.cpp)
+add_executable(testutils MessageHandlerUT.cpp main.cpp)
 
 target_link_libraries(testutils
     utils
