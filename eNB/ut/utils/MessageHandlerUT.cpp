@@ -12,10 +12,10 @@ struct Message {
     virtual ~Message(){} // we need polymorphism
 };
     
-struct FirstMessage :  Message{
+struct FirstMessage : Message{
 };
 
-struct SecondMessage : Message{
+struct SecondMessage :Message{
 };
 
 enum Status { none, first, second };
@@ -27,51 +27,46 @@ struct Runner {
     void onSecondMessage(const SecondMessage&) { status =  Status::second; }
 };
 
-
-TEST(MessageHandlerTest, message_was_not_handled)
-{
-    Runner  runner;
-    const Message& msg = FirstMessage();
+class MessageHandlerTest : public ::testing::Test{
+public:
+    Runner runner_;
     
-    MessageHandler<Message> handler;
-    bool message_was_handled = handler.handleMessage(msg);
+    void SetUp(){
+        runner_.status = Status::none;
+    }
+};
+
+TEST_F(MessageHandlerTest, message_was_not_handled)
+{
+    const Message& msg = FirstMessage();
+    MessageHandler<Message> sut;
+    
+    bool message_was_handled = sut.handleMessage(msg);
     
     ASSERT_FALSE(message_was_handled);
 }
 
-TEST(MessageHandlerTest, message_was_handled)
+TEST_F(MessageHandlerTest, execute_first)
 {
-    Runner  runner;
     const Message& msg = FirstMessage();
+    MessageHandler<Message> sut;
     
-    MessageHandler<Message> handler;
-    handler.registerMessage(&runner, &Runner::onFirstMessage);
-    bool message_was_handled = handler.handleMessage(msg);
+    sut.registerMessage(&runner_, &Runner::onFirstMessage);
+    bool message_was_handled = sut.handleMessage(msg);
     
     ASSERT_TRUE(message_was_handled);
+    ASSERT_EQ(runner_.status, Status::first);
 }
 
-TEST(MessageHandlerTest, execute_first)
+TEST_F(MessageHandlerTest, execute_second)
 {
-    Runner  runner;
-    const Message& msg = FirstMessage();
-    
-    MessageHandler<Message> handler;
-    handler.registerMessage(&runner, &Runner::onFirstMessage);
-    handler.handleMessage(msg);
-    
-    ASSERT_EQ(runner.status, Status::first);
-}
-
-TEST(MessageHandlerTest, execute_second)
-{
-    Runner  runner;
     const Message& msg = SecondMessage();
+    MessageHandler<Message> sut;
     
-    MessageHandler<Message> handler;
-    handler.registerMessage(&runner, &Runner::onSecondMessage);
-    handler.handleMessage(msg);
+    sut.registerMessage(&runner_, &Runner::onFirstMessage);
+    sut.registerMessage(&runner_, &Runner::onSecondMessage);
+    sut.handleMessage(msg);
     
-    ASSERT_EQ(runner.status, Status::second);
+    ASSERT_EQ(runner_.status, Status::second);
 }
 }
