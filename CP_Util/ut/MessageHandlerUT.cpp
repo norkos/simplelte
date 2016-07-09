@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <memory>
 
-#include "utils/MessageHandler.hpp"
+#include "MessageHandler.hpp"
 
 namespace GT = ::testing;
 

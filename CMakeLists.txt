@@ -4,8 +4,7 @@ include(ExternalProject)
 
 include_directories(externals/cppzmq)
 include_directories(externals/libzmq/include)
-include_directories(messages)
-
+include_directories(CP_Util/include)
 
 ExternalProject_Add(
     project_zmg
@@ -64,5 +63,6 @@ include_directories("${source_dir}/include")
 
 SET(CMAKE_CXX_FLAGS "-g -Wall -std=c++1y")
 
-add_subdirectory (eNB)
-add_subdirectory (messages)
+add_subdirectory(CP_eNB)
+add_subdirectory(CP_UE)
+add_subdirectory(CP_Util)

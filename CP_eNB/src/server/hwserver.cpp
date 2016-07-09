@@ -1,14 +1,14 @@
 #include <zmq.hpp>
 #include <string>
 #include <iostream>
+#include <MessageHandler.hpp>
+#include <Message.hpp>
 #include <messages.pb.h>
 #include <typeindex>
 #include <google/protobuf/text_format.h>
 #include <unordered_map>  // std::unordered_map
 
 #include "serialize.hpp"
-#include "utils/MessageHandler.hpp"
-#include "Message.hpp"
 
 class Printer : public MessageHandler<Message> {
     
