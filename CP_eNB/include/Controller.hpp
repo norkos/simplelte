@@ -2,23 +2,26 @@
 #define ENB_CONTROLLER_HPP
 
 #include <messages.pb.h>
+#include <unordered_map>
+#include "UeContext.hpp"
 
 namespace lte
 {
 namespace eNB
 {
-namespace server
-{
 
 class Controller{
     
 public:
-    Controller(){}
-    virtual ~Controller(){}
     
     void handle_attach_req(const lte::AttachReq& attach_req);
+    bool is_ue_attached(int ue_id);
+
+private:
+    using UEs = std::unordered_map<int, UeContext>;
+    UEs ues;
 };
-}
+
 }
 }
 

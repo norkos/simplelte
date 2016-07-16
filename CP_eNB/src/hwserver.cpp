@@ -8,16 +8,27 @@
 #include <google/protobuf/text_format.h>
 #include <unordered_map>  // std::unordered_map
 
-#include "serialize.hpp"
+#include <memory>
+#include <iostream>
 
-class Printer : public MessageHandler<Message> {
+template<typename MessageType>
+MessageType deserialize(zmq::message_t& message)
+{
+    MessageType result;
+    std::string msg_str(static_cast<char*>(message.data()),message.size());
+    result.ParseFromString(msg_str);
+    return result;
+}
+
+
+class Printer : public lte::util::MessageHandler<lte::util::Message> {
     
 public:
  
     Printer() 
     {
-        registerMessage(this, &Printer::onAttachRequest);
-        registerMessage(this, &Printer::onAttachResponse);
+        registerMessage(*this, &Printer::onAttachRequest);
+        registerMessage(*this, &Printer::onAttachResponse);
     }
     
     void onAttachRequest(const lte::AttachReq& attach_req)
