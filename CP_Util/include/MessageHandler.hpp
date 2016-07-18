@@ -1,5 +1,4 @@
-#ifndef MESSAGE_HANDLER_HPP
-#define MESSAGE_HANDLER_HPP
+#pragma once
 
 #include <unordered_map>
 #include <typeindex>
@@ -66,4 +65,3 @@ private:
 
 }
 }
-#endif

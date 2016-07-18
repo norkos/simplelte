@@ -1,28 +1,27 @@
-#ifndef ENB_CONTROLLER_HPP
-#define ENB_CONTROLLER_HPP
+#pragma once
 
 #include <messages.pb.h>
-#include <unordered_map>
-#include "UeContext.hpp"
+#include <memory>
+
+#include "IUeManager.hpp"
 
 namespace lte
 {
-namespace eNB
+namespace enb
 {
 
 class Controller{
     
 public:
+    Controller(std::shared_ptr<IUeManager> ue_manager):ue_manager_(ue_manager)
+    {}
     
-    void handle_attach_req(const lte::AttachReq& attach_req);
-    bool is_ue_attached(int ue_id);
+    void handle_attach_req(const AttachReq& attach_req);
+    void handle_detach_req(const DetachReq& detach_req);
 
 private:
-    using UEs = std::unordered_map<int, UeContext>;
-    UEs ues;
+    std::shared_ptr<IUeManager> ue_manager_;
 };
 
 }
 }
-
-#endif

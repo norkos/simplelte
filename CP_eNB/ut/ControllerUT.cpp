@@ -2,26 +2,47 @@
 #include <memory>
 
 #include "Controller.hpp"
+#include "MockUeManager.hpp"
 
 namespace GT = ::testing;
 
 namespace lte
 {
-namespace eNB
+namespace enb
 {
 namespace ut
 {
-    
-TEST(ControllerTest, message_was_not_handled)
+
+MATCHER_P(is_ue_id_eq, n, "") { return arg->id == n; }
+
+TEST(ControllerTest, attach_ue)
 {
-    Controller sut;
-    lte::AttachReq attach_req;
-    int ue_id = 10;
-    attach_req.set_id(ue_id);
+    //  given
+    auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
+    auto sut = Controller(ue_manager);
+    auto message = AttachReq();
+    message.set_id(10);
     
-    sut.handle_attach_req(attach_req);
+    //  expect
+    EXPECT_CALL(*ue_manager, add_ue_proxy(is_ue_id_eq(message.id())));
     
-    ASSERT_TRUE(sut.is_ue_attached(ue_id));
+    //  when
+    sut.handle_attach_req(message);
+}
+
+TEST(ControllerTest, detach_ue)
+{
+    //  given
+    auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
+    auto sut = Controller(ue_manager);
+    auto message = DetachReq();
+    message.set_id(10);
+    
+    //  expect
+    EXPECT_CALL(*ue_manager, remove_ue(message.id()));
+    
+    //  when
+    sut.handle_detach_req(message);
 }
 
 }

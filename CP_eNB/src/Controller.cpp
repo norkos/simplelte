@@ -2,19 +2,18 @@
 
 namespace lte
 {
-namespace eNB
+namespace enb
 {
 
-void Controller::handle_attach_req(const lte::AttachReq& attach_req)
+void Controller::handle_attach_req(const AttachReq& attach_req)
 {
     auto context = UeContext{ attach_req.id() };
-    ues[context.id] = context;
+    ue_manager_->add_ue(std::make_unique<UeContext>(context));
 }
 
-bool Controller::is_ue_attached(int ue_id)
+void Controller::handle_detach_req(const DetachReq& detach_req)
 {
-    auto it = ues.find(ue_id);
-    return it != ues.end();
+    ue_manager_->remove_ue(detach_req.id());
 }
 }
 }

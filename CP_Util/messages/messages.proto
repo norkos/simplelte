@@ -7,3 +7,11 @@ message AttachReq {
 message AttachResp {
     required int32 id = 1;
 }
+
+message DetachReq {
+    required int32 id = 1;
+}
+
+message DetachResp {
+    required int32 id = 1;
+}

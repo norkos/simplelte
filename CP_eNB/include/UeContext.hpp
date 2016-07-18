@@ -1,8 +1,9 @@
-#ifndef ENB_UE_CONTEXT
-#define ENB_UE_CONTEXT
+#pragma once
+
 
 struct UeContext
 {
     int id;
+    
+    int get_id() const { return id; } 
 };
-#endif

@@ -1,4 +1,4 @@
-ExternalProject_Get_Property(project_zmg install_dir)
+#ExternalProject_Get_Property(project_zmg install_dir)
 
 add_executable (hwserver hwserver.cpp)
 add_dependencies(hwserver project_zmg)
