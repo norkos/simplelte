@@ -19,6 +19,10 @@ void Controller::handle_attach_req(const AttachReq& attach_req)
 void Controller::handle_detach_req(const DetachReq& detach_req)
 {
     ue_manager_->remove_ue(detach_req.id());
+    
+    auto response = DetachResp();
+    response.set_id(detach_req.id());
+    sender_->send(response);
 }
 }
 }
