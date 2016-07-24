@@ -8,6 +8,9 @@
 #include <google/protobuf/text_format.h>
 #include <unordered_map>  // std::unordered_map
 
+#include "Controller.hpp"
+#include "ISender.hpp"
+
 #include <memory>
 #include <iostream>
 
@@ -21,29 +24,67 @@ MessageType deserialize(zmq::message_t& message)
 }
 
 
-class Printer : public lte::util::MessageHandler<lte::util::Message> {
-    
+using namespace lte::enb;
+
+class UeManager : public IUeManager 
+{
 public:
- 
-    Printer() 
+    void add_ue(std::unique_ptr<UeContext> ue) {}
+    void remove_ue(int ue_id) {}
+};
+
+
+class Dispatcher : public lte::util::MessageHandler<lte::util::Message>
+{
+public:
+    Dispatcher(std::shared_ptr<ISender<lte::util::Message>> sender): controller_(std::make_shared<UeManager>(), sender)
     {
-        registerMessage(*this, &Printer::onAttachRequest);
-        registerMessage(*this, &Printer::onAttachResponse);
+        registerMessage(controller_, &Controller::handle_attach_req);
     }
     
-    void onAttachRequest(const lte::AttachReq& attach_req)
+    Controller controller_;
+};
+
+
+class Listener
+{
+public:
+
+    Listener(zmq::socket_t& socket, std::shared_ptr<ISender<lte::util::Message>> sender): socket_(socket), dispatcher_(sender) {}
+    
+    void listen()
     {
-        std::cout << "Server recives AttachReq" << std::endl;
-        std::string result;
-        google::protobuf::TextFormat::PrintToString(attach_req, &result);
-        std::cout << result << std::endl;
+        zmq::message_t request;
+
+        //  Wait for next request from client
+        socket_.recv (&request);
+        
+        const lte::AttachReq& attach_req =  deserialize<lte::AttachReq>(request);
+        dispatcher_.handleMessage(attach_req);
     }
     
-    void onAttachResponse(const lte::AttachResp& attach_resp)
+    zmq::socket_t& socket_;
+    Dispatcher dispatcher_;
+};
+
+class Sender : public ISender<lte::util::Message>
+{
+public:
+
+    Sender(zmq::socket_t& socket): socket_(socket) {}
+    
+    void send(const lte::util::Message& msg)
     {
-        std::cout << "Server sends AttachResp" <<  std::endl;
+        std::string message;
+        msg.SerializeToString(&message);
+
+        zmq::message_t response(message.size());
+        memcpy((void*)response.data(),  message.c_str(), message.size());
+        
+        socket_.send (response);
     }
     
+    zmq::socket_t& socket_;
 };
 
 int main () 
@@ -52,29 +93,13 @@ int main ()
     zmq::context_t context (1);
     zmq::socket_t socket (context, ZMQ_PAIR);
     socket.bind ("tcp://*:5555");
-    Printer printer;
 
-    while (true) {
-        zmq::message_t request;
-
-        //  Wait for next request from client
-        socket.recv (&request);
-        
-        const lte::AttachReq& attach_req =  deserialize<lte::AttachReq>(request);
-        printer.handleMessage(attach_req);
-        
-        
-        lte::AttachResp attach_resp;
-        attach_resp.set_id(attach_req.id());
-        
-        std::string message;
-        attach_resp.SerializeToString(&message);
+    auto sender = std::make_shared<Sender>(socket);
+    Listener listener(socket, sender);
     
-        zmq::message_t response(message.size());
-        memcpy((void*)response.data(),  message.c_str(), message.size());
-        
-        printer.handleMessage(attach_resp);
-        socket.send (response);
+    while (true) {
+        listener.listen();
     }
+
     return 0;
 }

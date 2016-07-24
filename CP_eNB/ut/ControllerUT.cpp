@@ -3,6 +3,7 @@
 
 #include "Controller.hpp"
 #include "MockUeManager.hpp"
+#include "MockSender.hpp"
 
 namespace GT = ::testing;
 
@@ -19,7 +20,8 @@ TEST(ControllerTest, attach_ue)
 {
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
-    auto sut = Controller(ue_manager);
+    auto sender = std::make_shared<GT::StrictMock<MockSender>>();
+    auto sut = Controller(ue_manager, sender);
     auto message = AttachReq();
     message.set_id(10);
     
@@ -34,7 +36,8 @@ TEST(ControllerTest, detach_ue)
 {
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
-    auto sut = Controller(ue_manager);
+    auto sender = std::make_shared<GT::StrictMock<MockSender>>();
+    auto sut = Controller(ue_manager, sender);
     auto message = DetachReq();
     message.set_id(10);
     

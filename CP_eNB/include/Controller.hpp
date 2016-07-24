@@ -2,8 +2,11 @@
 
 #include <messages.pb.h>
 #include <memory>
+#include <Message.hpp>
 
+#include "ISender.hpp"
 #include "IUeManager.hpp"
+
 
 namespace lte
 {
@@ -13,7 +16,8 @@ namespace enb
 class Controller{
     
 public:
-    Controller(std::shared_ptr<IUeManager> ue_manager):ue_manager_(ue_manager)
+    Controller(std::shared_ptr<IUeManager> ue_manager, std::shared_ptr<ISender<lte::util::Message>> sender)
+        :ue_manager_(ue_manager), sender_(sender)
     {}
     
     void handle_attach_req(const AttachReq& attach_req);
@@ -21,6 +25,7 @@ public:
 
 private:
     std::shared_ptr<IUeManager> ue_manager_;
+    std::shared_ptr<ISender<lte::util::Message>> sender_;
 };
 
 }

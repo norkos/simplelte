@@ -13,7 +13,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='messages.proto',
   package='lte',
-  serialized_pb='\n\x0emessages.proto\x12\x03lte\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"\x18\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05')
+  serialized_pb='\n\x0emessages.proto\x12\x03lte\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"\x18\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05\"\x17\n\tDetachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"\x18\n\nDetachResp\x12\n\n\x02id\x18\x01 \x02(\x05')
 
 
 
@@ -73,8 +73,66 @@ _ATTACHRESP = _descriptor.Descriptor(
   serialized_end=72,
 )
 
+
+_DETACHREQ = _descriptor.Descriptor(
+  name='DetachReq',
+  full_name='lte.DetachReq',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='lte.DetachReq.id', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=74,
+  serialized_end=97,
+)
+
+
+_DETACHRESP = _descriptor.Descriptor(
+  name='DetachResp',
+  full_name='lte.DetachResp',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='lte.DetachResp.id', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=99,
+  serialized_end=123,
+)
+
 DESCRIPTOR.message_types_by_name['AttachReq'] = _ATTACHREQ
 DESCRIPTOR.message_types_by_name['AttachResp'] = _ATTACHRESP
+DESCRIPTOR.message_types_by_name['DetachReq'] = _DETACHREQ
+DESCRIPTOR.message_types_by_name['DetachResp'] = _DETACHRESP
 
 class AttachReq(_message.Message):
   __metaclass__ = _reflection.GeneratedProtocolMessageType
@@ -87,6 +145,18 @@ class AttachResp(_message.Message):
   DESCRIPTOR = _ATTACHRESP
 
   # @@protoc_insertion_point(class_scope:lte.AttachResp)
+
+class DetachReq(_message.Message):
+  __metaclass__ = _reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _DETACHREQ
+
+  # @@protoc_insertion_point(class_scope:lte.DetachReq)
+
+class DetachResp(_message.Message):
+  __metaclass__ = _reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _DETACHRESP
+
+  # @@protoc_insertion_point(class_scope:lte.DetachResp)
 
 
 # @@protoc_insertion_point(module_scope)

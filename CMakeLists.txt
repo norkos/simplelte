@@ -31,8 +31,18 @@ endmacro (add_my_external)
 add_my_external(gtest gtest-1.7.0)
 add_my_external(gmock gmock-1.7.0)
 
-SET(CMAKE_CXX_FLAGS "-g -Wall -std=c++1y")
+ExternalProject_Add(
+    libzmq
+    DOWNLOAD_COMMAND ""
+    SOURCE_DIR ../externals/libzmq
+
+    PREFIX ${CMAKE_CURRENT_BINARY_DIR}/libzmq
+    INSTALL_DIR ${CMAKE_BINARY_DIR}/install
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+)
+
+SET(CMAKE_CXX_FLAGS "-g -Wall -std=c++1y -fPIC")
 
 add_subdirectory(CP_eNB)
-add_subdirectory(CP_UE)
+add_subdirectory(CP_UE) 
 add_subdirectory(CP_Util)

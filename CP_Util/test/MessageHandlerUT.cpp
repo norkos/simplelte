@@ -19,7 +19,7 @@ struct Message {
 struct FirstMessage : Message{
 };
 
-struct SecondMessage :Message{
+struct SecondMessage : Message{
 };
 
 enum Status { none, first, second };
@@ -27,8 +27,8 @@ enum Status { none, first, second };
 struct Runner {
     Status status = Status::none;
     
-    void onFirstMessage(const FirstMessage&) { status = Status::first;}
-    void onSecondMessage(const SecondMessage&) { status =  Status::second;}
+    void on_first_message(const FirstMessage&) { status = Status::first;}
+    void on_second_message(const SecondMessage&) { status =  Status::second;}
 };
 
 class MessageHandlerTest : public ::testing::Test{
@@ -55,7 +55,7 @@ TEST_F(MessageHandlerTest, execute_first)
     const Message& msg = FirstMessage();
     MessageHandler<Message> sut;
     
-    sut.registerMessage(runner_, &Runner::onFirstMessage);
+    sut.registerMessage(runner_, &Runner::on_first_message);
     auto message_was_handled = sut.handleMessage(msg);
     
     ASSERT_TRUE(message_was_handled);
@@ -67,8 +67,8 @@ TEST_F(MessageHandlerTest, execute_second)
     const Message& msg = SecondMessage();
     MessageHandler<Message> sut;
     
-    sut.registerMessage(runner_, &Runner::onFirstMessage);
-    sut.registerMessage(runner_, &Runner::onSecondMessage);
+    sut.registerMessage(runner_, &Runner::on_first_message);
+    sut.registerMessage(runner_, &Runner::on_second_message);
     sut.handleMessage(msg);
     
     ASSERT_EQ(runner_.status, Status::second);
