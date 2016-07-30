@@ -22,7 +22,7 @@ message DetachResp {
     required Status status = 2;
 }
 
-message Message {
+message MessageWrapper{
     required int32 version = 1;
     oneof msg {
         AttachReq  attach_req  = 2;

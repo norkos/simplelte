@@ -20,15 +20,15 @@ def socket_for_single_message(request):
 def test_attach_request(socket_for_single_message):
     socket = socket_for_single_message
     
-    req = messages_pb2.AttachReq()
-    req.id = 1
+    req = messages_pb2.MessageWrapper()
+    req.attach_req.id = 1; 
     socket.send(req.SerializeToString())
 
     message = socket.recv()
-    resp = messages_pb2.AttachResp()
+    resp = messages_pb2.MessageWrapper()
     resp.ParseFromString(message)
     
-    assert req.id == resp.id
+    assert req.qttqcid == resp.attach_resp.id
 
 def test_detach_request_for_not_attached(socket_for_single_message):
     socket = socket_for_single_message
