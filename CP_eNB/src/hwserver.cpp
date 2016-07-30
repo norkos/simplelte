@@ -20,16 +20,30 @@ std::unique_ptr<lte::util::Message> deserialize(zmq::message_t& message)
     lte::MessageWrapper result;
     std::string msg_str(static_cast<char*>(message.data()),message.size());
     result.ParseFromString(msg_str);
-    if(result.has_attach_req())
+    
+    if(result.msg_case() == lte::MessageWrapper::kAttachReq)
     {
         return std::unique_ptr<lte::AttachReq>(std::move(result.release_attach_req()));
-    }else if (result.has_detach_req())
+    }
+    
+    if(result.msg_case() == lte::MessageWrapper::kDetachReq)
     {
         return std::unique_ptr<lte::DetachReq>(std::move(result.release_detach_req()));
     }
+    
     return nullptr;
 }
 
+std::unique_ptr<zmq::message_t> serialize(const lte::util::Message& msg)
+{
+    std::string message;
+    msg.SerializeToString(&message);
+
+    auto result = std::make_unique<zmq::message_t>(message.size());
+    memcpy((void*)result->data(),  message.c_str(), message.size());
+    
+    return result; 
+}
 
 using namespace lte::enb;
 
@@ -83,13 +97,8 @@ public:
     
     void send(const lte::util::Message& msg)
     {
-        std::string message;
-        msg.SerializeToString(&message);
-
-        zmq::message_t response(message.size());
-        memcpy((void*)response.data(),  message.c_str(), message.size());
-        
-        socket_.send (response);
+        auto response = serialize(msg);
+        socket_.send (*response);
     }
     
     zmq::socket_t& socket_;
