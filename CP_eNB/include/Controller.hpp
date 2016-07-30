@@ -16,7 +16,7 @@ namespace enb
 class Controller{
     
 public:
-    Controller(std::shared_ptr<IUeManager> ue_manager, std::shared_ptr<ISender<lte::util::Message>> sender)
+    Controller(std::shared_ptr<IUeManager> ue_manager, std::shared_ptr<ISender> sender)
         :ue_manager_(ue_manager), sender_(sender)
     {}
     
@@ -25,7 +25,7 @@ public:
 
 private:
     std::shared_ptr<IUeManager> ue_manager_;
-    std::shared_ptr<ISender<lte::util::Message>> sender_;
+    std::shared_ptr<ISender> sender_;
 };
 
 }

@@ -1,16 +1,15 @@
 #pragma once
-#include "Controller.hpp"
+#include <Message.hpp>
 
 namespace lte
 {
 namespace enb
 {
 
-template<class T>
 class ISender{
 public:
     virtual ~ISender(){}
-    virtual void send(const T&) = 0;
+    virtual void send(const lte::util::Message&) = 0;
 };
 
     
