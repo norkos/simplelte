@@ -11,7 +11,7 @@ namespace enb
 namespace ut
 {
 
-class MockSender : public ISender<lte::util::Message>
+class MockSender : public ISender
 {
 public:
     

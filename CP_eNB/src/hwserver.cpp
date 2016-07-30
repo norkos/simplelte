@@ -59,7 +59,7 @@ public:
 class Dispatcher : public lte::util::MessageHandler<lte::util::Message>
 {
 public:
-    Dispatcher(std::shared_ptr<ISender<lte::util::Message>> sender): controller_(std::make_shared<UeManager>(), sender)
+    Dispatcher(std::shared_ptr<ISender> sender): controller_(std::make_shared<UeManager>(), sender)
     {
         registerMessage(controller_, &Controller::handle_attach_req);
         registerMessage(controller_, &Controller::handle_detach_req);
@@ -73,7 +73,7 @@ class Listener
 {
 public:
 
-    Listener(zmq::socket_t& socket, std::shared_ptr<ISender<lte::util::Message>> sender): socket_(socket), dispatcher_(sender) {}
+    Listener(zmq::socket_t& socket, std::shared_ptr<ISender> sender): socket_(socket), dispatcher_(sender) {}
     
     void listen()
     {
@@ -90,7 +90,7 @@ public:
     Dispatcher dispatcher_;
 };
 
-class Sender : public ISender<lte::util::Message>
+class Sender : public ISender
 {
 public:
 
