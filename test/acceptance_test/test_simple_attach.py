@@ -20,26 +20,28 @@ def socket_for_single_message(request):
 def test_attach_request(socket_for_single_message):
     socket = socket_for_single_message
     
+    id = 1
     req = messages_pb2.MessageWrapper()
-    req.attach_req.id = 1; 
+    req.attach_req.id = id; 
     socket.send(req.SerializeToString())
 
     message = socket.recv()
     resp = messages_pb2.MessageWrapper()
     resp.ParseFromString(message)
     
-    assert req.qttqcid == resp.attach_resp.id
+    assert id == resp.attach_resp.id
 
 def test_detach_request_for_not_attached(socket_for_single_message):
     socket = socket_for_single_message
     
-    req = messages_pb2.DetachReq()
-    req.id = 10
+    id = 1
+    req = messages_pb2.MessageWrapper()
+    req.detach_req.id = id; 
     socket.send(req.SerializeToString())
 
     message = socket.recv()
-    resp = messages_pb2.DetachResp()
+    resp = messages_pb2.MessageWrapper()
     resp.ParseFromString(message)
-   
-    assert req.id == resp.id
-    assert messages_pb2.DetachResp.NOK == resp.status  
+    
+    assert id == resp.detach_resp.id
+    assert messages_pb2.DetachResp.OK == resp.detach_resp.status  

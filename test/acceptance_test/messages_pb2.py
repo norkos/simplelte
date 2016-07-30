@@ -18,7 +18,7 @@ _sym_db = _symbol_database.Default()
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='messages.proto',
   package='lte',
-  serialized_pb=_b('\n\x0emessages.proto\x12\x03lte\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"\x18\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05\"\x17\n\tDetachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"[\n\nDetachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12&\n\x06status\x18\x02 \x02(\x0e\x32\x16.lte.DetachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\xc4\x01\n\x0eMessageWrapper\x12\x0f\n\x07version\x18\x01 \x02(\x05\x12$\n\nattach_req\x18\x02 \x01(\x0b\x32\x0e.lte.AttachReqH\x00\x12&\n\x0b\x61ttach_resp\x18\x03 \x01(\x0b\x32\x0f.lte.AttachRespH\x00\x12$\n\ndetach_req\x18\x04 \x01(\x0b\x32\x0e.lte.DetachReqH\x00\x12&\n\x0b\x64\x65tach_resp\x18\x05 \x01(\x0b\x32\x0f.lte.DetachRespH\x00\x42\x05\n\x03msg')
+  serialized_pb=_b('\n\x0emessages.proto\x12\x03lte\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"\x18\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05\"\x17\n\tDetachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"[\n\nDetachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12&\n\x06status\x18\x02 \x02(\x0e\x32\x16.lte.DetachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\xb3\x01\n\x0eMessageWrapper\x12$\n\nattach_req\x18\x01 \x01(\x0b\x32\x0e.lte.AttachReqH\x00\x12&\n\x0b\x61ttach_resp\x18\x02 \x01(\x0b\x32\x0f.lte.AttachRespH\x00\x12$\n\ndetach_req\x18\x03 \x01(\x0b\x32\x0e.lte.DetachReqH\x00\x12&\n\x0b\x64\x65tach_resp\x18\x04 \x01(\x0b\x32\x0f.lte.DetachRespH\x00\x42\x05\n\x03msg')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -183,36 +183,29 @@ _MESSAGEWRAPPER = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='version', full_name='lte.MessageWrapper.version', index=0,
-      number=1, type=5, cpp_type=1, label=2,
-      has_default_value=False, default_value=0,
+      name='attach_req', full_name='lte.MessageWrapper.attach_req', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='attach_req', full_name='lte.MessageWrapper.attach_req', index=1,
+      name='attach_resp', full_name='lte.MessageWrapper.attach_resp', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='attach_resp', full_name='lte.MessageWrapper.attach_resp', index=2,
+      name='detach_req', full_name='lte.MessageWrapper.detach_req', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='detach_req', full_name='lte.MessageWrapper.detach_req', index=3,
+      name='detach_resp', full_name='lte.MessageWrapper.detach_resp', index=3,
       number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='detach_resp', full_name='lte.MessageWrapper.detach_resp', index=4,
-      number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -232,7 +225,7 @@ _MESSAGEWRAPPER = _descriptor.Descriptor(
       index=0, containing_type=None, fields=[]),
   ],
   serialized_start=193,
-  serialized_end=389,
+  serialized_end=372,
 )
 
 _DETACHRESP.fields_by_name['status'].enum_type = _DETACHRESP_STATUS

@@ -23,11 +23,10 @@ message DetachResp {
 }
 
 message MessageWrapper{
-    required int32 version = 1;
     oneof msg {
-        AttachReq  attach_req  = 2;
-        AttachResp attach_resp = 3;
-        DetachReq  detach_req  = 4;
-        DetachResp detach_resp = 5;
+        AttachReq  attach_req  = 1;
+        AttachResp attach_resp = 2;
+        DetachReq  detach_req  = 3;
+        DetachResp detach_resp = 4;
         }
 }
