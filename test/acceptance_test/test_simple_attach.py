@@ -1,32 +1,38 @@
 import pytest
 import messages_pb2
 import zmq
+from subprocess import Popen
 
-def test_attach_request():
+@pytest.fixture(scope='function')
+def socket_for_single_message(request):
+    proc = Popen('build/CP_eNB/src/hwserver')
     context = zmq.Context()
-
-    #  Socket to talk to server
     socket = context.socket(zmq.PAIR)
     socket.connect("tcp://localhost:5555")
-
-    attach_req = messages_pb2.AttachReq()
-    attach_req.id = 10
-    socket.send(attach_req.SerializeToString())
+    
+    def tear_down():
+        socket.close()
+        proc.kill()
+    
+    request.addfinalizer(tear_down)
+    return socket
+    
+def test_attach_request(socket_for_single_message):
+    socket = socket_for_single_message
+    
+    req = messages_pb2.AttachReq()
+    req.id = 1
+    socket.send(req.SerializeToString())
 
     message = socket.recv()
-    attach_resp = messages_pb2.AttachResp()
-    attach_resp.ParseFromString(message)
+    resp = messages_pb2.AttachResp()
+    resp.ParseFromString(message)
     
-    assert attach_resp.id == attach_req.id
-    socket.close()
+    assert req.id == resp.id
 
-def test_detach_request():
-    context = zmq.Context()
-
-    #  Socket to talk to server
-    socket = context.socket(zmq.PAIR)
-    socket.connect("tcp://localhost:5555")
-
+def test_detach_request_for_not_attached(socket_for_single_message):
+    socket = socket_for_single_message
+    
     req = messages_pb2.DetachReq()
     req.id = 10
     socket.send(req.SerializeToString())
@@ -34,6 +40,6 @@ def test_detach_request():
     message = socket.recv()
     resp = messages_pb2.DetachResp()
     resp.ParseFromString(message)
-    
-    assert resp.id == req.id
-    socket.close()
+   
+    assert req.id == resp.id
+    assert messages_pb2.DetachResp.NOK == resp.status  

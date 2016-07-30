@@ -14,4 +14,20 @@ message DetachReq {
 
 message DetachResp {
     required int32 id = 1;
+    
+    enum Status {
+        OK = 0;
+        NOK = 1;
+    }
+    required Status status = 2;
+}
+
+message Message {
+    required int32 version = 1;
+    oneof msg {
+        AttachReq  attach_req  = 2;
+        AttachResp attach_resp = 3;
+        DetachReq  detach_req  = 4;
+        DetachResp detach_resp = 5;
+        }
 }

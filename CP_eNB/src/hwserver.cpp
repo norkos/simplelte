@@ -40,6 +40,7 @@ public:
     Dispatcher(std::shared_ptr<ISender<lte::util::Message>> sender): controller_(std::make_shared<UeManager>(), sender)
     {
         registerMessage(controller_, &Controller::handle_attach_req);
+        registerMessage(controller_, &Controller::handle_detach_req);
     }
     
     Controller controller_;

@@ -18,7 +18,6 @@ public:
     
     MOCK_METHOD1(add_ue_proxy, void(UeContext*));
     MOCK_METHOD1(remove_ue, void(int));
-    //MOCK_METHOD1(is_ue, bool(int));
 };
 }
 }
