@@ -15,6 +15,8 @@
 #include <iostream>
 
 
+using namespace lte::enb;
+
 std::unique_ptr<lte::util::Message> deserialize(zmq::message_t& message)
 {
     lte::MessageWrapper result;
@@ -45,7 +47,6 @@ std::unique_ptr<zmq::message_t> serialize(const lte::util::Message& msg)
     return result; 
 }
 
-using namespace lte::enb;
 
 class UeManager : public IUeManager 
 {

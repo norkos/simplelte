@@ -1,5 +1,9 @@
 #pragma once
 
+namespace lte
+{
+namespace enb
+{
 
 struct UeContext
 {
@@ -7,3 +11,6 @@ struct UeContext
     
     int get_id() const { return id; } 
 };
+
+}
+}
