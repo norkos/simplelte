@@ -6,17 +6,16 @@
 #include <messages.pb.h>
 #include <typeindex>
 #include <google/protobuf/text_format.h>
-#include <unordered_map>  // std::unordered_map
+#include <unordered_map>
 
 #include "Controller.hpp"
-#include "ISender.hpp"
+#include "Sender.hpp"
 
 #include <memory>
 #include <iostream>
 
 
 using namespace lte::enb;
-
 std::unique_ptr<lte::util::Message> deserialize(zmq::message_t& message)
 {
     lte::MessageWrapper result;
@@ -36,16 +35,7 @@ std::unique_ptr<lte::util::Message> deserialize(zmq::message_t& message)
     return nullptr;
 }
 
-std::unique_ptr<zmq::message_t> serialize(const lte::util::Message& msg)
-{
-    std::string message;
-    msg.SerializeToString(&message);
 
-    auto result = std::make_unique<zmq::message_t>(message.size());
-    memcpy((void*)result->data(),  message.c_str(), message.size());
-    
-    return result; 
-}
 
 
 class UeManager : public IUeManager 
@@ -88,21 +78,6 @@ public:
     
     zmq::socket_t& socket_;
     Dispatcher dispatcher_;
-};
-
-class Sender : public ISender
-{
-public:
-
-    Sender(zmq::socket_t& socket): socket_(socket) {}
-    
-    void send(const lte::util::Message& msg)
-    {
-        auto response = serialize(msg);
-        socket_.send (*response);
-    }
-    
-    zmq::socket_t& socket_;
 };
 
 int main () 
