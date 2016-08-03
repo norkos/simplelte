@@ -1,5 +1,5 @@
 include(FindProtobuf)
-find_package(Protobuf 2.6 REQUIRED)
+find_package(Protobuf REQUIRED)
 include_directories(${PROTOBUF_INCLUDE_DIR})
 
 message(STATUS ${PROTOBUF_INCLUDE_DIR})
