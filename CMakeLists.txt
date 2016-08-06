@@ -2,8 +2,6 @@ cmake_minimum_required (VERSION 2.8)
 project (SimpleLTE CXX C)
 include(ExternalProject)
 
-include_directories(CP_Util/include)
-
 find_package(Threads REQUIRED)
     
 macro (add_my_external lib_name lib_path)

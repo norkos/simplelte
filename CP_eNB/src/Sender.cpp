@@ -1,5 +1,6 @@
 #include <memory>
 #include <messages.pb.h>
+#include <MessageBase.hpp>
 #include "Sender.hpp"
 
 namespace lte 
@@ -18,9 +19,9 @@ std::unique_ptr<zmq::message_t> serialize(const lte::util::Message& msg)
     return result; 
 }
 
-void Sender::send(const util::Message& msg)
+void Sender::send(std::unique_ptr<lte::util::Message> msg)
 {
-  auto response = serialize(msg);
+  auto response = serialize(*msg);
   socket_.send (*response);
 }
 

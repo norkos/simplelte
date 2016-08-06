@@ -27,7 +27,7 @@ TEST(ControllerTest, attach_ue)
     
     //  expect
     EXPECT_CALL(*ue_manager, add_ue_proxy(is_ue_id_eq(message.id())));
-    EXPECT_CALL(*sender, send(GT::_));
+    EXPECT_CALL(*sender, send_proxy(GT::_));
     
     //  when
     sut.handle_attach_req(message);
@@ -44,7 +44,7 @@ TEST(ControllerTest, detach_ue)
     
     //  expect
     EXPECT_CALL(*ue_manager, remove_ue(message.id()));
-    EXPECT_CALL(*sender, send(GT::_));
+    EXPECT_CALL(*sender, send_proxy(GT::_));
     
     //  when
     sut.handle_detach_req(message);

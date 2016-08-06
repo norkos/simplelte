@@ -1,4 +1,5 @@
 #include "Controller.hpp"
+#include "Message.hpp"
 
 namespace lte
 {
@@ -11,25 +12,21 @@ void Controller::handle_attach_req(const AttachReq& attach_req)
     auto context = UeContext{ id };
     ue_manager_->add_ue(std::make_unique<UeContext>(context));
     
-    auto response = new AttachResp();
+    auto response = Message<AttachResp>();
     response->set_id(id);
     
-    auto wrapper = MessageWrapper();
-    wrapper.set_allocated_attach_resp(response);
-    sender_->send(wrapper);
+    sender_->send(response);
 }
 
 void Controller::handle_detach_req(const DetachReq& detach_req)
 {
     ue_manager_->remove_ue(detach_req.id());
     
-    auto response = new DetachResp();
+    auto response = Message<DetachResp>();
     response->set_id(detach_req.id());
     response->set_status(DetachResp::OK);
 
-    auto wrapper = MessageWrapper();
-    wrapper.set_allocated_detach_resp(response);
-    sender_->send(wrapper);
+    sender_->send(response);
 }
 }
 }

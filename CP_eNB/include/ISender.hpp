@@ -1,17 +1,17 @@
 #pragma once
-#include <Message.hpp>
+#include "MessageBase.hpp"
 
 namespace lte
 {
 namespace enb
 {
 
-class ISender{
+class ISender
+{
 public:
     virtual ~ISender(){}
-    virtual void send(const lte::util::Message&) = 0;
+    virtual void send(std::unique_ptr<lte::util::Message> msg) = 0;
 };
 
-    
 }
 }

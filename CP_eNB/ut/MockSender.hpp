@@ -15,7 +15,11 @@ class MockSender : public ISender
 {
 public:
     
-    MOCK_METHOD1(send, void(const lte::util::Message&));
+    virtual void send(std::unique_ptr<lte::util::Message> ptr) {
+        send_proxy(ptr.get());
+    }
+    
+    MOCK_METHOD1(send_proxy, void(lte::util::Message*));
     
 };
 }

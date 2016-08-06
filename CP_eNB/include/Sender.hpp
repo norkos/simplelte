@@ -1,5 +1,6 @@
 #pragma once
 #include <zmq.hpp>
+
 #include "ISender.hpp"
 
 namespace lte
@@ -13,8 +14,9 @@ public:
 
     Sender(zmq::socket_t& socket): socket_(socket) {}
     
-    void send(const lte::util::Message& msg);
-    
+    void send(std::unique_ptr<lte::util::Message> msg);
+
+private:  
     zmq::socket_t& socket_;
 };
 
