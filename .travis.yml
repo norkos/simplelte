@@ -12,6 +12,10 @@ addons:
     - gcc-5
     - g++-5
     - clang-3.6
+    - libprotobuf-dev
+    - libprotobuf9v5
+    - libzmq-dev
+    - libzmq5
 
 before_install:
   - sudo apt-get update -qq
