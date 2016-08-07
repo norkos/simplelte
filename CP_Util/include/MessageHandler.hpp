@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <unordered_map>
 #include <typeindex>
 
@@ -39,7 +40,7 @@ private:
 template<class MessageBaseT>
 class MessageHandler{
 
-using Handler = std::unordered_map<std::type_index, HandlerFunctionBase<MessageBaseT> *>; 
+using Handler = std::unordered_map<std::type_index, std::unique_ptr<HandlerFunctionBase<MessageBaseT>>>; 
 
 public:
     virtual ~MessageHandler(){}
@@ -49,14 +50,15 @@ public:
         
         if(it != handler_.end()){
             it->second->execute(msg);
-            return true;
+	    return true;
         }
         return false;
     }
     
     template<class T, class MessageT>
     void registerMessage(T& source, void (T::*memFun)(const MessageT&)){
-        handler_[typeid(MessageT)] = new HandlerFunction<T, MessageBaseT, MessageT>(source, memFun);
+        handler_[typeid(MessageT)] = 
+            std::make_unique<HandlerFunction<T, MessageBaseT, MessageT>>(source, memFun);
     }
      
 private:
