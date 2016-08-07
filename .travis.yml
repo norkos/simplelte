@@ -1,13 +1,12 @@
 # Use new trusty images, should yield newer compilers and packages
 sudo: required
-dist: precise
+dist: trusty
 language: cpp
 
 addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
-    - llvm-toolchain-precise-3.6
     packages:
     - gcc-5
     - g++-5
