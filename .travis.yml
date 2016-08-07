@@ -1,6 +1,6 @@
 # Use new trusty images, should yield newer compilers and packages
 sudo: required
-dist: xenial
+dist: precise
 language: cpp
 
 addons:
@@ -11,11 +11,10 @@ addons:
     packages:
     - gcc-5
     - g++-5
-    - clang-3.6
     - libprotobuf-dev
-    - libprotobuf9v5
+    - libprotobuf9
     - libzmq-dev
-    - libzmq5
+    - libzmq3
 
 before_install:
   - sudo apt-get update -qq
