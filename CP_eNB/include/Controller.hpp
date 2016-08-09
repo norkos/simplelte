@@ -6,12 +6,10 @@
 #include "ISender.hpp"
 #include "IUeManager.hpp"
 
-
 namespace lte
 {
 namespace enb
 {
-
 
 class Controller{
     

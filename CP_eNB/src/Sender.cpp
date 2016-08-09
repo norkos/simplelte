@@ -8,7 +8,9 @@ namespace lte
 namespace enb
 {
 
-std::unique_ptr<zmq::message_t> serialize(const lte::util::Message& msg)
+namespace 
+{
+decltype(auto) serialize(const lte::util::Message& msg)
 {
     std::string message;
     msg.SerializeToString(&message);
@@ -18,7 +20,7 @@ std::unique_ptr<zmq::message_t> serialize(const lte::util::Message& msg)
     
     return result; 
 }
-
+}
 void Sender::send(std::unique_ptr<lte::util::Message> msg)
 {
   auto response = serialize(*msg);

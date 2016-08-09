@@ -5,6 +5,8 @@ namespace lte
 namespace enb
 {
 
+namespace
+{
 std::unique_ptr<lte::util::Message> deserialize(zmq::message_t& message)
 {
     lte::MessageWrapper result;
@@ -23,6 +25,14 @@ std::unique_ptr<lte::util::Message> deserialize(zmq::message_t& message)
     
     return nullptr;
 }
+}
+
+Listener::Listener(zmq::socket_t& socket, std::shared_ptr<ISender> sender): 
+            socket_(socket), controller_(std::make_shared<UeManager>(), sender)
+{
+    registerMessage(controller_, &Controller::handle_attach_req);
+    registerMessage(controller_, &Controller::handle_detach_req);
+}
 
 void Listener::listen()
 {
@@ -32,7 +42,7 @@ void Listener::listen()
   socket_.recv (&request);
         
   auto message = std::move(deserialize(request));
-  dispatcher_.handleMessage(*message);
+  handleMessage(*message);
 }
 
 }

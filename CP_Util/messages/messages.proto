@@ -6,6 +6,12 @@ message AttachReq {
 
 message AttachResp {
     required int32 id = 1;
+    
+    enum Status {
+        OK = 0;
+        NOK = 1;
+    }
+    required Status status = 2;
 }
 
 message DetachReq {

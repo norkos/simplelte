@@ -1,7 +1,8 @@
-import pytest
-import messages_pb2
-import zmq
 from subprocess import Popen
+import pytest
+import zmq
+import messages_pb2
+from ue_functions import attach_ue, detach_ue
 
 @pytest.fixture(scope='function')
 def socket_for_single_message(request):
@@ -21,27 +22,37 @@ def test_attach_request(socket_for_single_message):
     socket = socket_for_single_message
     
     id = 1
-    req = messages_pb2.MessageWrapper()
-    req.attach_req.id = id; 
-    socket.send(req.SerializeToString())
-
-    message = socket.recv()
-    resp = messages_pb2.MessageWrapper()
-    resp.ParseFromString(message)
+    resp = attach_ue(id, socket)
     
-    assert id == resp.attach_resp.id
+    assert id == resp.id
+    assert messages_pb2.AttachResp.OK == resp.status
+    
+def test_attach_already_attached(socket_for_single_message):
+    socket = socket_for_single_message
+    
+    id = 1
+    attach_ue(id, socket)
+    resp = attach_ue(id, socket)
+    
+    assert id == resp.id
+    assert messages_pb2.AttachResp.NOK == resp.status
 
 def test_detach_request_for_not_attached(socket_for_single_message):
     socket = socket_for_single_message
     
     id = 1
-    req = messages_pb2.MessageWrapper()
-    req.detach_req.id = id; 
-    socket.send(req.SerializeToString())
-
-    message = socket.recv()
-    resp = messages_pb2.MessageWrapper()
-    resp.ParseFromString(message)
+    resp = detach_ue(id, socket)
     
-    assert id == resp.detach_resp.id
-    assert messages_pb2.DetachResp.OK == resp.detach_resp.status  
+    assert id == resp.id
+    assert messages_pb2.DetachResp.NOK == resp.status 
+    
+def test_detach_request_for_attached(socket_for_single_message):
+    socket = socket_for_single_message
+    
+    id = 1
+    attach_ue(id, socket)
+    resp = detach_ue(id, socket)
+    
+    assert id == resp.id
+    assert messages_pb2.DetachResp.OK == resp.status
+    

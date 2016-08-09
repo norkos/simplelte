@@ -18,11 +18,33 @@ _sym_db = _symbol_database.Default()
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='messages.proto',
   package='lte',
-  serialized_pb=_b('\n\x0emessages.proto\x12\x03lte\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"\x18\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05\"\x17\n\tDetachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"[\n\nDetachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12&\n\x06status\x18\x02 \x02(\x0e\x32\x16.lte.DetachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\xb3\x01\n\x0eMessageWrapper\x12$\n\nattach_req\x18\x01 \x01(\x0b\x32\x0e.lte.AttachReqH\x00\x12&\n\x0b\x61ttach_resp\x18\x02 \x01(\x0b\x32\x0f.lte.AttachRespH\x00\x12$\n\ndetach_req\x18\x03 \x01(\x0b\x32\x0e.lte.DetachReqH\x00\x12&\n\x0b\x64\x65tach_resp\x18\x04 \x01(\x0b\x32\x0f.lte.DetachRespH\x00\x42\x05\n\x03msg')
+  serialized_pb=_b('\n\x0emessages.proto\x12\x03lte\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"[\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12&\n\x06status\x18\x02 \x02(\x0e\x32\x16.lte.AttachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\x17\n\tDetachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"[\n\nDetachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12&\n\x06status\x18\x02 \x02(\x0e\x32\x16.lte.DetachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\xb3\x01\n\x0eMessageWrapper\x12$\n\nattach_req\x18\x01 \x01(\x0b\x32\x0e.lte.AttachReqH\x00\x12&\n\x0b\x61ttach_resp\x18\x02 \x01(\x0b\x32\x0f.lte.AttachRespH\x00\x12$\n\ndetach_req\x18\x03 \x01(\x0b\x32\x0e.lte.DetachReqH\x00\x12&\n\x0b\x64\x65tach_resp\x18\x04 \x01(\x0b\x32\x0f.lte.DetachRespH\x00\x42\x05\n\x03msg')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
+
+_ATTACHRESP_STATUS = _descriptor.EnumDescriptor(
+  name='Status',
+  full_name='lte.AttachResp.Status',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='OK', index=0, number=0,
+      options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='NOK', index=1, number=1,
+      options=None,
+      type=None),
+  ],
+  containing_type=None,
+  options=None,
+  serialized_start=114,
+  serialized_end=139,
+)
+_sym_db.RegisterEnumDescriptor(_ATTACHRESP_STATUS)
 
 _DETACHRESP_STATUS = _descriptor.EnumDescriptor(
   name='Status',
@@ -41,8 +63,8 @@ _DETACHRESP_STATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=165,
-  serialized_end=190,
+  serialized_start=114,
+  serialized_end=139,
 )
 _sym_db.RegisterEnumDescriptor(_DETACHRESP_STATUS)
 
@@ -91,11 +113,19 @@ _ATTACHRESP = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='status', full_name='lte.AttachResp.status', index=1,
+      number=2, type=14, cpp_type=8, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
+    _ATTACHRESP_STATUS,
   ],
   options=None,
   is_extendable=False,
@@ -103,7 +133,7 @@ _ATTACHRESP = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=48,
-  serialized_end=72,
+  serialized_end=139,
 )
 
 
@@ -132,8 +162,8 @@ _DETACHREQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=74,
-  serialized_end=97,
+  serialized_start=141,
+  serialized_end=164,
 )
 
 
@@ -170,8 +200,8 @@ _DETACHRESP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=99,
-  serialized_end=190,
+  serialized_start=166,
+  serialized_end=257,
 )
 
 
@@ -224,10 +254,12 @@ _MESSAGEWRAPPER = _descriptor.Descriptor(
       name='msg', full_name='lte.MessageWrapper.msg',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=193,
-  serialized_end=372,
+  serialized_start=260,
+  serialized_end=439,
 )
 
+_ATTACHRESP.fields_by_name['status'].enum_type = _ATTACHRESP_STATUS
+_ATTACHRESP_STATUS.containing_type = _ATTACHRESP
 _DETACHRESP.fields_by_name['status'].enum_type = _DETACHRESP_STATUS
 _DETACHRESP_STATUS.containing_type = _DETACHRESP
 _MESSAGEWRAPPER.fields_by_name['attach_req'].message_type = _ATTACHREQ
