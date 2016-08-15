@@ -2,7 +2,7 @@
 #include <MessageBase.hpp>
 #include <memory>
 
-#include "MsgTraits.hpp"
+#include "MessageTraits.hpp"
 
 namespace lte
 {
@@ -19,7 +19,7 @@ public:
     operator std::unique_ptr<lte::util::Message>() const 
     {
         auto response = std::make_unique<MessageWrapper>();
-        (*response.*Traits<Payload>::to)(new Payload(payload_));
+        (*response.*MessageTraits<Payload>::to)(new Payload(payload_));
         return response;
     }
   

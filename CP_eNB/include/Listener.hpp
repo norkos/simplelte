@@ -5,6 +5,7 @@
 
 #include "UeManager.hpp"
 #include "Controller.hpp"
+#include <unordered_map>
 #include <MessageHandler.hpp>
 
 namespace lte
@@ -17,6 +18,9 @@ class Listener : public IListener, public lte::util::MessageHandler<lte::util::M
 
 public:
     Listener(zmq::socket_t& socket, std::shared_ptr<ISender> sender);
+    
+    Listener(const Listener&) = delete;
+    Listener operator=(const Listener&) = delete;
     
     virtual ~Listener(){}
     virtual void listen();

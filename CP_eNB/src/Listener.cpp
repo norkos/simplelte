@@ -1,34 +1,49 @@
 #include "Listener.hpp"
+#include "MessageTraits.hpp"
 
 namespace lte
 {
 namespace enb
 {
-
-namespace
-{
-std::unique_ptr<lte::util::Message> deserialize(zmq::message_t& message)
-{
-    lte::MessageWrapper result;
-    std::string msg_str(static_cast<char*>(message.data()),message.size());
-    result.ParseFromString(msg_str);
-    
-//    return parser<result.msg_case()>(result);
- 
-    if(result.msg_case() == lte::MessageWrapper::kAttachReq)
+   
+template<typename... Msgs>    
+class Deserializer{
+public:
+    std::unique_ptr<lte::util::Message> deserialize(zmq::message_t& message)
     {
-        return std::unique_ptr<lte::AttachReq>(std::move(result.release_attach_req()));
+        lte::MessageWrapper result;
+        std::string msg_str(static_cast<char*>(message.data()),message.size());
+        result.ParseFromString(msg_str);
+
+        return deserializeImp<Msgs...>(result);
     }
     
-    if(result.msg_case() == lte::MessageWrapper::kDetachReq)
+private:
+    template<typename Head, typename... Tail>
+    typename std::enable_if<(sizeof...(Tail)>0),std::unique_ptr<lte::util::Message>>::type
+    deserializeImp(lte::MessageWrapper& wrapper)
     {
-        return std::unique_ptr<lte::DetachReq>(std::move(result.release_detach_req()));
+        using Traits = MessageTraits<Head>;
+        if(wrapper.msg_case() == Traits::value)
+        {
+            return std::unique_ptr<typename Traits::payload>(std::move((wrapper.*Traits::from)()));
+        }
+        
+        return deserializeImp<Tail...>(wrapper);
     }
- 
-    return nullptr;
-
-}
-}
+    
+    template<typename Tail>
+    std::unique_ptr<lte::util::Message> deserializeImp(lte::MessageWrapper& wrapper)
+    {
+        using Traits = MessageTraits<Tail>;
+        if(wrapper.msg_case() == Traits::value)
+        {
+            return std::unique_ptr<typename Traits::payload>(std::move((wrapper.*Traits::from)()));
+        }
+        
+        return nullptr;
+    }
+};
 
 Listener::Listener(zmq::socket_t& socket, std::shared_ptr<ISender> sender): 
             socket_(socket), controller_(std::make_shared<UeManager>(), sender)
@@ -43,8 +58,10 @@ void Listener::listen()
 
   //  Wait for next request from client
   socket_.recv (&request);
-        
-  auto message = std::move(deserialize(request));
+  
+  using MyDeserializer = Deserializer<AttachReq, DetachReq>;
+  MyDeserializer deserializer;
+  auto message = std::move(deserializer.deserialize(request));
   handleMessage(*message);
 }
 
