@@ -12,24 +12,24 @@ struct MessageTraits {
 template<>
 struct MessageTraits<lte::AttachReq>
 {
-    using payload = AttachReq;
-    static constexpr auto value = lte::MessageWrapper::kAttachReq;
+    using type = AttachReq;
+    static constexpr auto id = lte::MessageWrapper::kAttachReq;
     static constexpr decltype (auto) from = &lte::MessageWrapper::release_attach_req;  
 };
 
 template<>
 struct MessageTraits<lte::AttachResp>
 {
-    using payload = AttachResp;
-    static constexpr auto value = lte::MessageWrapper::kAttachResp;
+    using type = AttachResp;
+    static constexpr auto id = lte::MessageWrapper::kAttachResp;
     static constexpr decltype (auto) to = &lte::MessageWrapper::set_allocated_attach_resp;
 };
 
 template<>
 struct MessageTraits<lte::DetachReq>
 {
-    using payload = DetachReq;
-    static constexpr auto value = lte::MessageWrapper::kDetachReq;
+    using type = DetachReq;
+    static constexpr auto id = lte::MessageWrapper::kDetachReq;
     static constexpr decltype (auto) from = &lte::MessageWrapper::release_detach_req;
     
 };
@@ -37,8 +37,8 @@ struct MessageTraits<lte::DetachReq>
 template<>
 struct MessageTraits<lte::DetachResp>
 {
-    using payload = DetachResp;
-    static constexpr auto value = lte::MessageWrapper::kDetachResp;
+    using type = DetachResp;
+    static constexpr auto id = lte::MessageWrapper::kDetachResp;
     static constexpr decltype (auto) to = &lte::MessageWrapper::set_allocated_detach_resp;
 };
 

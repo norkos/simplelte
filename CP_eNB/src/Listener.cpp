@@ -14,7 +14,7 @@ public:
         lte::MessageWrapper result;
         std::string msg_str(static_cast<char*>(message.data()),message.size());
         result.ParseFromString(msg_str);
-
+        
         return deserializeImp<Msgs...>(result);
     }
     
@@ -24,24 +24,26 @@ private:
     deserializeImp(lte::MessageWrapper& wrapper)
     {
         using Traits = MessageTraits<Head>;
-        if(wrapper.msg_case() == Traits::value)
-        {
-            return std::unique_ptr<typename Traits::payload>(std::move((wrapper.*Traits::from)()));
-        }
-        
-        return deserializeImp<Tail...>(wrapper);
+        return is_type<Traits>(wrapper) ? create_msg<Traits>(wrapper) : deserializeImp<Tail...>(wrapper);    
     }
     
-    template<typename Tail>
+    template<typename LastElem>
     std::unique_ptr<lte::util::Message> deserializeImp(lte::MessageWrapper& wrapper)
     {
-        using Traits = MessageTraits<Tail>;
-        if(wrapper.msg_case() == Traits::value)
-        {
-            return std::unique_ptr<typename Traits::payload>(std::move((wrapper.*Traits::from)()));
-        }
-        
-        return nullptr;
+        using Traits = MessageTraits<LastElem>;
+        return is_type<Traits>(wrapper) ? create_msg<Traits>(wrapper) : nullptr;
+    }
+    
+    template<typename Traits>
+    bool is_type(lte::MessageWrapper& wrapper)
+    {
+        return wrapper.msg_case() == Traits::id;
+    }
+    
+    template<typename Traits>
+    std::unique_ptr<lte::util::Message> create_msg(lte::MessageWrapper& wrapper)
+    {
+        return std::unique_ptr<typename Traits::type>(std::move((wrapper.*Traits::from)()));
     }
 };
 
@@ -61,6 +63,7 @@ void Listener::listen()
   
   using MyDeserializer = Deserializer<AttachReq, DetachReq>;
   MyDeserializer deserializer;
+  
   auto message = std::move(deserializer.deserialize(request));
   handleMessage(*message);
 }
