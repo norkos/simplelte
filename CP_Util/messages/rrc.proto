@@ -4,8 +4,12 @@ message AttachReq {
     required int32 id = 1;
 }
 
-message Paiging {
-    required int32 id = 1;
+message SIB {
+    required SIB1 sib1 = 1;
+}
+
+message SIB1 {
+    required int32 cell_identity = 1;
 }
 
 message AttachResp {

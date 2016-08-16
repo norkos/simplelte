@@ -18,7 +18,7 @@ _sym_db = _symbol_database.Default()
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='rrc.proto',
   package='lte.rrc',
-  serialized_pb=_b('\n\trrc.proto\x12\x07lte.rrc\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"_\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12*\n\x06status\x18\x02 \x02(\x0e\x32\x1a.lte.rrc.AttachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\x17\n\tDetachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"_\n\nDetachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12*\n\x06status\x18\x02 \x02(\x0e\x32\x1a.lte.rrc.DetachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\xb8\x01\n\x03RRC\x12(\n\nattach_req\x18\x01 \x01(\x0b\x32\x12.lte.rrc.AttachReqH\x00\x12*\n\x0b\x61ttach_resp\x18\x02 \x01(\x0b\x32\x13.lte.rrc.AttachRespH\x00\x12(\n\ndetach_req\x18\x03 \x01(\x0b\x32\x12.lte.rrc.DetachReqH\x00\x12*\n\x0b\x64\x65tach_resp\x18\x04 \x01(\x0b\x32\x13.lte.rrc.DetachRespH\x00\x42\x05\n\x03msg')
+  serialized_pb=_b('\n\trrc.proto\x12\x07lte.rrc\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"\"\n\x03SIB\x12\x1b\n\x04sib1\x18\x01 \x02(\x0b\x32\r.lte.rrc.SIB1\"\x1d\n\x04SIB1\x12\x15\n\rcell_identity\x18\x01 \x02(\x05\"_\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12*\n\x06status\x18\x02 \x02(\x0e\x32\x1a.lte.rrc.AttachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\x17\n\tDetachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"_\n\nDetachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12*\n\x06status\x18\x02 \x02(\x0e\x32\x1a.lte.rrc.DetachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\xb8\x01\n\x03RRC\x12(\n\nattach_req\x18\x01 \x01(\x0b\x32\x12.lte.rrc.AttachReqH\x00\x12*\n\x0b\x61ttach_resp\x18\x02 \x01(\x0b\x32\x13.lte.rrc.AttachRespH\x00\x12(\n\ndetach_req\x18\x03 \x01(\x0b\x32\x12.lte.rrc.DetachReqH\x00\x12*\n\x0b\x64\x65tach_resp\x18\x04 \x01(\x0b\x32\x13.lte.rrc.DetachRespH\x00\x42\x05\n\x03msg')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -41,8 +41,8 @@ _ATTACHRESP_STATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=117,
-  serialized_end=142,
+  serialized_start=184,
+  serialized_end=209,
 )
 _sym_db.RegisterEnumDescriptor(_ATTACHRESP_STATUS)
 
@@ -63,8 +63,8 @@ _DETACHRESP_STATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   options=None,
-  serialized_start=117,
-  serialized_end=142,
+  serialized_start=184,
+  serialized_end=209,
 )
 _sym_db.RegisterEnumDescriptor(_DETACHRESP_STATUS)
 
@@ -96,6 +96,66 @@ _ATTACHREQ = _descriptor.Descriptor(
   ],
   serialized_start=22,
   serialized_end=45,
+)
+
+
+_SIB = _descriptor.Descriptor(
+  name='SIB',
+  full_name='lte.rrc.SIB',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='sib1', full_name='lte.rrc.SIB.sib1', index=0,
+      number=1, type=11, cpp_type=10, label=2,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=47,
+  serialized_end=81,
+)
+
+
+_SIB1 = _descriptor.Descriptor(
+  name='SIB1',
+  full_name='lte.rrc.SIB1',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='cell_identity', full_name='lte.rrc.SIB1.cell_identity', index=0,
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=83,
+  serialized_end=112,
 )
 
 
@@ -132,8 +192,8 @@ _ATTACHRESP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=47,
-  serialized_end=142,
+  serialized_start=114,
+  serialized_end=209,
 )
 
 
@@ -162,8 +222,8 @@ _DETACHREQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=144,
-  serialized_end=167,
+  serialized_start=211,
+  serialized_end=234,
 )
 
 
@@ -200,8 +260,8 @@ _DETACHRESP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=169,
-  serialized_end=264,
+  serialized_start=236,
+  serialized_end=331,
 )
 
 
@@ -254,10 +314,11 @@ _RRC = _descriptor.Descriptor(
       name='msg', full_name='lte.rrc.RRC.msg',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=267,
-  serialized_end=451,
+  serialized_start=334,
+  serialized_end=518,
 )
 
+_SIB.fields_by_name['sib1'].message_type = _SIB1
 _ATTACHRESP.fields_by_name['status'].enum_type = _ATTACHRESP_STATUS
 _ATTACHRESP_STATUS.containing_type = _ATTACHRESP
 _DETACHRESP.fields_by_name['status'].enum_type = _DETACHRESP_STATUS
@@ -279,6 +340,8 @@ _RRC.oneofs_by_name['msg'].fields.append(
   _RRC.fields_by_name['detach_resp'])
 _RRC.fields_by_name['detach_resp'].containing_oneof = _RRC.oneofs_by_name['msg']
 DESCRIPTOR.message_types_by_name['AttachReq'] = _ATTACHREQ
+DESCRIPTOR.message_types_by_name['SIB'] = _SIB
+DESCRIPTOR.message_types_by_name['SIB1'] = _SIB1
 DESCRIPTOR.message_types_by_name['AttachResp'] = _ATTACHRESP
 DESCRIPTOR.message_types_by_name['DetachReq'] = _DETACHREQ
 DESCRIPTOR.message_types_by_name['DetachResp'] = _DETACHRESP
@@ -290,6 +353,20 @@ AttachReq = _reflection.GeneratedProtocolMessageType('AttachReq', (_message.Mess
   # @@protoc_insertion_point(class_scope:lte.rrc.AttachReq)
   ))
 _sym_db.RegisterMessage(AttachReq)
+
+SIB = _reflection.GeneratedProtocolMessageType('SIB', (_message.Message,), dict(
+  DESCRIPTOR = _SIB,
+  __module__ = 'rrc_pb2'
+  # @@protoc_insertion_point(class_scope:lte.rrc.SIB)
+  ))
+_sym_db.RegisterMessage(SIB)
+
+SIB1 = _reflection.GeneratedProtocolMessageType('SIB1', (_message.Message,), dict(
+  DESCRIPTOR = _SIB1,
+  __module__ = 'rrc_pb2'
+  # @@protoc_insertion_point(class_scope:lte.rrc.SIB1)
+  ))
+_sym_db.RegisterMessage(SIB1)
 
 AttachResp = _reflection.GeneratedProtocolMessageType('AttachResp', (_message.Message,), dict(
   DESCRIPTOR = _ATTACHRESP,

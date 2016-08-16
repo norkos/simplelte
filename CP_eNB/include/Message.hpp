@@ -19,13 +19,13 @@ public:
     operator std::unique_ptr<util::Message>() const 
     {
         using Traits = MessageTraits<Payload>;
-        using ParentTraits = MessageTraits<typename Traits::parent>;
+        using WrapperTraits = MessageTraits<typename Traits::parent>;
         
-        auto wrapper = std::make_unique<typename Traits::parent>();
+        auto wrapper = std::make_unique<typename WrapperTraits::type>();
         (*wrapper.*Traits::to)(new Payload(payload_));
         
         auto response = std::make_unique<ASN1>();
-        (*response.*ParentTraits::to)(wrapper.release());
+        (*response.*WrapperTraits::to)(wrapper.release());
         return response;
     }
   
