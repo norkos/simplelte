@@ -18,8 +18,11 @@ public:
   
     operator std::unique_ptr<lte::util::Message>() const 
     {
-        auto response = std::make_unique<MessageWrapper>();
-        (*response.*MessageTraits<Payload>::to)(new Payload(payload_));
+        auto response = std::make_unique<ASN1>();
+        auto rrc = std::make_unique<RRC>();
+        (*rrc.*MessageTraits<Payload>::to)(new Payload(payload_));
+        
+        response->set_allocated_rrc(rrc.release());
         return response;
     }
   

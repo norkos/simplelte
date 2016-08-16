@@ -1,6 +1,10 @@
 #include "Controller.hpp"
 #include "Message.hpp"
 
+#include "ISender.hpp"
+#include "IUeManager.hpp"
+#include "UeContext.hpp"
+
 namespace lte
 {
 namespace enb

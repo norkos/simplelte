@@ -4,6 +4,7 @@
 #include "Controller.hpp"
 #include "MockUeManager.hpp"
 #include "MockSender.hpp"
+#include "UeContext.hpp"
 
 namespace GT = ::testing;
 

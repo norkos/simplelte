@@ -1,5 +1,4 @@
 #include <memory>
-#include <messages.pb.h>
 #include <MessageBase.hpp>
 #include "Sender.hpp"
 

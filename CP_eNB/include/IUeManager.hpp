@@ -1,13 +1,13 @@
 #pragma once
 
 #include <memory>
-#include "UeContext.hpp"
 
 namespace lte
 {
 namespace enb
 {
     
+class UeContext;
 
 class IUeManager
 {

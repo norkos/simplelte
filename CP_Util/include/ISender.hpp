@@ -1,5 +1,5 @@
 #pragma once
-#include "MessageBase.hpp"
+#include <MessageBase.hpp>
 
 namespace lte
 {

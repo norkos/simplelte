@@ -18,7 +18,7 @@ _sym_db = _symbol_database.Default()
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='messages.proto',
   package='lte',
-  serialized_pb=_b('\n\x0emessages.proto\x12\x03lte\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"[\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12&\n\x06status\x18\x02 \x02(\x0e\x32\x16.lte.AttachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\x17\n\tDetachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"[\n\nDetachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12&\n\x06status\x18\x02 \x02(\x0e\x32\x16.lte.DetachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\xb3\x01\n\x0eMessageWrapper\x12$\n\nattach_req\x18\x01 \x01(\x0b\x32\x0e.lte.AttachReqH\x00\x12&\n\x0b\x61ttach_resp\x18\x02 \x01(\x0b\x32\x0f.lte.AttachRespH\x00\x12$\n\ndetach_req\x18\x03 \x01(\x0b\x32\x0e.lte.DetachReqH\x00\x12&\n\x0b\x64\x65tach_resp\x18\x04 \x01(\x0b\x32\x0f.lte.DetachRespH\x00\x42\x05\n\x03msg')
+  serialized_pb=_b('\n\x0emessages.proto\x12\x03lte\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"[\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12&\n\x06status\x18\x02 \x02(\x0e\x32\x16.lte.AttachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\x17\n\tDetachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"[\n\nDetachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12&\n\x06status\x18\x02 \x02(\x0e\x32\x16.lte.DetachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\x06\n\x04S1AP\"\x06\n\x04X2AP\"\xa8\x01\n\x03RRC\x12$\n\nattach_req\x18\x01 \x01(\x0b\x32\x0e.lte.AttachReqH\x00\x12&\n\x0b\x61ttach_resp\x18\x02 \x01(\x0b\x32\x0f.lte.AttachRespH\x00\x12$\n\ndetach_req\x18\x03 \x01(\x0b\x32\x0e.lte.DetachReqH\x00\x12&\n\x0b\x64\x65tach_resp\x18\x04 \x01(\x0b\x32\x0f.lte.DetachRespH\x00\x42\x05\n\x03msg\"\\\n\x04\x41SN1\x12\x19\n\x04s1ap\x18\x01 \x01(\x0b\x32\t.lte.S1APH\x00\x12\x19\n\x04x2ap\x18\x02 \x01(\x0b\x32\t.lte.X2APH\x00\x12\x17\n\x03rrc\x18\x03 \x01(\x0b\x32\x08.lte.RRCH\x00\x42\x05\n\x03msg')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -205,36 +205,82 @@ _DETACHRESP = _descriptor.Descriptor(
 )
 
 
-_MESSAGEWRAPPER = _descriptor.Descriptor(
-  name='MessageWrapper',
-  full_name='lte.MessageWrapper',
+_S1AP = _descriptor.Descriptor(
+  name='S1AP',
+  full_name='lte.S1AP',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=259,
+  serialized_end=265,
+)
+
+
+_X2AP = _descriptor.Descriptor(
+  name='X2AP',
+  full_name='lte.X2AP',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=267,
+  serialized_end=273,
+)
+
+
+_RRC = _descriptor.Descriptor(
+  name='RRC',
+  full_name='lte.RRC',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='attach_req', full_name='lte.MessageWrapper.attach_req', index=0,
+      name='attach_req', full_name='lte.RRC.attach_req', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='attach_resp', full_name='lte.MessageWrapper.attach_resp', index=1,
+      name='attach_resp', full_name='lte.RRC.attach_resp', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='detach_req', full_name='lte.MessageWrapper.detach_req', index=2,
+      name='detach_req', full_name='lte.RRC.detach_req', index=2,
       number=3, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
-      name='detach_resp', full_name='lte.MessageWrapper.detach_resp', index=3,
+      name='detach_resp', full_name='lte.RRC.detach_resp', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -251,38 +297,100 @@ _MESSAGEWRAPPER = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
     _descriptor.OneofDescriptor(
-      name='msg', full_name='lte.MessageWrapper.msg',
+      name='msg', full_name='lte.RRC.msg',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=260,
-  serialized_end=439,
+  serialized_start=276,
+  serialized_end=444,
+)
+
+
+_ASN1 = _descriptor.Descriptor(
+  name='ASN1',
+  full_name='lte.ASN1',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='s1ap', full_name='lte.ASN1.s1ap', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='x2ap', full_name='lte.ASN1.x2ap', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='rrc', full_name='lte.ASN1.rrc', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  oneofs=[
+    _descriptor.OneofDescriptor(
+      name='msg', full_name='lte.ASN1.msg',
+      index=0, containing_type=None, fields=[]),
+  ],
+  serialized_start=446,
+  serialized_end=538,
 )
 
 _ATTACHRESP.fields_by_name['status'].enum_type = _ATTACHRESP_STATUS
 _ATTACHRESP_STATUS.containing_type = _ATTACHRESP
 _DETACHRESP.fields_by_name['status'].enum_type = _DETACHRESP_STATUS
 _DETACHRESP_STATUS.containing_type = _DETACHRESP
-_MESSAGEWRAPPER.fields_by_name['attach_req'].message_type = _ATTACHREQ
-_MESSAGEWRAPPER.fields_by_name['attach_resp'].message_type = _ATTACHRESP
-_MESSAGEWRAPPER.fields_by_name['detach_req'].message_type = _DETACHREQ
-_MESSAGEWRAPPER.fields_by_name['detach_resp'].message_type = _DETACHRESP
-_MESSAGEWRAPPER.oneofs_by_name['msg'].fields.append(
-  _MESSAGEWRAPPER.fields_by_name['attach_req'])
-_MESSAGEWRAPPER.fields_by_name['attach_req'].containing_oneof = _MESSAGEWRAPPER.oneofs_by_name['msg']
-_MESSAGEWRAPPER.oneofs_by_name['msg'].fields.append(
-  _MESSAGEWRAPPER.fields_by_name['attach_resp'])
-_MESSAGEWRAPPER.fields_by_name['attach_resp'].containing_oneof = _MESSAGEWRAPPER.oneofs_by_name['msg']
-_MESSAGEWRAPPER.oneofs_by_name['msg'].fields.append(
-  _MESSAGEWRAPPER.fields_by_name['detach_req'])
-_MESSAGEWRAPPER.fields_by_name['detach_req'].containing_oneof = _MESSAGEWRAPPER.oneofs_by_name['msg']
-_MESSAGEWRAPPER.oneofs_by_name['msg'].fields.append(
-  _MESSAGEWRAPPER.fields_by_name['detach_resp'])
-_MESSAGEWRAPPER.fields_by_name['detach_resp'].containing_oneof = _MESSAGEWRAPPER.oneofs_by_name['msg']
+_RRC.fields_by_name['attach_req'].message_type = _ATTACHREQ
+_RRC.fields_by_name['attach_resp'].message_type = _ATTACHRESP
+_RRC.fields_by_name['detach_req'].message_type = _DETACHREQ
+_RRC.fields_by_name['detach_resp'].message_type = _DETACHRESP
+_RRC.oneofs_by_name['msg'].fields.append(
+  _RRC.fields_by_name['attach_req'])
+_RRC.fields_by_name['attach_req'].containing_oneof = _RRC.oneofs_by_name['msg']
+_RRC.oneofs_by_name['msg'].fields.append(
+  _RRC.fields_by_name['attach_resp'])
+_RRC.fields_by_name['attach_resp'].containing_oneof = _RRC.oneofs_by_name['msg']
+_RRC.oneofs_by_name['msg'].fields.append(
+  _RRC.fields_by_name['detach_req'])
+_RRC.fields_by_name['detach_req'].containing_oneof = _RRC.oneofs_by_name['msg']
+_RRC.oneofs_by_name['msg'].fields.append(
+  _RRC.fields_by_name['detach_resp'])
+_RRC.fields_by_name['detach_resp'].containing_oneof = _RRC.oneofs_by_name['msg']
+_ASN1.fields_by_name['s1ap'].message_type = _S1AP
+_ASN1.fields_by_name['x2ap'].message_type = _X2AP
+_ASN1.fields_by_name['rrc'].message_type = _RRC
+_ASN1.oneofs_by_name['msg'].fields.append(
+  _ASN1.fields_by_name['s1ap'])
+_ASN1.fields_by_name['s1ap'].containing_oneof = _ASN1.oneofs_by_name['msg']
+_ASN1.oneofs_by_name['msg'].fields.append(
+  _ASN1.fields_by_name['x2ap'])
+_ASN1.fields_by_name['x2ap'].containing_oneof = _ASN1.oneofs_by_name['msg']
+_ASN1.oneofs_by_name['msg'].fields.append(
+  _ASN1.fields_by_name['rrc'])
+_ASN1.fields_by_name['rrc'].containing_oneof = _ASN1.oneofs_by_name['msg']
 DESCRIPTOR.message_types_by_name['AttachReq'] = _ATTACHREQ
 DESCRIPTOR.message_types_by_name['AttachResp'] = _ATTACHRESP
 DESCRIPTOR.message_types_by_name['DetachReq'] = _DETACHREQ
 DESCRIPTOR.message_types_by_name['DetachResp'] = _DETACHRESP
-DESCRIPTOR.message_types_by_name['MessageWrapper'] = _MESSAGEWRAPPER
+DESCRIPTOR.message_types_by_name['S1AP'] = _S1AP
+DESCRIPTOR.message_types_by_name['X2AP'] = _X2AP
+DESCRIPTOR.message_types_by_name['RRC'] = _RRC
+DESCRIPTOR.message_types_by_name['ASN1'] = _ASN1
 
 AttachReq = _reflection.GeneratedProtocolMessageType('AttachReq', (_message.Message,), dict(
   DESCRIPTOR = _ATTACHREQ,
@@ -312,12 +420,33 @@ DetachResp = _reflection.GeneratedProtocolMessageType('DetachResp', (_message.Me
   ))
 _sym_db.RegisterMessage(DetachResp)
 
-MessageWrapper = _reflection.GeneratedProtocolMessageType('MessageWrapper', (_message.Message,), dict(
-  DESCRIPTOR = _MESSAGEWRAPPER,
+S1AP = _reflection.GeneratedProtocolMessageType('S1AP', (_message.Message,), dict(
+  DESCRIPTOR = _S1AP,
   __module__ = 'messages_pb2'
-  # @@protoc_insertion_point(class_scope:lte.MessageWrapper)
+  # @@protoc_insertion_point(class_scope:lte.S1AP)
   ))
-_sym_db.RegisterMessage(MessageWrapper)
+_sym_db.RegisterMessage(S1AP)
+
+X2AP = _reflection.GeneratedProtocolMessageType('X2AP', (_message.Message,), dict(
+  DESCRIPTOR = _X2AP,
+  __module__ = 'messages_pb2'
+  # @@protoc_insertion_point(class_scope:lte.X2AP)
+  ))
+_sym_db.RegisterMessage(X2AP)
+
+RRC = _reflection.GeneratedProtocolMessageType('RRC', (_message.Message,), dict(
+  DESCRIPTOR = _RRC,
+  __module__ = 'messages_pb2'
+  # @@protoc_insertion_point(class_scope:lte.RRC)
+  ))
+_sym_db.RegisterMessage(RRC)
+
+ASN1 = _reflection.GeneratedProtocolMessageType('ASN1', (_message.Message,), dict(
+  DESCRIPTOR = _ASN1,
+  __module__ = 'messages_pb2'
+  # @@protoc_insertion_point(class_scope:lte.ASN1)
+  ))
+_sym_db.RegisterMessage(ASN1)
 
 
 # @@protoc_insertion_point(module_scope)

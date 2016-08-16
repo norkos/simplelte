@@ -1,7 +1,7 @@
-add_library (eNB SHARED Controller.cpp UeManager.cpp UeManager.cpp)
+add_library (eNB SHARED Controller.cpp UeManager.cpp)
 target_link_libraries (eNB messages utils)
 
-add_library (communication SHARED Sender.cpp Listener.cpp )
+add_library (communication SHARED Sender.cpp Listener.cpp)
 target_link_libraries (communication messages zmq)
 
 add_executable (hwserver main.cpp)

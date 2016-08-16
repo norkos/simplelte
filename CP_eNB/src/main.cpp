@@ -3,6 +3,7 @@
 
 #include "Listener.hpp"
 #include "Sender.hpp"
+#include "UeManager.hpp"
 
 int main () 
 {
@@ -13,7 +14,8 @@ int main ()
     socket.bind ("tcp://*:5555");
 
     auto sender = std::make_shared<Sender>(socket);
-    Listener listener(socket, sender);
+    auto ue_manager = std::make_shared<UeManager>();
+    Listener listener(socket, sender, ue_manager);
     
     while (true) {
         listener.listen();

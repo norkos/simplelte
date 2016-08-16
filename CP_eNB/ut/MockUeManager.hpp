@@ -7,6 +7,9 @@ namespace lte
 {
 namespace enb
 {
+
+class UeContext;
+
 namespace ut
 {
 class MockUeManager : public IUeManager

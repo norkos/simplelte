@@ -3,13 +3,13 @@
 #include <messages.pb.h>
 #include <memory>
 
-#include "ISender.hpp"
-#include "IUeManager.hpp"
-
 namespace lte
 {
 namespace enb
 {
+    
+class IUeManager;
+class ISender;
 
 class Controller{
     
