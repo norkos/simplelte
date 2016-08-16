@@ -1,4 +1,4 @@
-add_library (eNB SHARED Controller.cpp UeManager.cpp)
+add_library (eNB SHARED Controller.cpp UeManager.cpp Timer.cpp)
 target_link_libraries (eNB messages utils)
 
 add_library (communication SHARED Sender.cpp Listener.cpp)
