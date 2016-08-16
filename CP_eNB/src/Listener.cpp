@@ -22,7 +22,8 @@ void Listener::listen()
   //  Wait for next request from client
   socket_.recv (&request);
   
-  using MyDeserializer = Deserializer<AttachReq, DetachReq>;
+  using Wrapper = rrc::RRC;
+  using MyDeserializer = Deserializer<Wrapper, rrc::AttachReq, rrc::DetachReq>;
   MyDeserializer deserializer;
   
   auto message = std::move(deserializer.deserialize(request));

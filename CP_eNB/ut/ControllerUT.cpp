@@ -23,7 +23,7 @@ TEST(ControllerTest, attach_ue)
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
     Controller sut(ue_manager, sender);
-    AttachReq message;
+    rrc::AttachReq message;
     
     message.set_id(10);
     
@@ -42,7 +42,7 @@ TEST(ControllerTest, attach_already_attached_ue)
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
     Controller sut(ue_manager, sender);
-    AttachReq message;
+    rrc::AttachReq message;
     
     message.set_id(10);
     
@@ -60,7 +60,7 @@ TEST(ControllerTest, detach_ue)
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
     Controller sut(ue_manager, sender);
-    DetachReq message;
+    rrc::DetachReq message;
     message.set_id(10);
     
     //  expect

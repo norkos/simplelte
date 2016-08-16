@@ -16,13 +16,16 @@ public:
     Payload* operator->() { return &payload_; }
     const Payload* operator->() const { return &payload_; }
   
-    operator std::unique_ptr<lte::util::Message>() const 
+    operator std::unique_ptr<util::Message>() const 
     {
-        auto response = std::make_unique<ASN1>();
-        auto rrc = std::make_unique<RRC>();
-        (*rrc.*MessageTraits<Payload>::to)(new Payload(payload_));
+        using Traits = MessageTraits<Payload>;
+        using ParentTraits = MessageTraits<typename Traits::parent>;
         
-        response->set_allocated_rrc(rrc.release());
+        auto wrapper = std::make_unique<typename Traits::parent>();
+        (*wrapper.*Traits::to)(new Payload(payload_));
+        
+        auto response = std::make_unique<ASN1>();
+        (*response.*ParentTraits::to)(wrapper.release());
         return response;
     }
   

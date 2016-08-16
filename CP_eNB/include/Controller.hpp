@@ -1,6 +1,6 @@
 #pragma once
 
-#include <messages.pb.h>
+#include <rrc.pb.h>
 #include <memory>
 
 namespace lte
@@ -18,8 +18,8 @@ public:
         :ue_manager_(ue_manager), sender_(sender)
     {}
     
-    void handle_attach_req(const AttachReq& attach_req);
-    void handle_detach_req(const DetachReq& detach_req);
+    void handle_attach_req(const rrc::AttachReq& attach_req);
+    void handle_detach_req(const rrc::DetachReq& detach_req);
 
 private:
     std::shared_ptr<IUeManager> ue_manager_;

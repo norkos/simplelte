@@ -16,7 +16,7 @@ class ISender;
 class IUeManager;
 class Controller;
 
-class Listener : public IListener, public lte::util::MessageHandler<lte::util::Message>
+class Listener : public IListener, public util::MessageHandler<util::Message>
 {
 
 public:

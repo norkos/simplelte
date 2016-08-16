@@ -9,7 +9,7 @@ namespace enb
 
 namespace 
 {
-decltype(auto) serialize(const lte::util::Message& msg)
+decltype(auto) serialize(const util::Message& msg)
 {
     std::string message;
     msg.SerializeToString(&message);
@@ -20,7 +20,7 @@ decltype(auto) serialize(const lte::util::Message& msg)
     return result; 
 }
 }
-void Sender::send(std::unique_ptr<lte::util::Message> msg)
+void Sender::send(std::unique_ptr<util::Message> msg)
 {
   auto response = serialize(*msg);
   socket_.send (*response);

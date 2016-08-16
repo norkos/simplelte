@@ -1,6 +1,10 @@
-package lte;
+package lte.rrc;
 
 message AttachReq {
+    required int32 id = 1;
+}
+
+message Paiging {
     required int32 id = 1;
 }
 
@@ -28,25 +32,11 @@ message DetachResp {
     required Status status = 2;
 }
 
-message S1AP{
-}
-
-message X2AP{
-}
-
 message RRC{
     oneof msg {
         AttachReq  attach_req  = 1;
         AttachResp attach_resp = 2;
         DetachReq  detach_req  = 3;
         DetachResp detach_resp = 4;
-        }
-}
-
-message ASN1{
-    oneof msg {
-        S1AP s1ap       = 1;
-        X2AP x2ap       = 2;
-        RRC rrc         = 3;
         }
 }

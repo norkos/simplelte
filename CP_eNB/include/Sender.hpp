@@ -14,7 +14,7 @@ public:
 
     Sender(zmq::socket_t& socket): socket_(socket) {}
     
-    void send(std::unique_ptr<lte::util::Message> msg);
+    void send(std::unique_ptr<util::Message> msg);
 
 private:  
     zmq::socket_t& socket_;

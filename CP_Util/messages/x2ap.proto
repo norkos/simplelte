@@ -1,0 +1,4 @@
+package lte.x2ap;
+
+message X2AP{
+}
