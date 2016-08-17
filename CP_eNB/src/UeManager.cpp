@@ -25,10 +25,5 @@ bool UeManager::remove_ue(int ue_id)
     }
     return false;
 }
-
-UeManager::~UeManager()
-{
-
-}
 }
 }

@@ -32,7 +32,6 @@ void Listener::listen()
 
 Listener::~Listener()
 {
-
 }
 }
 }

@@ -1,8 +1,10 @@
 #pragma once
 
 #include <rrc.pb.h>
+#include <internal.pb.h>
 #include <memory>
 #include <ITimer.hpp>
+#include "SIBService.hpp"
 
 namespace lte
 {
@@ -19,8 +21,9 @@ public:
     
     void handle_attach_req(const rrc::AttachReq& attach_req);
     void handle_detach_req(const rrc::DetachReq& detach_req);
+    void handle_timer_ind(const internal::TimerInd& timer_ind);
 
-private:
+protected:
     std::shared_ptr<IUeManager> ue_manager_;
     std::shared_ptr<ISender> sender_;
     std::unique_ptr<util::ITimer> timer_;

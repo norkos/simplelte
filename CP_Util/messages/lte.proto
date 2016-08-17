@@ -2,11 +2,13 @@ package lte;
 import "s1ap.proto";
 import "x2ap.proto";
 import "rrc.proto";
+import "internal.proto";
 
 message ASN1{
     oneof msg {
-        s1ap.S1AP s1ap  = 1;
-        x2ap.X2AP x2ap  = 2;
-        rrc.RRC rrc     = 3;
+        s1ap.S1AP    s1ap       = 1;
+        x2ap.X2AP    x2ap       = 2;
+        rrc.RRC      rrc        = 3;
+        internal.TimerInd timerInd   = 4;
         }
 }

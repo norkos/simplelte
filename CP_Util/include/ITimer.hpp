@@ -13,6 +13,7 @@ public:
     virtual ~ITimer() = default;
     virtual void subscribe(ITimerWatcher& watcher, int time_out) = 0;
     virtual void unsubscribe(ITimerWatcher& watcher) = 0;
+    virtual void update() = 0;
 };
 }
 }

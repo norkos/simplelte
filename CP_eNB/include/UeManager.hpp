@@ -15,10 +15,10 @@ class UeManager : public IUeManager
 using UEs = std::unordered_map<int, std::unique_ptr<UeContext>>;
     
 public:
-    virtual ~UeManager();
-    virtual void add_ue(std::unique_ptr<UeContext> ue);
-    virtual bool remove_ue(int ue_id);
-    virtual bool is_ue(int ue_id) const;
+    virtual ~UeManager() = default;
+    void add_ue(std::unique_ptr<UeContext> ue) override;
+    bool remove_ue(int ue_id) override;
+    bool is_ue(int ue_id) const override;
 
 private:
     UEs ues_;

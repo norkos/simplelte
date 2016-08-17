@@ -5,6 +5,10 @@ namespace lte
 namespace enb
 {
 
+void Timer::update()
+{
+}
+
 void Timer::subscribe(util::ITimerWatcher& watcher, int time_out) 
 {
 }

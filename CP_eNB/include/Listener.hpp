@@ -23,10 +23,10 @@ public:
     Listener(zmq::socket_t& socket, std::shared_ptr<ISender> sender, std::shared_ptr<IUeManager> ue_manager);
     
     Listener(const Listener&) = delete;
-    Listener operator=(const Listener&) = delete;
+    Listener& operator=(const Listener&) = delete;
     
     virtual ~Listener();
-    virtual void listen();
+    void listen() override;
   
 private:
     zmq::socket_t& socket_;

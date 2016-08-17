@@ -3,6 +3,7 @@
 
 #include "Controller.hpp"
 #include "MockUeManager.hpp"
+#include "MockTimer.hpp"
 #include "MockSender.hpp"
 #include "UeContext.hpp"
 
@@ -69,6 +70,34 @@ TEST(ControllerTest, detach_ue)
     
     //  when
     sut.handle_detach_req(message);
+}
+
+
+class ControllerTimerStub : public Controller
+{
+public:
+    using Controller::Controller;
+    void set_timer(util::ITimer* timer)
+    {        
+        timer_.reset(timer);
+    }
+};
+
+TEST(TimerTest, is_timer_invoked)
+{
+    //  given
+    auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
+    auto sender = std::make_shared<GT::StrictMock<MockSender>>();
+    ControllerTimerStub sut(ue_manager, sender);
+    
+    auto timer = new GT::StrictMock<MockTimer>();
+    sut.set_timer(timer);
+    
+    //  expect
+    EXPECT_CALL(*timer, update());
+    
+    //  when
+    sut.handle_timer_ind(internal::TimerInd());
 }
 
 }

@@ -16,6 +16,11 @@ Controller::Controller(std::shared_ptr<IUeManager> ue_manager, std::shared_ptr<I
 {
 }
 
+void Controller::handle_timer_ind(const internal::TimerInd& timer_ind)
+{
+    timer_->update();
+}
+
 void Controller::handle_attach_req(const rrc::AttachReq& attach_req)
 {
     const auto id = attach_req.id();

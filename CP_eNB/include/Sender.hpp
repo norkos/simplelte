@@ -11,10 +11,9 @@ namespace enb
 class Sender : public ISender
 {
 public:
-
     Sender(zmq::socket_t& socket): socket_(socket) {}
-    
-    void send(std::unique_ptr<util::Message> msg);
+    virtual ~Sender() = default;
+    void send(std::unique_ptr<util::Message> msg) override;
 
 private:  
     zmq::socket_t& socket_;
