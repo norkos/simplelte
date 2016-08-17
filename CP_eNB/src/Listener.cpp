@@ -7,7 +7,7 @@ namespace lte
 namespace enb
 {
 
-Listener::Listener(zmq::socket_t& socket, std::shared_ptr<ISender> sender, std::shared_ptr<IUeManager> ue_manager): 
+Listener::Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manager): 
             socket_(socket), 
             controller_(std::make_unique<Controller>(ue_manager, sender))
 {

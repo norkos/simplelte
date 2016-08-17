@@ -16,14 +16,15 @@ _sym_db = _symbol_database.Default()
 import s1ap_pb2
 import x2ap_pb2
 import rrc_pb2
+import internal_pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='lte.proto',
   package='lte',
-  serialized_pb=_b('\n\tlte.proto\x12\x03lte\x1a\ns1ap.proto\x1a\nx2ap.proto\x1a\trrc.proto\"j\n\x04\x41SN1\x12\x1e\n\x04s1ap\x18\x01 \x01(\x0b\x32\x0e.lte.s1ap.S1APH\x00\x12\x1e\n\x04x2ap\x18\x02 \x01(\x0b\x32\x0e.lte.x2ap.X2APH\x00\x12\x1b\n\x03rrc\x18\x03 \x01(\x0b\x32\x0c.lte.rrc.RRCH\x00\x42\x05\n\x03msg')
+  serialized_pb=_b('\n\tlte.proto\x12\x03lte\x1a\ns1ap.proto\x1a\nx2ap.proto\x1a\trrc.proto\x1a\x0einternal.proto\"\x96\x01\n\x04\x41SN1\x12\x1e\n\x04s1ap\x18\x01 \x01(\x0b\x32\x0e.lte.s1ap.S1APH\x00\x12\x1e\n\x04x2ap\x18\x02 \x01(\x0b\x32\x0e.lte.x2ap.X2APH\x00\x12\x1b\n\x03rrc\x18\x03 \x01(\x0b\x32\x0c.lte.rrc.RRCH\x00\x12*\n\x08timerInd\x18\x04 \x01(\x0b\x32\x16.lte.internal.TimerIndH\x00\x42\x05\n\x03msg')
   ,
-  dependencies=[s1ap_pb2.DESCRIPTOR,x2ap_pb2.DESCRIPTOR,rrc_pb2.DESCRIPTOR,])
+  dependencies=[s1ap_pb2.DESCRIPTOR,x2ap_pb2.DESCRIPTOR,rrc_pb2.DESCRIPTOR,internal_pb2.DESCRIPTOR,])
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
@@ -57,6 +58,13 @@ _ASN1 = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='timerInd', full_name='lte.ASN1.timerInd', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -71,13 +79,14 @@ _ASN1 = _descriptor.Descriptor(
       name='msg', full_name='lte.ASN1.msg',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=53,
-  serialized_end=159,
+  serialized_start=70,
+  serialized_end=220,
 )
 
 _ASN1.fields_by_name['s1ap'].message_type = s1ap_pb2._S1AP
 _ASN1.fields_by_name['x2ap'].message_type = x2ap_pb2._X2AP
 _ASN1.fields_by_name['rrc'].message_type = rrc_pb2._RRC
+_ASN1.fields_by_name['timerInd'].message_type = internal_pb2._TIMERIND
 _ASN1.oneofs_by_name['msg'].fields.append(
   _ASN1.fields_by_name['s1ap'])
 _ASN1.fields_by_name['s1ap'].containing_oneof = _ASN1.oneofs_by_name['msg']
@@ -87,6 +96,9 @@ _ASN1.fields_by_name['x2ap'].containing_oneof = _ASN1.oneofs_by_name['msg']
 _ASN1.oneofs_by_name['msg'].fields.append(
   _ASN1.fields_by_name['rrc'])
 _ASN1.fields_by_name['rrc'].containing_oneof = _ASN1.oneofs_by_name['msg']
+_ASN1.oneofs_by_name['msg'].fields.append(
+  _ASN1.fields_by_name['timerInd'])
+_ASN1.fields_by_name['timerInd'].containing_oneof = _ASN1.oneofs_by_name['msg']
 DESCRIPTOR.message_types_by_name['ASN1'] = _ASN1
 
 ASN1 = _reflection.GeneratedProtocolMessageType('ASN1', (_message.Message,), dict(

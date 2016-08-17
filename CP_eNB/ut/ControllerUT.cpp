@@ -23,7 +23,7 @@ TEST(ControllerTest, attach_ue)
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
-    Controller sut(ue_manager, sender);
+    Controller sut(*ue_manager, *sender);
     rrc::AttachReq message;
     
     message.set_id(10);
@@ -42,7 +42,7 @@ TEST(ControllerTest, attach_already_attached_ue)
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
-    Controller sut(ue_manager, sender);
+    Controller sut(*ue_manager, *sender);
     rrc::AttachReq message;
     
     message.set_id(10);
@@ -60,7 +60,7 @@ TEST(ControllerTest, detach_ue)
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
-    Controller sut(ue_manager, sender);
+    Controller sut(*ue_manager, *sender);
     rrc::DetachReq message;
     message.set_id(10);
     
@@ -88,7 +88,7 @@ TEST(TimerTest, is_timer_invoked)
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
-    ControllerTimerStub sut(ue_manager, sender);
+    ControllerTimerStub sut(*ue_manager, *sender);
     
     auto timer = new GT::StrictMock<MockTimer>();
     sut.set_timer(timer);

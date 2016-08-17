@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 #include <zmq.hpp>
 
 #include <MessageHandler.hpp>
@@ -20,7 +19,7 @@ class Listener : public IListener, public util::MessageHandler<util::Message>
 {
 
 public:
-    Listener(zmq::socket_t& socket, std::shared_ptr<ISender> sender, std::shared_ptr<IUeManager> ue_manager);
+    Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manager);
     
     Listener(const Listener&) = delete;
     Listener& operator=(const Listener&) = delete;

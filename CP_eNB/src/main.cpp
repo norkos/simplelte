@@ -15,7 +15,7 @@ int main ()
 
     auto sender = std::make_shared<Sender>(socket);
     auto ue_manager = std::make_shared<UeManager>();
-    Listener listener(socket, sender, ue_manager);
+    Listener listener(socket, *sender, *ue_manager);
     
     while (true) {
         listener.listen();
