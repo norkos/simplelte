@@ -3,12 +3,18 @@
 
 #include "ISender.hpp"
 #include "IUeManager.hpp"
+#include "Timer.hpp"
 #include "UeContext.hpp"
 
 namespace lte
 {
 namespace enb
 {
+
+Controller::Controller(std::shared_ptr<IUeManager> ue_manager, std::shared_ptr<ISender> sender):
+    ue_manager_(ue_manager), sender_(sender), timer_(std::make_unique<Timer>())
+{
+}
 
 void Controller::handle_attach_req(const rrc::AttachReq& attach_req)
 {
