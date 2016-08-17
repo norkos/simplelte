@@ -21,6 +21,21 @@ void Controller::handle_timer_ind(const internal::TimerInd& timer_ind)
     timer_->update();
 }
 
+void Controller::handle_detach_req(const rrc::DetachReq& detach_req)
+{
+    const auto id = detach_req.id();
+    Message<rrc::DetachResp> response;
+    response->set_id(id);
+    
+    if(ue_manager_.remove_ue(id)){
+        response->set_status(rrc::DetachResp::OK);
+    }else{
+        response->set_status(rrc::DetachResp::NOK);
+    }
+   
+    sender_.send(response);
+}
+
 void Controller::handle_attach_req(const rrc::AttachReq& attach_req)
 {
     const auto id = attach_req.id();
@@ -40,19 +55,6 @@ void Controller::handle_attach_req(const rrc::AttachReq& attach_req)
     sender_.send(response);
 }
 
-void Controller::handle_detach_req(const rrc::DetachReq& detach_req)
-{
-    const auto id = detach_req.id();
-    Message<rrc::DetachResp> response;
-    response->set_id(id);
-    
-    if(ue_manager_.remove_ue(id)){
-        response->set_status(rrc::DetachResp::OK);
-    }else{
-        response->set_status(rrc::DetachResp::NOK);
-    }
-   
-    sender_.send(response);
-}
+
 }
 }

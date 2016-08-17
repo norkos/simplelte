@@ -26,7 +26,7 @@ public:
     
 private:
     template<typename Head, typename... Tail>
-    typename std::enable_if<(sizeof...(Tail)>0),std::unique_ptr<util::Message>>::type
+    typename std::enable_if_t<(sizeof...(Tail)>0),std::unique_ptr<util::Message>>
     deserializeImp(Wrapper& wrapper)
     {
         using Traits = MessageTraits<Head>;

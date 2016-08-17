@@ -1,6 +1,5 @@
 #pragma once
 #include <lte.pb.h>
-#include <rrc.pb.h>
 
 namespace lte
 {
@@ -12,8 +11,19 @@ struct MessageTraits {
 };
 
 template<>
+struct MessageTraits<internal::TimerInd>
+{
+    using parent = ASN1;
+    using type = internal::TimerInd;
+    static constexpr auto id = ASN1::kTimerInd;
+    static constexpr decltype (auto) from = &ASN1::release_timerind;  
+    static constexpr decltype (auto) to = &ASN1::set_allocated_timerind;
+};
+
+template<>
 struct MessageTraits<rrc::RRC>
 {
+    using parent = ASN1;
     using type = rrc::RRC;
     static constexpr auto id = ASN1::kRrc;
     static constexpr decltype (auto) from = &ASN1::release_rrc;  
