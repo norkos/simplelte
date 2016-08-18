@@ -23,7 +23,6 @@ void Timer::update()
 void Timer::subscribe(const util::ITimerWatcher& watcher, int time_out) 
 {
     subscribers_.push_back(&watcher);
-    
     std::thread([this,time_out]() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(time_out));
                 send();

@@ -7,9 +7,9 @@ namespace lte
 namespace enb
 {
 
-Listener::Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manager): 
+Listener::Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manager, util::ITimer& timer): 
             socket_(socket), 
-            controller_(std::make_unique<Controller>(ue_manager, sender))
+            controller_(std::make_unique<Controller>(ue_manager, sender, timer))
 {
     registerMessage(*controller_, &Controller::handle_attach_req);
     registerMessage(*controller_, &Controller::handle_detach_req);

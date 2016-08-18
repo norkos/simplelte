@@ -12,17 +12,17 @@ namespace lte
 namespace enb
 {
 
-Controller::Controller(IUeManager& ue_manager, ISender& sender):
+Controller::Controller(IUeManager& ue_manager, ISender& sender, util::ITimer& timer):
     ue_manager_(ue_manager), sender_(sender), 
-    timer_(std::make_unique<Timer>()), sib_service_(std::make_unique<SIBService>(sender))
+    timer_(timer), sib_service_(std::make_unique<SIBService>(sender))
 {
     int time_in_ms = 1000;
-    timer_->subscribe(*sib_service_, time_in_ms);
+    timer_.subscribe(*sib_service_, time_in_ms);
 }
 
 void Controller::handle_timer_ind(const internal::TimerInd& timer_ind)
 {
-    timer_->update();
+    timer_.update();
 }
 
 void Controller::handle_detach_req(const rrc::DetachReq& detach_req)
@@ -61,7 +61,7 @@ void Controller::handle_attach_req(const rrc::AttachReq& attach_req)
 
 Controller::~Controller()
 {
-    timer_->unsubscribe(*sib_service_);
+    timer_.unsubscribe(*sib_service_);
 }
 
 }

@@ -23,7 +23,8 @@ TEST(ControllerTest, attach_ue)
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
-    Controller sut(*ue_manager, *sender);
+    auto timer = std::make_shared<GT::NiceMock<MockTimer>>();
+    Controller sut(*ue_manager, *sender, *timer );
     rrc::AttachReq message;
     
     message.set_id(10);
@@ -42,7 +43,8 @@ TEST(ControllerTest, attach_already_attached_ue)
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
-    Controller sut(*ue_manager, *sender);
+    auto timer = std::make_shared<GT::NiceMock<MockTimer>>();
+    Controller sut(*ue_manager, *sender, *timer );
     rrc::AttachReq message;
     
     message.set_id(10);
@@ -60,7 +62,8 @@ TEST(ControllerTest, detach_ue)
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
-    Controller sut(*ue_manager, *sender);
+    auto timer = std::make_shared<GT::NiceMock<MockTimer>>();
+    Controller sut(*ue_manager, *sender, *timer );
     rrc::DetachReq message;
     message.set_id(10);
     
@@ -72,26 +75,14 @@ TEST(ControllerTest, detach_ue)
     sut.handle_detach_req(message);
 }
 
-class ControllerTimerStub : public Controller
-{
-public:
-    using Controller::Controller;
-    void set_timer(util::ITimer* timer)
-    {        
-        timer_.reset(timer);
-    }
-};
-
 TEST(TimerTest, is_timer_invoked)
 {
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
-    ControllerTimerStub sut(*ue_manager, *sender);
-    
-    auto timer = new GT::NiceMock<MockTimer>();
-    sut.set_timer(timer);
-    
+    auto timer = std::make_shared<GT::NiceMock<MockTimer>>();
+    Controller sut(*ue_manager, *sender, *timer );
+       
     //  expect
     EXPECT_CALL(*timer, update());
     

@@ -7,7 +7,6 @@ namespace lte
 namespace enb
 {
 
-//template<class TimePolicy>
 class Timer : public util::ITimer 
 {
 using Subscribers = std::vector<const util::ITimerWatcher*>;
@@ -21,7 +20,6 @@ public:
 private:
     void send();
     Subscribers subscribers_;
-//    TimePolicy timer_;
 };
 }
 }

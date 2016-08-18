@@ -4,6 +4,7 @@
 #include <MessageHandler.hpp>
 #include "IListener.hpp"
 
+#include <ITimer.hpp>
 #include <MessageBase.hpp>
 
 namespace lte
@@ -19,7 +20,7 @@ class Listener : public IListener, public util::MessageHandler<util::Message>
 {
 
 public:
-    Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manager);
+    Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manager, util::ITimer& timer);
     
     Listener(const Listener&) = delete;
     Listener& operator=(const Listener&) = delete;

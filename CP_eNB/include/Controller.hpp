@@ -18,7 +18,7 @@ class SIBService;
 class Controller{
     
 public:
-    Controller(IUeManager& ue_manager, ISender& sender);
+    Controller(IUeManager& ue_manager, ISender& sender, util::ITimer& timer);
     ~Controller();
     
     void handle_attach_req(const rrc::AttachReq& attach_req);
@@ -28,7 +28,7 @@ public:
 protected:
     IUeManager& ue_manager_;
     ISender& sender_;
-    std::unique_ptr<util::ITimer> timer_;
+    util::ITimer& timer_;
     std::unique_ptr<SIBService> sib_service_;
 };
 
