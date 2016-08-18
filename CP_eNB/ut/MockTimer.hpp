@@ -16,8 +16,8 @@ class MockTimer : public util::ITimer
 public:
     
     MOCK_METHOD0(update, void());
-    MOCK_METHOD2(subscribe, void(util::ITimerWatcher&,int));
-    MOCK_METHOD1(unsubscribe, void(util::ITimerWatcher&));
+    MOCK_METHOD2(subscribe, void(const util::ITimerWatcher&,int));
+    MOCK_METHOD1(unsubscribe, void(const util::ITimerWatcher&));
     
 };
 }

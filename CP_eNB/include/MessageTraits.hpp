@@ -67,7 +67,14 @@ struct MessageTraits<rrc::DetachResp>
     static constexpr decltype (auto) to = &rrc::RRC::set_allocated_detach_resp;
 };
 
-
+template<>
+struct MessageTraits<rrc::SIB>
+{
+    using parent = rrc::RRC;
+    using type = rrc::SIB;
+    static constexpr auto id = rrc::RRC::kSib;
+    static constexpr decltype (auto) to = &rrc::RRC::set_allocated_sib;
+};
 
 }
 }

@@ -16,10 +16,9 @@ namespace ut
 
 TEST(SIBService, notify_ues)
 {
-    //  given
-    auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
+    //  given     
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
-    SIBService sut(*ue_manager, *sender);
+    SIBService sut(*sender);
     
     //  expected
     EXPECT_CALL(*sender, send_proxy(GT::_));

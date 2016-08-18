@@ -28,10 +28,10 @@ public:
     
 private:   
     
-    template <typename Condition, typename T = void>
+    template <typename Condition>
     using EnableIf = typename std::enable_if_t<Condition::value, std::unique_ptr<util::Message>>;
 
-    template <typename Condition, typename T = void>
+    template <typename Condition>
     using DisableIf = typename std::enable_if_t<!Condition::value, std::unique_ptr<util::Message>>;
 
     template<class Parent>
@@ -54,11 +54,8 @@ private:
         (*response.*WrapperTraits::to)(wrapper.release());
         return response;
     }
-    
-
-  
-
-  Payload payload_;
+   
+   Payload payload_;
 };
 
 

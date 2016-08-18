@@ -5,6 +5,7 @@
 #include "IUeManager.hpp"
 #include "Timer.hpp"
 #include "UeContext.hpp"
+#include "SIBService.hpp"
 
 namespace lte
 {
@@ -12,8 +13,11 @@ namespace enb
 {
 
 Controller::Controller(IUeManager& ue_manager, ISender& sender):
-    ue_manager_(ue_manager), sender_(sender), timer_(std::make_unique<Timer>())
+    ue_manager_(ue_manager), sender_(sender), 
+    timer_(std::make_unique<Timer>()), sib_service_(std::make_unique<SIBService>(sender))
 {
+    int time_in_ms = 1000;
+    timer_->subscribe(*sib_service_, time_in_ms);
 }
 
 void Controller::handle_timer_ind(const internal::TimerInd& timer_ind)
@@ -55,6 +59,10 @@ void Controller::handle_attach_req(const rrc::AttachReq& attach_req)
     sender_.send(response);
 }
 
+Controller::~Controller()
+{
+    timer_->unsubscribe(*sib_service_);
+}
 
 }
 }

@@ -8,6 +8,7 @@ target_link_libraries(testenb
     ${PROTOBUF_LIBRARY}
     libgmock
     libgtest
+    communication #remove
 )
 
 install(TARGETS testenb DESTINATION bin)

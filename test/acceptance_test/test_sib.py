@@ -31,7 +31,7 @@ def test_sib(socket_for_single_message):
         message = socket.recv()
         resp = messages_pb2.ASN1()
         resp.ParseFromString(message)
-        assert 1986 == resp.rrc.sib.sib1.cell_identity
+        assert 1986 == resp.rrc.sib.cell_identity
         
     else:
         raise IOError("Timeout processing auth request")

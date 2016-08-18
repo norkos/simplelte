@@ -1,5 +1,6 @@
 #pragma once
 #include <ITimer.hpp>
+#include <vector>
 
 namespace lte
 {
@@ -9,13 +10,17 @@ namespace enb
 //template<class TimePolicy>
 class Timer : public util::ITimer 
 {
+using Subscribers = std::vector<const util::ITimerWatcher*>;
+
 public:
     virtual ~Timer() = default;
-    void subscribe(util::ITimerWatcher& watcher, int time_out) override;
-    void unsubscribe(util::ITimerWatcher& watcher) override;
+    void subscribe(const util::ITimerWatcher& watcher, int time_out) override;
+    void unsubscribe(const util::ITimerWatcher& watcher) override;
     void update() override;
 
 private:
+    void send();
+    Subscribers subscribers_;
 //    TimePolicy timer_;
 };
 }

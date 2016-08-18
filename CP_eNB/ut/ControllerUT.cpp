@@ -72,7 +72,6 @@ TEST(ControllerTest, detach_ue)
     sut.handle_detach_req(message);
 }
 
-
 class ControllerTimerStub : public Controller
 {
 public:
@@ -90,7 +89,7 @@ TEST(TimerTest, is_timer_invoked)
     auto sender = std::make_shared<GT::StrictMock<MockSender>>();
     ControllerTimerStub sut(*ue_manager, *sender);
     
-    auto timer = new GT::StrictMock<MockTimer>();
+    auto timer = new GT::NiceMock<MockTimer>();
     sut.set_timer(timer);
     
     //  expect
