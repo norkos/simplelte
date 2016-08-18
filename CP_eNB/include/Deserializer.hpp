@@ -7,8 +7,10 @@ namespace lte
 namespace enb
 {
 
+namespace
+{
 template<typename T, typename... Msgs>    
-class Deserializer{
+class DeserializerImp{
 
 using WrapperTrait = MessageTraits<T>;
 using Wrapper = typename MessageTraits<T>::type;
@@ -52,5 +54,8 @@ private:
         return std::unique_ptr<typename Traits::type>(std::move((wrapper.*Traits::from)()));
     }
 };
+}
+
+using Deserializer = DeserializerImp<rrc::RRC, rrc::AttachReq, rrc::DetachReq>;
 }
 }

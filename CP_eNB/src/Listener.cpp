@@ -19,14 +19,9 @@ Listener::Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manage
 void Listener::listen()
 {
   zmq::message_t request;
-
-  //  Wait for next request from client
   socket_.recv (&request);
   
-  using Wrapper = rrc::RRC;
-  using MyDeserializer = Deserializer<Wrapper, rrc::AttachReq, rrc::DetachReq>;
-  MyDeserializer deserializer;
-  
+  Deserializer deserializer;
   auto message = std::move(deserializer.deserialize(request));
   handleMessage(*message);
 }
