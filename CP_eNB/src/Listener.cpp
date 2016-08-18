@@ -1,15 +1,16 @@
 #include "Listener.hpp"
 #include "Deserializer.hpp"
 #include "Controller.hpp"
+#include "Timer.hpp"
 
 namespace lte
 {
 namespace enb
 {
 
-Listener::Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manager, util::ITimer& timer): 
-            socket_(socket), 
-            controller_(std::make_unique<Controller>(ue_manager, sender, timer))
+Listener::Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manager): 
+            socket_(socket), timer_(std::make_unique<Timer>()), 
+            controller_(std::make_unique<Controller>(ue_manager, sender, *timer_))
 {
     registerMessage(*controller_, &Controller::handle_attach_req);
     registerMessage(*controller_, &Controller::handle_detach_req);

@@ -4,7 +4,6 @@
 #include "Listener.hpp"
 #include "Sender.hpp"
 #include "UeManager.hpp"
-#include "Timer.hpp"
 
 int main () 
 {
@@ -16,8 +15,7 @@ int main ()
 
     auto sender = std::make_unique<Sender>(socket);
     auto ue_manager = std::make_unique<UeManager>();
-    auto timer = std::make_unique<Timer>();
-    Listener listener(socket, *sender, *ue_manager, *timer);
+    Listener listener(socket, *sender, *ue_manager);
     
     while (true) {
         listener.listen();

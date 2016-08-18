@@ -20,7 +20,7 @@ class Listener : public IListener, public util::MessageHandler<util::Message>
 {
 
 public:
-    Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manager, util::ITimer& timer);
+    Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manager);
     
     Listener(const Listener&) = delete;
     Listener& operator=(const Listener&) = delete;
@@ -30,6 +30,7 @@ public:
   
 private:
     zmq::socket_t& socket_;
+    std::unique_ptr<util::ITimer> timer_;
     std::unique_ptr<Controller> controller_;
 };
 
