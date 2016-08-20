@@ -1,5 +1,6 @@
 from subprocess import Popen
 import pytest
+import sys
 import zmq
 import messages_pb2
 from ue_functions import attach_ue, detach_ue

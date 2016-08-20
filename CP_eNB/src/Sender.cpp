@@ -1,4 +1,5 @@
 #include <memory>
+#include <Logger.hpp>
 #include <MessageBase.hpp>
 #include "Sender.hpp"
 
@@ -22,6 +23,7 @@ decltype(auto) serialize(const util::Message& msg)
 }
 void Sender::send(std::unique_ptr<util::Message> msg)
 {
+  dbg() << "Sending: " << *msg;
   auto response = serialize(*msg);
   socket_.send (*response);
 }

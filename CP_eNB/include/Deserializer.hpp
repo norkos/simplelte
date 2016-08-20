@@ -12,21 +12,40 @@ namespace
 template<typename T, typename... Msgs>    
 class DeserializerImp{
 
-using WrapperTrait = MessageTraits<T>;
-using Wrapper = typename MessageTraits<T>::type;
+using UniqueMessage = std::unique_ptr<util::Message>;
 
 public:
-    std::unique_ptr<util::Message> deserialize(zmq::message_t& message)
+    UniqueMessage deserialize(zmq::message_t& message)
     {
         ASN1 result;
         std::string msg_str(static_cast<char*>(message.data()),message.size());
         result.ParseFromString(msg_str);
         
-        auto wrapper = std::unique_ptr<Wrapper>((result.*WrapperTrait::from)());
-        return deserializeImp<Msgs...>(*wrapper);
+        return extract_proper_message(result);
     }
     
 private:
+    
+    using WrapperTrait = MessageTraits<T>;
+    using Wrapper = typename MessageTraits<T>::type;
+
+    UniqueMessage extract_proper_message(ASN1& message)
+    {
+        if(message.msg_case() == ASN1::kRrc)
+        {
+            auto wrapper = std::unique_ptr<Wrapper>((message.*WrapperTrait::from)());
+            return deserializeImp<Msgs...>(*wrapper);
+        }
+        
+        if(message.msg_case() == ASN1::kTimerInd)
+        {
+            return std::unique_ptr<typename MessageTraits<internal::TimerInd>::type>
+                ((message.*MessageTraits<internal::TimerInd>::from)());
+        }
+       
+        return nullptr;
+    }
+    
     template<typename Head, typename... Tail>
     typename std::enable_if_t<(sizeof...(Tail)>0),std::unique_ptr<util::Message>>
     deserializeImp(Wrapper& wrapper)
