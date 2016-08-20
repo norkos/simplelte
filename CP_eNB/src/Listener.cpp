@@ -1,3 +1,4 @@
+#include <Logger.hpp>
 #include "Listener.hpp"
 #include "Deserializer.hpp"
 #include "Controller.hpp"
@@ -14,6 +15,7 @@ Listener::Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manage
 {
     registerMessage(*controller_, &Controller::handle_attach_req);
     registerMessage(*controller_, &Controller::handle_detach_req);
+    registerMessage(*controller_, &Controller::handle_timer_ind);
 }
 
 void Listener::listen()
@@ -23,6 +25,12 @@ void Listener::listen()
   
   Deserializer deserializer;
   auto message = std::move(deserializer.deserialize(request));
+  if(message == nullptr)
+  {
+      err() << "Received message which was not decoded properly";
+      return;
+  }
+  dbg() << "Received: " << *message;
   handleMessage(*message);
 }
 
