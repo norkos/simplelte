@@ -20,7 +20,7 @@ public:
     {
     }
     
-    auto& get_stream()
+    std::ostream& get_stream()
     {
         if(severity_ == Severity::dbg) return std::cout;
         else return std::cerr;
@@ -46,11 +46,11 @@ private:
 
 }
 
-inline auto dbg()
+inline util::Logger dbg()
 {
     return std::move(util::Logger(util::Severity::dbg));
 }
-inline auto err()
+inline util::Logger err()
 {
     return std::move(util::Logger(util::Severity::error));
 }
