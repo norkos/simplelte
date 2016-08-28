@@ -18,7 +18,7 @@ _sym_db = _symbol_database.Default()
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='rrc.proto',
   package='lte.rrc',
-  serialized_pb=_b('\n\trrc.proto\x12\x07lte.rrc\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"\x1c\n\x03SIB\x12\x15\n\rcell_identity\x18\x01 \x02(\x05\"\x1d\n\x04SIB1\x12\x15\n\rcell_identity\x18\x01 \x02(\x05\"_\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12*\n\x06status\x18\x02 \x02(\x0e\x32\x1a.lte.rrc.AttachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\x17\n\tDetachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"_\n\nDetachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12*\n\x06status\x18\x02 \x02(\x0e\x32\x1a.lte.rrc.DetachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\xd5\x01\n\x03RRC\x12(\n\nattach_req\x18\x01 \x01(\x0b\x32\x12.lte.rrc.AttachReqH\x00\x12*\n\x0b\x61ttach_resp\x18\x02 \x01(\x0b\x32\x13.lte.rrc.AttachRespH\x00\x12(\n\ndetach_req\x18\x03 \x01(\x0b\x32\x12.lte.rrc.DetachReqH\x00\x12*\n\x0b\x64\x65tach_resp\x18\x04 \x01(\x0b\x32\x13.lte.rrc.DetachRespH\x00\x12\x1b\n\x03sib\x18\x05 \x01(\x0b\x32\x0c.lte.rrc.SIBH\x00\x42\x05\n\x03msg')
+  serialized_pb=_b('\n\trrc.proto\x12\x07lte.rrc\"\x17\n\tAttachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"\x1c\n\x03SIB\x12\x15\n\rcell_identity\x18\x01 \x02(\x05\"\x1d\n\x04SIB1\x12\x15\n\rcell_identity\x18\x01 \x02(\x05\"_\n\nAttachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12*\n\x06status\x18\x02 \x02(\x0e\x32\x1a.lte.rrc.AttachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\x17\n\tDetachReq\x12\n\n\x02id\x18\x01 \x02(\x05\"_\n\nDetachResp\x12\n\n\x02id\x18\x01 \x02(\x05\x12*\n\x06status\x18\x02 \x02(\x0e\x32\x1a.lte.rrc.DetachResp.Status\"\x19\n\x06Status\x12\x06\n\x02OK\x10\x00\x12\x07\n\x03NOK\x10\x01\"\xc4\x01\n\x03RRC\x12&\n\nattach_req\x18\x01 \x01(\x0b\x32\x12.lte.rrc.AttachReq\x12(\n\x0b\x61ttach_resp\x18\x02 \x01(\x0b\x32\x13.lte.rrc.AttachResp\x12&\n\ndetach_req\x18\x03 \x01(\x0b\x32\x12.lte.rrc.DetachReq\x12(\n\x0b\x64\x65tach_resp\x18\x04 \x01(\x0b\x32\x13.lte.rrc.DetachResp\x12\x19\n\x03sib\x18\x05 \x01(\x0b\x32\x0c.lte.rrc.SIB')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -317,12 +317,9 @@ _RRC = _descriptor.Descriptor(
   is_extendable=False,
   extension_ranges=[],
   oneofs=[
-    _descriptor.OneofDescriptor(
-      name='msg', full_name='lte.rrc.RRC.msg',
-      index=0, containing_type=None, fields=[]),
   ],
   serialized_start=328,
-  serialized_end=541,
+  serialized_end=524,
 )
 
 _ATTACHRESP.fields_by_name['status'].enum_type = _ATTACHRESP_STATUS
@@ -334,21 +331,6 @@ _RRC.fields_by_name['attach_resp'].message_type = _ATTACHRESP
 _RRC.fields_by_name['detach_req'].message_type = _DETACHREQ
 _RRC.fields_by_name['detach_resp'].message_type = _DETACHRESP
 _RRC.fields_by_name['sib'].message_type = _SIB
-_RRC.oneofs_by_name['msg'].fields.append(
-  _RRC.fields_by_name['attach_req'])
-_RRC.fields_by_name['attach_req'].containing_oneof = _RRC.oneofs_by_name['msg']
-_RRC.oneofs_by_name['msg'].fields.append(
-  _RRC.fields_by_name['attach_resp'])
-_RRC.fields_by_name['attach_resp'].containing_oneof = _RRC.oneofs_by_name['msg']
-_RRC.oneofs_by_name['msg'].fields.append(
-  _RRC.fields_by_name['detach_req'])
-_RRC.fields_by_name['detach_req'].containing_oneof = _RRC.oneofs_by_name['msg']
-_RRC.oneofs_by_name['msg'].fields.append(
-  _RRC.fields_by_name['detach_resp'])
-_RRC.fields_by_name['detach_resp'].containing_oneof = _RRC.oneofs_by_name['msg']
-_RRC.oneofs_by_name['msg'].fields.append(
-  _RRC.fields_by_name['sib'])
-_RRC.fields_by_name['sib'].containing_oneof = _RRC.oneofs_by_name['msg']
 DESCRIPTOR.message_types_by_name['AttachReq'] = _ATTACHREQ
 DESCRIPTOR.message_types_by_name['SIB'] = _SIB
 DESCRIPTOR.message_types_by_name['SIB1'] = _SIB1

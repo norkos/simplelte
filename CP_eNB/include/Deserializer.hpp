@@ -31,16 +31,10 @@ private:
 
     UniqueMessage extract_proper_message(ASN1& message)
     {
-        if(message.msg_case() == ASN1::kRrc)
+        if(message.has_rrc())
         {
             auto wrapper = std::unique_ptr<Wrapper>((message.*WrapperTrait::from)());
             return deserializeImp<Msgs...>(*wrapper);
-        }
-        
-        if(message.msg_case() == ASN1::kTimerInd)
-        {
-            return std::unique_ptr<typename MessageTraits<internal::TimerInd>::type>
-                ((message.*MessageTraits<internal::TimerInd>::from)());
         }
        
         return nullptr;
@@ -64,7 +58,7 @@ private:
     template<typename Traits>
     bool is_type(Wrapper& wrapper)
     {
-        return wrapper.msg_case() == Traits::id;
+        return (wrapper.*Traits::exists)();
     }
     
     template<typename Traits>

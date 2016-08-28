@@ -38,11 +38,9 @@ message DetachResp {
 }
 
 message RRC{
-    oneof msg {
-        AttachReq  attach_req  = 1;
-        AttachResp attach_resp = 2;
-        DetachReq  detach_req  = 3;
-        DetachResp detach_resp = 4;
-        SIB        sib = 5;
-        }
+    optional AttachReq  attach_req  = 1;
+    optional AttachResp attach_resp = 2;
+    optional DetachReq  detach_req  = 3;
+    optional DetachResp detach_resp = 4;
+    optional SIB        sib = 5;
 }
