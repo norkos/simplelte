@@ -20,6 +20,6 @@ before_install:
 
 script:
   - mkdir build
-  - cd build
-  - cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && make
+  - cd build && cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && make
+  - cd ..
   - toolset/run_test.sh
