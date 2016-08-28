@@ -48,10 +48,10 @@ private:
 
 inline util::Logger dbg()
 {
-    return std::move(util::Logger(util::Severity::dbg));
+    return util::Logger(util::Severity::dbg);
 }
 inline util::Logger err()
 {
-    return std::move(util::Logger(util::Severity::error));
+    return util::Logger(util::Severity::error);
 }
 }
