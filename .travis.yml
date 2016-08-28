@@ -17,7 +17,8 @@ matrix:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y libopencv-dev valgrind
-  - sudo apt-get install -y python-protobuf protobuf-compiler libprotobuf-dev  
+  - sudo apt-get remove -y python-protobuf
+  - sudo apt-get install -y python-protobuf protobuf-compiler libprotobuf-dev
   - sudo apt-get install -y python-pytest
   - sudo apt-get install -y libzmq-dev libzmq3 python-zmq
 
