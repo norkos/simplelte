@@ -1,3 +1,4 @@
+#include <Logger.hpp>
 #include "Timer.hpp"
 #include "ITimerWatcher.hpp"
 
@@ -42,6 +43,7 @@ void Timer::send()
     
     Message<internal::TimerInd> timer;
     sender.send(timer);
+    socket.close();
 }
 
 }
