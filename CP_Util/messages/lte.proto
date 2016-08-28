@@ -5,10 +5,8 @@ import "rrc.proto";
 import "internal.proto";
 
 message ASN1{
-    oneof msg {
-        s1ap.S1AP    s1ap       = 1;
-        x2ap.X2AP    x2ap       = 2;
-        rrc.RRC      rrc        = 3;
-        internal.TimerInd timerInd   = 4;
-        }
+    optional s1ap.S1AP    s1ap       = 1;
+    optional x2ap.X2AP    x2ap       = 2;
+    optional rrc.RRC      rrc        = 3;
+    optional internal.TimerInd timerInd   = 4;
 }

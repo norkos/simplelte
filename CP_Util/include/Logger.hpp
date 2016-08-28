@@ -46,12 +46,12 @@ private:
 
 }
 
-inline util::Logger dbg()
+inline util::Logger dbg() // RVO
 {
-    return std::move(util::Logger(util::Severity::dbg));
+    return util::Logger(util::Severity::dbg);
 }
-inline util::Logger err()
+inline util::Logger err() // RVOs
 {
-    return std::move(util::Logger(util::Severity::error));
+    return util::Logger(util::Severity::error);
 }
 }

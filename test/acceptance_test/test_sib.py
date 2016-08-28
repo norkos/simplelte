@@ -7,7 +7,7 @@ from ue_functions import attach_ue, detach_ue
 
 @pytest.fixture(scope='function')
 def socket_for_single_message(request):
-    proc = Popen('build/CP_eNB/src/hwserver2')
+    proc = Popen('build/CP_eNB/src/hwserver')
     context = zmq.Context()
     socket = context.socket(zmq.PAIR)
     socket.connect("tcp://localhost:5555")
@@ -28,7 +28,7 @@ def test_sib(socket_for_single_message):
     poller = zmq.Poller()
     poller.register(socket, zmq.POLLIN)
     
-    if poller.poll(5000):
+    if poller.poll(1000):
         message = socket.recv()
         resp = messages_pb2.ASN1()
         resp.ParseFromString(message)

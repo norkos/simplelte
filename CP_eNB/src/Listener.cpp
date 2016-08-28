@@ -1,8 +1,8 @@
-#include <Logger.hpp>
 #include "Listener.hpp"
 #include "Deserializer.hpp"
 #include "Controller.hpp"
 #include "Timer.hpp"
+#include <Logger.hpp>
 
 namespace lte
 {
