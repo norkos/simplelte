@@ -23,13 +23,13 @@ Controller::Controller(IUeManager& ue_manager, ISender& sender, util::ITimer& ti
 
 void Controller::handle_timer_ind(const internal::TimerInd& timer_ind)
 {
-    dbg() << "Processing: TimerInd";
+    //dbg() << "Processing: TimerInd";
     timer_.update();
 }
 
 void Controller::handle_detach_req(const rrc::DetachReq& detach_req)
 {
-    dbg() << "Processing: DetachReq";
+    //dbg() << "Processing: DetachReq";
     const auto id = detach_req.id();
     Message<rrc::DetachResp> response;
     response->set_id(id);
@@ -45,7 +45,7 @@ void Controller::handle_detach_req(const rrc::DetachReq& detach_req)
 
 void Controller::handle_attach_req(const rrc::AttachReq& attach_req)
 {
-    dbg() << "Processing: AttachReq";
+    //dbg() << "Processing: AttachReq";
     const auto id = attach_req.id();
     Message<rrc::AttachResp> response;
     response->set_id(id);

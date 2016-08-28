@@ -27,10 +27,10 @@ void Listener::listen()
   auto message = std::move(deserializer.deserialize(request));
   if(message == nullptr)
   {
-      err() << "Received message which was not decoded properly";
+      //err() << "Received message which was not decoded properly";
       return;
   }
-  dbg() << "Received: " << *message;
+  //dbg() << "Received: " << *message;
   handleMessage(*message);
 }
 
