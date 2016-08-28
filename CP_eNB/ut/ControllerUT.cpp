@@ -36,6 +36,7 @@ TEST(ControllerTest, attach_ue)
     
     //  when
     sut.handle_attach_req(message);
+    google::protobuf::ShutdownProtobufLibrary();
 }
 
 TEST(ControllerTest, attach_already_attached_ue)
@@ -55,6 +56,7 @@ TEST(ControllerTest, attach_already_attached_ue)
     
     //  when
     sut.handle_attach_req(message);
+    google::protobuf::ShutdownProtobufLibrary();
 }
 
 TEST(ControllerTest, detach_ue)
@@ -73,6 +75,7 @@ TEST(ControllerTest, detach_ue)
     
     //  when
     sut.handle_detach_req(message);
+    google::protobuf::ShutdownProtobufLibrary();
 }
 
 TEST(TimerTest, is_timer_invoked)
@@ -88,6 +91,7 @@ TEST(TimerTest, is_timer_invoked)
     
     //  when
     sut.handle_timer_ind(internal::TimerInd());
+    google::protobuf::ShutdownProtobufLibrary();
 }
 
 }
