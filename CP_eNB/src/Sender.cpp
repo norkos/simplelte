@@ -1,7 +1,7 @@
 #include <memory>
-#include <Logger.hpp>
 #include <MessageBase.hpp>
 #include "Sender.hpp"
+#include <Logger.hpp>
 
 namespace lte 
 {
