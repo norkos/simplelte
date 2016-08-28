@@ -15,12 +15,15 @@ matrix:
       env: COMPILER=g++-5
 
 before_install:
+  - sudo add-apt-repository -y ppa:5-james-t/protobuf-ppa
   - sudo apt-get update -qq
+  - sudo pip install protobuf
   - sudo apt-get install -y libopencv-dev valgrind
-  - sudo apt-get remove -y python-protobuf
-  - sudo apt-get install -y python-protobuf protobuf-compiler libprotobuf-dev
+  - sudo apt-get install -y protobuf-compiler libprotobuf-dev
   - sudo apt-get install -y python-pytest
   - sudo apt-get install -y libzmq-dev libzmq3 python-zmq
+
+
 
 script:
   - mkdir build
