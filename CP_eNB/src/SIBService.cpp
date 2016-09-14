@@ -1,6 +1,6 @@
 #include "SIBService.hpp"
 #include "Message.hpp"
-#include "ISender.hpp"
+#include "IServer.hpp"
 #include <rrc.pb.h>
 
 namespace lte

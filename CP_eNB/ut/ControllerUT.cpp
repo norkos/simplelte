@@ -4,7 +4,7 @@
 #include "Controller.hpp"
 #include "MockUeManager.hpp"
 #include "MockTimer.hpp"
-#include "MockSender.hpp"
+#include "MockServer.hpp"
 #include "UeContext.hpp"
 
 namespace GT = ::testing;
@@ -22,7 +22,7 @@ TEST(ControllerTest, attach_ue)
 {
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
-    auto sender = std::make_shared<GT::StrictMock<MockSender>>();
+    auto sender = std::make_shared<GT::StrictMock<MockServer>>();
     auto timer = std::make_shared<GT::NiceMock<MockTimer>>();
     Controller sut(*ue_manager, *sender, *timer );
     rrc::AttachReq message;
@@ -43,7 +43,7 @@ TEST(ControllerTest, attach_already_attached_ue)
 {
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
-    auto sender = std::make_shared<GT::StrictMock<MockSender>>();
+    auto sender = std::make_shared<GT::StrictMock<MockServer>>();
     auto timer = std::make_shared<GT::NiceMock<MockTimer>>();
     Controller sut(*ue_manager, *sender, *timer );
     rrc::AttachReq message;
@@ -63,7 +63,7 @@ TEST(ControllerTest, detach_ue)
 {
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
-    auto sender = std::make_shared<GT::StrictMock<MockSender>>();
+    auto sender = std::make_shared<GT::StrictMock<MockServer>>();
     auto timer = std::make_shared<GT::NiceMock<MockTimer>>();
     Controller sut(*ue_manager, *sender, *timer );
     rrc::DetachReq message;
@@ -82,7 +82,7 @@ TEST(TimerTest, is_timer_invoked)
 {
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
-    auto sender = std::make_shared<GT::StrictMock<MockSender>>();
+    auto sender = std::make_shared<GT::StrictMock<MockServer>>();
     auto timer = std::make_shared<GT::NiceMock<MockTimer>>();
     Controller sut(*ue_manager, *sender, *timer );
        

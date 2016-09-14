@@ -2,8 +2,6 @@
 #include <zmq.hpp>
 
 #include <MessageHandler.hpp>
-#include "IListener.hpp"
-
 #include <ITimer.hpp>
 #include <MessageBase.hpp>
 
@@ -14,22 +12,23 @@ namespace enb
 
 class ISender;
 class IUeManager;
+class IServer;
 class Controller;
 
-class Listener : public IListener, public util::MessageHandler<util::Message>
+class Listener : public util::MessageHandler<util::Message>
 {
 
 public:
-    Listener(zmq::socket_t& socket, ISender& sender, IUeManager& ue_manager);
+    Listener(IUeManager& ue_manager, IServer& server);
     
     Listener(const Listener&) = delete;
     Listener& operator=(const Listener&) = delete;
     
     virtual ~Listener();
-    void listen() override;
+    void listen();
   
 private:
-    zmq::socket_t& socket_;
+    IServer& server_;
     std::unique_ptr<util::ITimer> timer_;
     std::unique_ptr<Controller> controller_;
 };

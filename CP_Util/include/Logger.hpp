@@ -45,7 +45,7 @@ private:
 };
 
 }
-/**
+
 inline util::Logger dbg() // RVO
 {
     return util::Logger(util::Severity::dbg);
@@ -54,5 +54,5 @@ inline util::Logger err() // RVOs
 {
     return util::Logger(util::Severity::error);
 }
-*/
+
 }

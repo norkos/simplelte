@@ -5,9 +5,12 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <Logger.hpp>
+#include <lte.pb.h>
 #include <future>
+#include <google/protobuf/io/coded_stream.h>
+#include <google/protobuf/io/zero_copy_stream_impl.h>
 
-void dostuff(int); /* function prototype */
+void dostuff(int, int); /* function prototype */
 
 int create_socket()
 {
@@ -28,7 +31,7 @@ int bind(int socket_fd, sockaddr_in& server_address)
               sizeof(server_address));
 }
 
-void f(int port_number, int socket_capacity = 5, int buffer_size = 256)
+void run(int port_number, int socket_capacity, int buffer_size)
 {
     int socket_fd = create_socket();
     if (socket_fd < 0)
@@ -61,28 +64,39 @@ void f(int port_number, int socket_capacity = 5, int buffer_size = 256)
             lte::err() << "ERROR on accept with errNo: " << newsockfd;
         }
         
-        std::thread([newsockfd]() {
-           dostuff(newsockfd);     
+        std::thread([newsockfd, buffer_size]() {
+           dostuff(newsockfd, buffer_size);     
         }).detach();
     }
     
     close(socket_fd);
 }
 
-void dostuff (int sock)
+void dostuff (int sock, int buffer_size)
 {
-   int n;
-   char buffer[256];
+    lte::ASN1 msg;
+    int received;
+    char buffer[buffer_size];
       
-   bzero(buffer,256);
-   n = read(sock,buffer,255);
-   if (n < 0) lte::err() << "ERROR reading from socket";
-   printf("Here is the message: %s\n",buffer);
-   close(sock);
+    bzero(buffer,buffer_size);
+    received = read(sock,buffer,255);
+    if (received < 0) lte::err() << "ERROR reading from socket";
+    
+    google::protobuf::io::ArrayInputStream arrayIn(buffer, received);
+    google::protobuf::io::CodedInputStream codedIn(&arrayIn);
+    google::protobuf::uint32 size;
+    codedIn.ReadVarint32(&size);
+    google::protobuf::io::CodedInputStream::Limit msgLimit = codedIn.PushLimit(size);
+    msg.ParseFromCodedStream(&codedIn);
+    codedIn.PopLimit(msgLimit);
+    close(sock);
 }
 
 int main()
 {
-    f(5555);
+    int port_number = 5555;
+    int socket_capacity = 5;
+    int buffer_size = 255;
+    run(port_number, socket_capacity, buffer_size);
     return 0;
 }

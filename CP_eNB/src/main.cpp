@@ -1,22 +1,18 @@
-#include <zmq.hpp>
 #include <memory>
 
 #include "Listener.hpp"
-#include "Sender.hpp"
 #include "UeManager.hpp"
+#include "ZMQCommunicationFactory.hpp"
+#include <Logger.hpp>
 
 int main () 
 {
     using namespace lte::enb;
-    
-    zmq::context_t context (1);
-    zmq::socket_t socket (context, ZMQ_PAIR);
-    socket.bind ("tcp://*:5555");
 
-    auto sender = std::make_unique<Sender>(socket);
+    lte::dbg() << "Startup";
     auto ue_manager = std::make_unique<UeManager>();
-    Listener listener(socket, *sender, *ue_manager);
-    
+    auto server = ZMQCommunicationFactory().createServer();
+    Listener listener(*ue_manager, *server);
     while (true) {
         listener.listen();
     }

@@ -2,7 +2,7 @@
 
 #include <gmock/gmock.h>
 #include <Message.hpp>
-#include "ISender.hpp"
+#include "IServer.hpp"
 
 namespace lte
 {
@@ -11,12 +11,16 @@ namespace enb
 namespace ut
 {
 
-class MockSender : public ISender
+class MockServer : public IServer
 {
 public:
     
-    virtual void send(std::unique_ptr<lte::util::Message> ptr) {
+    void send(std::unique_ptr<lte::util::Message> ptr) {
         send_proxy(ptr.get());
+    }
+    
+    std::unique_ptr<lte::util::Message> receive() {
+        return nullptr;
     }
     
     MOCK_METHOD1(send_proxy, void(lte::util::Message*));

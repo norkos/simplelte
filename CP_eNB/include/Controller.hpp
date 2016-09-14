@@ -12,13 +12,13 @@ namespace enb
 {
 
 class IUeManager;
-class ISender;
+class Server;
 class SIBService;
 
 class Controller{
     
 public:
-    Controller(IUeManager& ue_manager, ISender& sender, util::ITimer& timer);
+    Controller(IUeManager& ue_manager, IServer& sender, util::ITimer& timer);
     ~Controller();
     
     void handle_attach_req(const rrc::AttachReq& attach_req);
@@ -27,7 +27,7 @@ public:
 
 protected:
     IUeManager& ue_manager_;
-    ISender& sender_;
+    IServer& sender_;
     util::ITimer& timer_;
     std::unique_ptr<SIBService> sib_service_;
 };

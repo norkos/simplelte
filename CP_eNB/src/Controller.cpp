@@ -2,34 +2,36 @@
 #include "Controller.hpp"
 #include "Message.hpp"
 
-#include "ISender.hpp"
 #include "IUeManager.hpp"
 #include "Timer.hpp"
 #include "UeContext.hpp"
 #include "SIBService.hpp"
+
+#include "IServer.hpp"
 
 namespace lte
 {
 namespace enb
 {
 
-Controller::Controller(IUeManager& ue_manager, ISender& sender, util::ITimer& timer):
+Controller::Controller(IUeManager& ue_manager, IServer& sender, util::ITimer& timer):
     ue_manager_(ue_manager), sender_(sender), 
     timer_(timer), sib_service_(std::make_unique<SIBService>(sender))
 {
+    dbg() << "Controller";
     int time_in_ms = 1000;
     timer_.subscribe(*sib_service_, time_in_ms);
 }
 
 void Controller::handle_timer_ind(const internal::TimerInd& timer_ind)
 {
-    //dbg() << "Processing: TimerInd";
+    dbg() << "Processing: TimerInd";
     timer_.update();
 }
 
 void Controller::handle_detach_req(const rrc::DetachReq& detach_req)
 {
-    //dbg() << "Processing: DetachReq";
+    dbg() << "Processing: DetachReq";
     const auto id = detach_req.id();
     Message<rrc::DetachResp> response;
     response->set_id(id);
@@ -45,7 +47,7 @@ void Controller::handle_detach_req(const rrc::DetachReq& detach_req)
 
 void Controller::handle_attach_req(const rrc::AttachReq& attach_req)
 {
-    //dbg() << "Processing: AttachReq";
+    dbg() << "Processing: AttachReq";
     const auto id = attach_req.id();
     Message<rrc::AttachResp> response;
     response->set_id(id);

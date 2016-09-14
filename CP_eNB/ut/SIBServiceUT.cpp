@@ -2,7 +2,7 @@
 #include <memory>
 
 #include "SIBService.hpp"
-#include "MockSender.hpp"
+#include "MockServer.hpp"
 #include "MockUeManager.hpp"
 
 namespace GT = ::testing;
@@ -17,7 +17,7 @@ namespace ut
 TEST(SIBService, notify_ues)
 {
     //  given     
-    auto sender = std::make_shared<GT::StrictMock<MockSender>>();
+    auto sender = std::make_shared<GT::StrictMock<MockServer>>();
     SIBService sut(*sender);
     
     //  expected
