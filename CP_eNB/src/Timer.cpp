@@ -1,15 +1,22 @@
-#include <Logger.hpp>
+#include <chrono>
+#include <future>
+#include <zmq.hpp>
 #include "Timer.hpp"
 #include "ITimerWatcher.hpp"
 
 #include "Message.hpp"
-#include <chrono>
-#include <future>
+#include "IClient.hpp"
+
+#include <Logger.hpp>
 
 namespace lte
 {
 namespace enb
 {
+
+Timer::Timer(std::unique_ptr<IClient> client) : client_(std::move(client)) 
+{
+}
 
 void Timer::update()
 {
@@ -22,13 +29,11 @@ void Timer::update()
 
 void Timer::subscribe(const util::ITimerWatcher& watcher, int time_out) 
 {
-    /**
     subscribers_.push_back(&watcher);
     std::thread([this,time_out]() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(time_out));
                 send();
             }).detach();
-            */
 }
 
 void Timer::unsubscribe(const util::ITimerWatcher& watcher)
@@ -37,16 +42,6 @@ void Timer::unsubscribe(const util::ITimerWatcher& watcher)
 
 void Timer::send()
 {
-    /**
-    zmq::context_t context (1);
-    zmq::socket_t socket (context, ZMQ_PUSH);
-    socket.connect ("tcp://localhost:5555");
-    Sender sender(socket);
-    
-    Message<internal::TimerInd> timer;
-    sender.send(timer);
-    socket.close();
-    */
 }
 
 }

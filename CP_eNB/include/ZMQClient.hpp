@@ -1,22 +1,22 @@
 #pragma once
 #include <zmq.hpp>
-#include "IServer.hpp"
+#include "IClient.hpp"
 
 namespace lte
 {
 namespace enb
 {
 
-class ZMQServer : public IServer
+class ZMQClient : public IClient
 {
 public:
-    ZMQServer();
+    ZMQClient();
     
-    ZMQServer(ZMQServer&& server) = delete;
-    ZMQServer(const ZMQServer&) = delete;
-    ZMQServer& operator=(const ZMQServer&) = delete;
+    ZMQClient(ZMQClient&& server) = delete;
+    ZMQClient(const ZMQClient&) = delete;
+    ZMQClient& operator=(const ZMQClient&) = delete;
     
-    virtual ~ZMQServer();
+    virtual ~ZMQClient();
     void send(std::unique_ptr<util::Message>) override;
     std::unique_ptr<util::Message> receive() override;
     

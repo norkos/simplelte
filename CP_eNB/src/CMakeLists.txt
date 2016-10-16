@@ -1,8 +1,8 @@
-add_library (eNB SHARED Controller.cpp UeManager.cpp Timer.cpp SIBService.cpp)
+add_library (eNB SHARED Controller.cpp UeManager.cpp Timer.cpp)
 target_link_libraries (eNB messages utils) 
 # remove zmq
 
-add_library (server SHARED ZMQCommunicationFactory.cpp ZMQServer.cpp)
+add_library (server SHARED ZMQCommunicationFactory.cpp ZMQServer.cpp ZMQClient.cpp)
 target_link_libraries (server messages zmq)
 
 add_library (communication SHARED Listener.cpp)

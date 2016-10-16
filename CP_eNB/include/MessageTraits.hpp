@@ -66,15 +66,5 @@ struct MessageTraits<rrc::SIB>
     static constexpr decltype (auto) to = &rrc::RRC::set_allocated_sib;
 };
 
-template<>
-struct MessageTraits<internal::TimerInd>
-{
-    using parent = ASN1;
-    using type = internal::TimerInd;
-    static constexpr decltype (auto) exists = &ASN1::has_timerind;
-    static constexpr decltype (auto) from = &ASN1::release_timerind;  
-    static constexpr decltype (auto) to = &ASN1::set_allocated_timerind;
-};
-
 }
 }

@@ -14,12 +14,13 @@ class ISender;
 class IUeManager;
 class IServer;
 class Controller;
+class ICommunicationFactory;
 
 class Listener : public util::MessageHandler<util::Message>
 {
 
 public:
-    Listener(IUeManager& ue_manager, IServer& server);
+    Listener(IUeManager& ue_manager, ICommunicationFactory& communication);
     
     Listener(const Listener&) = delete;
     Listener& operator=(const Listener&) = delete;
@@ -28,7 +29,7 @@ public:
     void listen();
   
 private:
-    IServer& server_;
+    std::unique_ptr<IServer> server_;
     std::unique_ptr<util::ITimer> timer_;
     std::unique_ptr<Controller> controller_;
 };

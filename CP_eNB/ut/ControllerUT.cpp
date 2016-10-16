@@ -23,8 +23,7 @@ TEST(ControllerTest, attach_ue)
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockServer>>();
-    auto timer = std::make_shared<GT::NiceMock<MockTimer>>();
-    Controller sut(*ue_manager, *sender, *timer );
+    Controller sut(*ue_manager, *sender );
     rrc::AttachReq message;
     
     message.set_id(10);
@@ -44,8 +43,7 @@ TEST(ControllerTest, attach_already_attached_ue)
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockServer>>();
-    auto timer = std::make_shared<GT::NiceMock<MockTimer>>();
-    Controller sut(*ue_manager, *sender, *timer );
+    Controller sut(*ue_manager, *sender);
     rrc::AttachReq message;
     
     message.set_id(10);
@@ -64,8 +62,7 @@ TEST(ControllerTest, detach_ue)
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockServer>>();
-    auto timer = std::make_shared<GT::NiceMock<MockTimer>>();
-    Controller sut(*ue_manager, *sender, *timer );
+    Controller sut(*ue_manager, *sender);
     rrc::DetachReq message;
     message.set_id(10);
     
@@ -75,22 +72,6 @@ TEST(ControllerTest, detach_ue)
     
     //  when
     sut.handle_detach_req(message);
-    google::protobuf::ShutdownProtobufLibrary();
-}
-
-TEST(TimerTest, is_timer_invoked)
-{
-    //  given
-    auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
-    auto sender = std::make_shared<GT::StrictMock<MockServer>>();
-    auto timer = std::make_shared<GT::NiceMock<MockTimer>>();
-    Controller sut(*ue_manager, *sender, *timer );
-       
-    //  expect
-    EXPECT_CALL(*timer, update());
-    
-    //  when
-    sut.handle_timer_ind(internal::TimerInd());
     google::protobuf::ShutdownProtobufLibrary();
 }
 

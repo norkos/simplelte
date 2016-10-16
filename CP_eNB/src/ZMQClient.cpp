@@ -1,4 +1,4 @@
-#include "ZMQServer.hpp"
+#include "ZMQClient.hpp"
 #include "Deserializer.hpp"
 #include <Logger.hpp>
 
@@ -7,13 +7,13 @@ namespace lte
 namespace enb
 {
 
-ZMQServer::ZMQServer():
+ZMQClient::ZMQClient() :
     context_(zmq::context_t(1)), socket_(zmq::socket_t(context_, ZMQ_PAIR))
 {
-    socket_.bind ("tcp://*:5555");
+    //socket_.connect ("tcp://*:5555");
 }
 
-void ZMQServer::send(std::unique_ptr<util::Message> msg)
+void ZMQClient::send(std::unique_ptr<util::Message> msg)
 {
     std::string message;
     msg->SerializeToString(&message);
@@ -25,7 +25,7 @@ void ZMQServer::send(std::unique_ptr<util::Message> msg)
     socket_.send (result);
 }
 
-std::unique_ptr< util::Message > ZMQServer::receive()
+std::unique_ptr< util::Message > ZMQClient::receive()
 {
     dbg() << "Waiting for the message";
     zmq::message_t request;
@@ -35,10 +35,10 @@ std::unique_ptr< util::Message > ZMQServer::receive()
     return deserializer.deserialize(request);
 }
 
-ZMQServer::~ZMQServer()
+ZMQClient::~ZMQClient()
 {
     socket_.close();
 }
-    
+
 }
 }
