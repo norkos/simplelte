@@ -29,10 +29,10 @@ public:
 private:   
     
     template <typename Condition>
-    using EnableIf = typename std::enable_if_t<Condition::value, std::unique_ptr<util::Message>>;
+    using EnableIf = typename std::enable_if_t<Condition::value, std::unique_ptr<ASN1>>;
 
     template <typename Condition>
-    using DisableIf = typename std::enable_if_t<!Condition::value, std::unique_ptr<util::Message>>;
+    using DisableIf = typename std::enable_if_t<!Condition::value, std::unique_ptr<ASN1>>;
 
     template<class Parent>
     EnableIf<std::is_same<Parent, ASN1>>

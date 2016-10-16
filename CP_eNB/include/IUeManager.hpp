@@ -7,7 +7,7 @@ namespace lte
 namespace enb
 {
     
-class UeContext;
+struct UeContext;
 
 class IUeManager
 {

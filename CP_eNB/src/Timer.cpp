@@ -12,7 +12,7 @@
 namespace lte
 {
 namespace enb
-{
+{               
 
 Timer::Timer(std::unique_ptr<IClient> client) : client_(std::move(client)) 
 {
@@ -23,7 +23,7 @@ void Timer::update()
     for(auto& i : subscribers_)
     {
         auto& no_const = const_cast<util::ITimerWatcher&>(*i);
-        no_const.notify();
+        no_const.notify();      
     }
 }
 

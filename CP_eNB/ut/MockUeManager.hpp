@@ -8,7 +8,7 @@ namespace lte
 namespace enb
 {
 
-class UeContext;
+struct UeContext;
 
 namespace ut
 {
