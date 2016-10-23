@@ -4,15 +4,6 @@ message AttachReq {
     required int32 id = 1;
 }
 
-message SIB {
-    //required SIB1 sib1 = 1;
-    required int32 cell_identity = 1;
-}
-
-message SIB1 {
-    required int32 cell_identity = 1;
-}
-
 message AttachResp {
     required int32 id = 1;
     
@@ -42,5 +33,4 @@ message RRC{
     optional AttachResp attach_resp = 2;
     optional DetachReq  detach_req  = 3;
     optional DetachResp detach_resp = 4;
-    optional SIB        sib = 5;
 }

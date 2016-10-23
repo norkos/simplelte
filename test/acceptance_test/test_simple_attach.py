@@ -1,58 +1,101 @@
 from subprocess import Popen
 import pytest
 import zmq
-import messages_pb2
+import lte_pb2
+import rrc_pb2
+import s1ap_pb2
 from ue_functions import attach_ue, detach_ue
 
 @pytest.fixture(scope='function')
-def socket_for_single_message(request):
+def create_eNB(request):
     proc = Popen('build/CP_eNB/src/hwserver')
-    context = zmq.Context()
-    socket = context.socket(zmq.PAIR)
-    socket.connect("tcp://localhost:5555")
     
     def tear_down():
-        socket.close()
         proc.kill()
     
     request.addfinalizer(tear_down)
-    return socket
-    
-def test_attach_request(socket_for_single_message):
-    socket = socket_for_single_message
-    
-    id = 1
-    resp = attach_ue(id, socket)
-    
-    assert id == resp.id
-    assert messages_pb2.AttachResp.OK == resp.status
-    
-def test_attach_already_attached(socket_for_single_message):
-    socket = socket_for_single_message
-    
-    id = 1
-    attach_ue(id, socket)
-    resp = attach_ue(id, socket)
-    
-    assert id == resp.id
-    assert messages_pb2.AttachResp.NOK == resp.status
 
-def test_detach_request_for_not_attached(socket_for_single_message):
-    socket = socket_for_single_message
+@pytest.fixture(scope='function')
+def create_mme(request):
+    context = zmq.Context()
+    mme = context.socket(zmq.DEALER)
+    mme.connect("tcp://localhost:5555")
     
+    def tear_down():
+        mme.close()
+    
+    request.addfinalizer(tear_down)
+    return mme
+
+@pytest.fixture(scope='function')
+def create_ue(request):
+    context = zmq.Context()
+    ue = context.socket(zmq.DEALER)
+    ue.bind("tcp://*:5556")
+    
+    def tear_down():
+        ue.close()
+    
+    request.addfinalizer(tear_down)
+    return ue
+
+def test_attach_request(create_eNB, create_mme, create_ue):
+    mme = create_mme
+    ue = create_ue
+    
+    ue_port = 5556
     id = 1
-    resp = detach_ue(id, socket)
     
-    assert id == resp.id
-    assert messages_pb2.DetachResp.NOK == resp.status 
+    mme_req = lte_pb2.ASN1()
+    mme_req.s1ap.attach_req.id = id 
+    mme_req.s1ap.attach_req.port = ue_port
+    mme.send(mme_req.SerializeToString())
     
-def test_detach_request_for_attached(socket_for_single_message):
-    socket = socket_for_single_message
+    message = ue.recv()
+    ue_req_ = lte_pb2.ASN1()
+    ue_req_.ParseFromString(message)
+    assert id == ue_req_.rrc.attach_req.id
+     
+    ue_resp = lte_pb2.ASN1()
+    ue_resp.rrc.attach_resp.id = id
+    ue_resp.rrc.attach_resp.status = rrc_pb2.AttachResp.OK
+    ue.send(ue_resp.SerializeToString())
     
+    message = mme.recv()
+    mme_resp_ = lte_pb2.ASN1()
+    mme_resp_.ParseFromString(message)
+    mme_resp = mme_resp_.s1ap.attach_resp
+    
+    assert id == mme_resp.id
+    assert s1ap_pb2.AttachResp.OK == mme_resp.status
+    
+def test_attach_request_nok(create_eNB, create_mme, create_ue):
+    mme = create_mme
+    ue = create_ue
+    
+    ue_port = 5556
     id = 1
-    attach_ue(id, socket)
-    resp = detach_ue(id, socket)
     
-    assert id == resp.id
-    assert messages_pb2.DetachResp.OK == resp.status
+    mme_req = lte_pb2.ASN1()
+    mme_req.s1ap.attach_req.id = id 
+    mme_req.s1ap.attach_req.port = ue_port
+    mme.send(mme_req.SerializeToString())
+    
+    message = ue.recv()
+    ue_req_ = lte_pb2.ASN1()
+    ue_req_.ParseFromString(message)
+    assert id == ue_req_.rrc.attach_req.id
+     
+    ue_resp = lte_pb2.ASN1()
+    ue_resp.rrc.attach_resp.id = id
+    ue_resp.rrc.attach_resp.status = rrc_pb2.AttachResp.NOK
+    ue.send(ue_resp.SerializeToString())
+    
+    message = mme.recv()
+    mme_resp_ = lte_pb2.ASN1()
+    mme_resp_.ParseFromString(message)
+    mme_resp = mme_resp_.s1ap.attach_resp
+    
+    assert id == mme_resp.id
+    assert s1ap_pb2.AttachResp.NOK == mme_resp.status
     

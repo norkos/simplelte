@@ -16,7 +16,7 @@ class Message
 
 using Traits = MessageTraits<Payload>;
 using WrapperTraits = MessageTraits<typename Traits::parent>;
-    
+
 public:
     Payload* operator->() { return &payload_; }
     const Payload* operator->() const { return &payload_; }

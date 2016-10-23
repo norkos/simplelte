@@ -4,9 +4,10 @@
 
 #include "IUeManager.hpp"
 #include "UeContext.hpp"
-#include "SIBService.hpp"
 
 #include "IServer.hpp"
+
+#include "ZMQClient.hpp"
 
 namespace lte
 {
@@ -16,6 +17,32 @@ namespace enb
 Controller::Controller(IUeManager& ue_manager, IServer& sender):
     ue_manager_(ue_manager), sender_(sender)
 {
+}
+
+bool Controller::connect_ue(int ue_id, int port)
+{
+    ZMQClient client;
+    
+    Message<rrc::AttachReq> request;
+    request->set_id(ue_id);
+    client.send(request);
+    
+    auto message = client.receive();
+    const rrc::AttachResp* resp =  static_cast<rrc::AttachResp*>(message.get());
+    return resp->status() == rrc::AttachResp_Status_OK;
+}
+
+void Controller::handle_s1_attach_req(const s1ap::AttachReq& attach_req)
+{
+    dbg() << "Processing S1::AttachReq";
+    
+    bool connected_ue = connect_ue(attach_req.id(), attach_req.port());
+    
+    Message<s1ap::AttachResp> response;;
+    response->set_id(attach_req.id());
+    response->set_status(connected_ue ? s1ap::AttachResp::OK : s1ap::AttachResp::NOK);
+    
+    sender_.send(response);
 }
 
 void Controller::handle_detach_req(const rrc::DetachReq& detach_req)

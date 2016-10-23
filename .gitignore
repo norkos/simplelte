@@ -1,4 +1,5 @@
 # Compiled Object files
+*.log
 build
 *.kdev*
 
@@ -8,4 +9,4 @@ build
 *.bak
 
 #generated
-test/acceptance_test/messages_pb2.py
+test/acceptance_test/*_pb2.py

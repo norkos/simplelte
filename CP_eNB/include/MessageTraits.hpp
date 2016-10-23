@@ -21,12 +21,33 @@ struct MessageTraits<rrc::RRC>
 };
 
 template<>
+struct MessageTraits<s1ap::S1AP>
+{
+    using parent = ASN1;
+    using type = s1ap::S1AP;
+    static constexpr decltype (auto) exists = &ASN1::has_s1ap;
+    static constexpr decltype (auto) from = &ASN1::release_s1ap;  
+    static constexpr decltype (auto) to = &ASN1::set_allocated_s1ap;
+};
+
+template<>
 struct MessageTraits<rrc::AttachReq>
 {
     using parent = rrc::RRC;
     using type = rrc::AttachReq;
     static constexpr decltype (auto) exists = &rrc::RRC::has_attach_req;
-    static constexpr decltype (auto) from = &rrc::RRC::release_attach_req;  
+    static constexpr decltype (auto) to = &rrc::RRC::set_allocated_attach_req;
+    static constexpr decltype (auto) from = &rrc::RRC::release_attach_req;
+};
+
+template<>
+struct MessageTraits<s1ap::AttachReq>
+{
+    using parent = s1ap::S1AP;
+    using type = s1ap::AttachReq;
+    static constexpr decltype (auto) exists = &s1ap::S1AP::has_attach_req;
+    static constexpr decltype (auto) to = &s1ap::S1AP::set_allocated_attach_req;
+    static constexpr decltype (auto) from = &s1ap::S1AP::release_attach_req;  
 };
 
 template<>
@@ -36,6 +57,17 @@ struct MessageTraits<rrc::AttachResp>
     using type = rrc::AttachResp;
     static constexpr decltype (auto) exists = &rrc::RRC::has_attach_resp;
     static constexpr decltype (auto) to = &rrc::RRC::set_allocated_attach_resp;
+    static constexpr decltype (auto) from = &rrc::RRC::release_attach_resp;
+};
+
+template<>
+struct MessageTraits<s1ap::AttachResp>
+{
+    using parent = s1ap::S1AP;
+    using type = s1ap::AttachResp;
+    static constexpr decltype (auto) exists = &s1ap::S1AP::has_attach_resp;
+    static constexpr decltype (auto) to = &s1ap::S1AP::set_allocated_attach_resp;
+    static constexpr decltype (auto) from = &s1ap::S1AP::release_attach_resp;
 };
 
 template<>
@@ -55,15 +87,6 @@ struct MessageTraits<rrc::DetachResp>
     using type = rrc::DetachResp;
     static constexpr decltype (auto) exists = &rrc::RRC::has_detach_resp;
     static constexpr decltype (auto) to = &rrc::RRC::set_allocated_detach_resp;
-};
-
-template<>
-struct MessageTraits<rrc::SIB>
-{
-    using parent = rrc::RRC;
-    using type = rrc::SIB;
-    static constexpr decltype (auto) exists = &rrc::RRC::has_sib;
-    static constexpr decltype (auto) to = &rrc::RRC::set_allocated_sib;
 };
 
 }

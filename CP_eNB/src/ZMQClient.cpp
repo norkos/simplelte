@@ -8,9 +8,9 @@ namespace enb
 {
 
 ZMQClient::ZMQClient() :
-    context_(zmq::context_t(1)), socket_(zmq::socket_t(context_, ZMQ_PAIR))
+    context_(zmq::context_t(1)), socket_(zmq::socket_t(context_, ZMQ_DEALER))
 {
-    //socket_.connect ("tcp://*:5555");
+    socket_.connect ("tcp://*:5556");
 }
 
 void ZMQClient::send(std::unique_ptr<util::Message> msg)
@@ -21,18 +21,19 @@ void ZMQClient::send(std::unique_ptr<util::Message> msg)
     zmq::message_t result(message.size());
     memcpy((void*)result.data(),  message.c_str(), message.size());
         
-    dbg() << "Sending: " << *msg;
+    dbg() << "Sending: \n" << *msg;
     socket_.send (result);
 }
 
 std::unique_ptr< util::Message > ZMQClient::receive()
 {
-    dbg() << "Waiting for the message";
     zmq::message_t request;
     socket_.recv (&request);
-    
     Deserializer deserializer;
-    return deserializer.deserialize(request);
+    auto result = deserializer.deserialize(request);
+    
+    dbg() << "Received: \n" << *result;
+    return result;
 }
 
 ZMQClient::~ZMQClient()
