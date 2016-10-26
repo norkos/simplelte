@@ -1,0 +1,6 @@
+package lte.nas;
+
+message NAS {
+    required int32  id = 1;
+    required string data = 2;
+}
