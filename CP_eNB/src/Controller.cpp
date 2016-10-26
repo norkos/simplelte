@@ -61,6 +61,11 @@ void Controller::handle_detach_req(const rrc::DetachReq& detach_req)
     sender_.send(response);
 }
 
+void Controller::handle_dl_throughput(const nas::DownlinkThr& dl_througput)
+{
+    dbg() << "Processing: DownlinkThr";
+}
+
 void Controller::handle_attach_req(const rrc::AttachReq& attach_req)
 {
     dbg() << "Processing: AttachReq";

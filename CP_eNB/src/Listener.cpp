@@ -17,6 +17,7 @@ Listener::Listener(IUeManager& ue_manager, ICommunicationFactory& communication)
     registerMessage(*controller_, &Controller::handle_s1_attach_req);
     registerMessage(*controller_, &Controller::handle_attach_req);
     registerMessage(*controller_, &Controller::handle_detach_req);
+    registerMessage(*controller_, &Controller::handle_dl_throughput);
 }
 
 void Listener::listen()
