@@ -38,6 +38,11 @@ private:
              return s1ap_deserializer_.extract_proper_message(message);
         }
         
+        if(message.has_nas())
+        {
+            return nas_deserializer_.extract_proper_message(message);
+        }
+        
         return nullptr;
     }
     
@@ -87,6 +92,9 @@ private:
 
     TypedDeserializer<s1ap::S1AP, 
                       s1ap::AttachReq> s1ap_deserializer_;
+                      
+    TypedDeserializer<nas::NAS, 
+                      nas::DownlinkThr> nas_deserializer_;
 };
 }
 }

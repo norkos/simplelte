@@ -52,6 +52,12 @@ std::unique_ptr<ASN1> create_wrapped_message(Payload* msg, FunctionPtr<s1ap::S1A
     return create_wrapped_message(msg, payload_setter, &ASN1::set_allocated_s1ap);
 }
 
+template<typename Payload>
+std::unique_ptr<ASN1> create_wrapped_message(Payload* msg, FunctionPtr<nas::NAS, Payload> payload_setter)
+{
+    return create_wrapped_message(msg, payload_setter, &ASN1::set_allocated_nas);
+}
+
 TEST(DeserializerRRC, attach_resp)
 {
     Deserializer sut;
@@ -80,6 +86,25 @@ TEST(DeserializerS1AP, attach_req)
     payload->set_id(1);
     payload->set_port(1);
     auto wrapper = create_wrapped_message(payload, &s1ap::S1AP::set_allocated_attach_req);
+    auto message = create_message(*wrapper);
+  
+    //  when
+    auto result = sut.deserialize(*message);
+    
+    //  then
+    ASSERT_TRUE(result != nullptr);
+    ASSERT_TRUE(typeid(*result) == typeid(*payload));
+}
+
+TEST(DeserializerNAS, downlink_thr)
+{
+    Deserializer sut;
+    
+    //  given
+    nas::DownlinkThr* payload = new nas::DownlinkThr();
+    payload->set_id(1);
+    payload->set_data("dummy");
+    auto wrapper = create_wrapped_message(payload, &nas::NAS::set_allocated_downlink_thr);
     auto message = create_message(*wrapper);
   
     //  when

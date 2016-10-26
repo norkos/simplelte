@@ -31,6 +31,26 @@ struct MessageTraits<s1ap::S1AP>
 };
 
 template<>
+struct MessageTraits<nas::NAS>
+{
+    using parent = ASN1;
+    using type = nas::NAS;
+    static constexpr decltype (auto) exists = &ASN1::has_nas;
+    static constexpr decltype (auto) from = &ASN1::release_nas;  
+    static constexpr decltype (auto) to = &ASN1::set_allocated_nas;
+};
+
+template<>
+struct MessageTraits<nas::DownlinkThr>
+{
+    using parent = nas::NAS;
+    using type = nas::DownlinkThr;
+    static constexpr decltype (auto) exists = &nas::NAS::has_downlink_thr;
+    static constexpr decltype (auto) to = &nas::NAS::set_allocated_downlink_thr;
+    static constexpr decltype (auto) from = &nas::NAS::release_downlink_thr;
+};
+
+template<>
 struct MessageTraits<rrc::AttachReq>
 {
     using parent = rrc::RRC;

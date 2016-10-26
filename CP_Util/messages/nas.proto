@@ -1,6 +1,10 @@
 package lte.nas;
 
-message NAS {
+message DownlinkThr {
     required int32  id = 1;
     required string data = 2;
+}
+
+message NAS{
+    optional DownlinkThr downlink_thr  = 1;
 }

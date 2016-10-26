@@ -57,15 +57,15 @@ def test_attach_request(create_eNB, create_mme, create_ue):
     attach_ue(ue, mme, id, ue_port)
     
     nas_from_mme = lte_pb2.ASN1()
-    nas_from_mme.nas.id = id
-    nas_from_mme.nas.data = data
+    nas_from_mme.nas.downlink_thr.id = id
+    nas_from_mme.nas.downlink_thr.data = data
     mme.send(nas_from_mme.SerializeToString())
     
     to_ue = ue.recv()
     nas_to_ue = lte_pb2.ASN1()
     nas_to_ue.ParseFromString(to_ue)
     
-    assert data == nas_to_ue.nas.data
+    assert data == nas_to_ue.nas.downlink_thr.data
 
 def attach_ue(ue, mme, id, ue_port):    
     mme_req = lte_pb2.ASN1()
