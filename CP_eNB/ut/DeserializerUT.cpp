@@ -24,32 +24,33 @@ std::unique_ptr<zmq::message_t> create_message(ASN1& wrapper)
 }
 
 template<typename Wrapper, typename Payload>
-using RRCFunctionPtr = void(Wrapper::*)(Payload*);
+using FunctionPtr = void(Wrapper::*)(Payload*);
 
-template<typename Payload>
-std::unique_ptr<ASN1> create_wrapped_rrc_message(Payload* msg, RRCFunctionPtr<rrc::RRC, Payload> setter)
+template<typename Wrapper, typename Payload>
+std::unique_ptr<ASN1> create_wrapped_message(Payload* msg, 
+                                             FunctionPtr<Wrapper, Payload> payload_setter, 
+                                             FunctionPtr<ASN1, Wrapper> wrapper_setter)
 {
-    auto rrc = new rrc::RRC();
-    (*rrc.*setter)(msg);
+    auto wrapper = new Wrapper();
+    (*wrapper.*payload_setter)(msg);
     
-    auto wrapper = std::make_unique<ASN1>();
-    wrapper->set_allocated_rrc(rrc);
+    auto result = std::make_unique<ASN1>();
+    (*result.*wrapper_setter)(wrapper);
     
-    return wrapper;
+    return result;
 }
 
 template<typename Payload>
-std::unique_ptr<ASN1> create_wrapped_s1ap_message(Payload* msg, RRCFunctionPtr<s1ap::S1AP, Payload> setter)
-{
-    auto s1ap = new s1ap::S1AP();
-    (*s1ap.*setter)(msg);
-    
-    auto wrapper = std::make_unique<ASN1>();
-    wrapper->set_allocated_s1ap(s1ap);
-    
-    return wrapper;
+std::unique_ptr<ASN1> create_wrapped_message(Payload* msg, FunctionPtr<rrc::RRC, Payload> payload_setter)
+{   
+    return create_wrapped_message(msg, payload_setter, &ASN1::set_allocated_rrc);
 }
 
+template<typename Payload>
+std::unique_ptr<ASN1> create_wrapped_message(Payload* msg, FunctionPtr<s1ap::S1AP, Payload> payload_setter)
+{
+    return create_wrapped_message(msg, payload_setter, &ASN1::set_allocated_s1ap);
+}
 
 TEST(DeserializerRRC, attach_resp)
 {
@@ -59,7 +60,7 @@ TEST(DeserializerRRC, attach_resp)
     rrc::AttachResp* payload = new rrc::AttachResp();
     payload->set_id(1);
     payload->set_status(rrc::AttachResp_Status_OK);
-    auto wrapper = create_wrapped_rrc_message(payload, &rrc::RRC::set_allocated_attach_resp);
+    auto wrapper = create_wrapped_message(payload, &rrc::RRC::set_allocated_attach_resp);
     auto message = create_message(*wrapper);
     
     //  when
@@ -78,7 +79,7 @@ TEST(DeserializerS1AP, attach_req)
     s1ap::AttachReq* payload = new s1ap::AttachReq();
     payload->set_id(1);
     payload->set_port(1);
-    auto wrapper = create_wrapped_s1ap_message(payload, &s1ap::S1AP::set_allocated_attach_req);
+    auto wrapper = create_wrapped_message(payload, &s1ap::S1AP::set_allocated_attach_req);
     auto message = create_message(*wrapper);
   
     //  when
