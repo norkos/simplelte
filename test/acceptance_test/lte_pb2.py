@@ -16,14 +16,15 @@ _sym_db = _symbol_database.Default()
 import s1ap_pb2
 import x2ap_pb2
 import rrc_pb2
+import nas_pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='lte.proto',
   package='lte',
-  serialized_pb=_b('\n\tlte.proto\x12\x03lte\x1a\ns1ap.proto\x1a\nx2ap.proto\x1a\trrc.proto\"]\n\x04\x41SN1\x12\x1c\n\x04s1ap\x18\x01 \x01(\x0b\x32\x0e.lte.s1ap.S1AP\x12\x1c\n\x04x2ap\x18\x02 \x01(\x0b\x32\x0e.lte.x2ap.X2AP\x12\x19\n\x03rrc\x18\x03 \x01(\x0b\x32\x0c.lte.rrc.RRC')
+  serialized_pb=_b('\n\tlte.proto\x12\x03lte\x1a\ns1ap.proto\x1a\nx2ap.proto\x1a\trrc.proto\x1a\tnas.proto\"x\n\x04\x41SN1\x12\x1c\n\x04s1ap\x18\x01 \x01(\x0b\x32\x0e.lte.s1ap.S1AP\x12\x1c\n\x04x2ap\x18\x02 \x01(\x0b\x32\x0e.lte.x2ap.X2AP\x12\x19\n\x03rrc\x18\x03 \x01(\x0b\x32\x0c.lte.rrc.RRC\x12\x19\n\x03nas\x18\x04 \x01(\x0b\x32\x0c.lte.nas.NAS')
   ,
-  dependencies=[s1ap_pb2.DESCRIPTOR,x2ap_pb2.DESCRIPTOR,rrc_pb2.DESCRIPTOR,])
+  dependencies=[s1ap_pb2.DESCRIPTOR,x2ap_pb2.DESCRIPTOR,rrc_pb2.DESCRIPTOR,nas_pb2.DESCRIPTOR,])
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
@@ -57,6 +58,13 @@ _ASN1 = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='nas', full_name='lte.ASN1.nas', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -68,13 +76,14 @@ _ASN1 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=53,
-  serialized_end=146,
+  serialized_start=64,
+  serialized_end=184,
 )
 
 _ASN1.fields_by_name['s1ap'].message_type = s1ap_pb2._S1AP
 _ASN1.fields_by_name['x2ap'].message_type = x2ap_pb2._X2AP
 _ASN1.fields_by_name['rrc'].message_type = rrc_pb2._RRC
+_ASN1.fields_by_name['nas'].message_type = nas_pb2._NAS
 DESCRIPTOR.message_types_by_name['ASN1'] = _ASN1
 
 ASN1 = _reflection.GeneratedProtocolMessageType('ASN1', (_message.Message,), dict(

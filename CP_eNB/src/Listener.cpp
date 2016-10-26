@@ -25,7 +25,7 @@ void Listener::listen()
   auto message = server_->receive();
   if(message == nullptr)
   {
-      err() << "Received message which was not decoded properly";
+      err() << "Skipping handling of not known message";
       return;
   }
   handleMessage(*message);

@@ -29,5 +29,4 @@ add_my_external(gmock gmock-1.7.0)
 SET(CMAKE_CXX_FLAGS "-g -Wall -std=c++1y -fPIC")
 
 add_subdirectory(CP_eNB)
-add_subdirectory(CP_UE) 
 add_subdirectory(CP_Util)

@@ -8,7 +8,7 @@ namespace enb
 {
 
 ZMQClient::ZMQClient() :
-    context_(zmq::context_t(1)), socket_(zmq::socket_t(context_, ZMQ_DEALER))
+    context_(zmq::context_t(1)), socket_(zmq::socket_t(context_, ZMQ_REQ))
 {
     socket_.connect ("tcp://*:5556");
 }
@@ -32,7 +32,13 @@ std::unique_ptr< util::Message > ZMQClient::receive()
     Deserializer deserializer;
     auto result = deserializer.deserialize(request);
     
-    dbg() << "Received: \n" << *result;
+    if(result != nullptr)
+    {
+        dbg() << "Received: \n" << *result;
+    }else{
+        err() << "Message was not decoded properly";
+    }
+    
     return result;
 }
 

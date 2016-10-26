@@ -6,6 +6,9 @@ import rrc_pb2
 import s1ap_pb2
 from ue_functions import attach_ue, detach_ue
 
+mme_port = 5555;
+ue_port  = 5556;
+
 @pytest.fixture(scope='function')
 def create_eNB(request):
     proc = Popen('build/CP_eNB/src/hwserver')
@@ -19,31 +22,36 @@ def create_eNB(request):
 def create_mme(request):
     context = zmq.Context()
     mme = context.socket(zmq.DEALER)
-    mme.connect("tcp://localhost:5555")
+    port = getattr(request.module, "mme_port")
+    mme.connect("tcp://localhost:%s" % port)
+    mme.RCVTIMEO = 1000
     
     def tear_down():
         mme.close()
     
     request.addfinalizer(tear_down)
+    
     return mme
 
 @pytest.fixture(scope='function')
 def create_ue(request):
     context = zmq.Context()
     ue = context.socket(zmq.DEALER)
-    ue.bind("tcp://*:5556")
+    port = getattr(request.module, "ue_port")
+    ue.bind("tcp://*:%s" % port)
+    ue.RCVTIMEO = 1000
     
     def tear_down():
         ue.close()
     
     request.addfinalizer(tear_down)
+    
     return ue
 
-def test_attach_request(create_eNB, create_mme, create_ue):
+def test_attach_request(create_eNB, create_mme, create_ue):  
     mme = create_mme
     ue = create_ue
     
-    ue_port = 5556
     id = 1
     
     mme_req = lte_pb2.ASN1()
@@ -68,12 +76,12 @@ def test_attach_request(create_eNB, create_mme, create_ue):
     
     assert id == mme_resp.id
     assert s1ap_pb2.AttachResp.OK == mme_resp.status
+
     
-def test_attach_request_nok(create_eNB, create_mme, create_ue):
+def test_attach_request_nok(create_eNB, create_mme, create_ue):  
     mme = create_mme
     ue = create_ue
     
-    ue_port = 5556
     id = 1
     
     mme_req = lte_pb2.ASN1()

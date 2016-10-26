@@ -2,6 +2,7 @@
 #include "MessageTraits.hpp"
 #include <memory>
 #include <lte.pb.h>
+#include <Logger.hpp>
 
 namespace lte
 {
@@ -33,7 +34,7 @@ private:
         {
              return s1ap_deserializer_.extract_proper_message(message);
         }
-       
+        
         return nullptr;
     }
     

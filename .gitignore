@@ -1,6 +1,7 @@
 # Compiled Object files
 *.log
 build
+core
 *.kdev*
 
 #python
