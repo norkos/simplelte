@@ -21,7 +21,7 @@ def create_eNB(request):
 @pytest.fixture(scope='function')
 def create_mme(request):
     context = zmq.Context()
-    mme = context.socket(zmq.REQ)
+    mme = context.socket(zmq.DEALER)
     port = getattr(request.module, "mme_port")
     mme.connect("tcp://localhost:%s" % port)
     mme.RCVTIMEO = 1000
@@ -36,7 +36,7 @@ def create_mme(request):
 @pytest.fixture(scope='function')
 def create_ue(request):
     context = zmq.Context()
-    ue = context.socket(zmq.REP)
+    ue = context.socket(zmq.DEALER)
     port = getattr(request.module, "ue_port")
     ue.bind("tcp://*:%s" % port)
     ue.RCVTIMEO = 1000
@@ -60,12 +60,12 @@ def test_attach_request(create_eNB, create_mme, create_ue):
     nas_from_mme.nas.id = id
     nas_from_mme.nas.data = data
     mme.send(nas_from_mme.SerializeToString())
-    print nas_from_mme
-    to_ue = ue.recv()
-#    nas_to_ue = lte_pb2.ASN1()
-#    nas_to_ue.ParseFromString(to_ue)
     
-#    assert data == nas_to_ue.nas.data
+    to_ue = ue.recv()
+    nas_to_ue = lte_pb2.ASN1()
+    nas_to_ue.ParseFromString(to_ue)
+    
+    assert data == nas_to_ue.nas.data
 
 def attach_ue(ue, mme, id, ue_port):    
     mme_req = lte_pb2.ASN1()

@@ -1,7 +1,10 @@
 #pragma once
-#include "MessageTraits.hpp"
+
 #include <memory>
+#include <zmq.hpp>
 #include <lte.pb.h>
+#include <MessageBase.hpp>
+#include "MessageTraits.hpp"
 #include <Logger.hpp>
 
 namespace lte

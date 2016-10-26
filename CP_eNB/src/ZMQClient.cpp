@@ -8,7 +8,7 @@ namespace enb
 {
 
 ZMQClient::ZMQClient() :
-    context_(zmq::context_t(1)), socket_(zmq::socket_t(context_, ZMQ_REQ))
+    context_(zmq::context_t(1)), socket_(zmq::socket_t(context_, ZMQ_DEALER))
 {
     socket_.connect ("tcp://*:5556");
 }
