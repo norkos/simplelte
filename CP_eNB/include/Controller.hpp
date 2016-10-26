@@ -13,6 +13,7 @@ namespace enb
 
 class IUeManager;
 class IServer;
+class IClient;
 
 class Controller{
     
@@ -31,6 +32,7 @@ private:
 protected:
     IUeManager& ue_manager_;
     IServer& sender_;
+    std::unique_ptr<IClient> client_;
 };
 
 }

@@ -48,7 +48,7 @@ def create_ue(request):
     
     return ue
 
-def test_attach_request(create_eNB, create_mme, create_ue):  
+def test_dl_throughput(create_eNB, create_mme, create_ue):  
     mme = create_mme
     ue = create_ue
     
