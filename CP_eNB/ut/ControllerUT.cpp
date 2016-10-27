@@ -36,8 +36,9 @@ TEST(ControllerTest, attach_ue)
     
     //  when
     sut.handle_attach_req(message);
-    google::protobuf::ShutdownProtobufLibrary();
     */
+    google::protobuf::ShutdownProtobufLibrary();
+    
 }
 
 }
