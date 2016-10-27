@@ -7,10 +7,11 @@ namespace lte
 namespace enb
 {
 
-ZMQClient::ZMQClient() :
+ZMQClient::ZMQClient(int port) :
     context_(zmq::context_t(1)), socket_(zmq::socket_t(context_, ZMQ_DEALER))
 {
-    socket_.connect ("tcp://*:5556");
+    const std::string connection = "tcp://localhost:" + std::to_string(port);
+    socket_.connect (connection.c_str());
 }
 
 void ZMQClient::send(std::unique_ptr<util::Message> msg)

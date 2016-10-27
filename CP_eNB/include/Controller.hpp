@@ -5,6 +5,7 @@
 #include <nas.pb.h>
 #include <memory>
 #include <ITimer.hpp>
+#include <unordered_map>
 
 namespace lte
 {
@@ -21,9 +22,8 @@ public:
     Controller(IUeManager& ue_manager, IServer& sender);
     ~Controller();
     
-    void handle_attach_req(const rrc::AttachReq& attach_req);
-    void handle_s1_attach_req(const s1ap::AttachReq& attach_req);
-    void handle_detach_req(const rrc::DetachReq& detach_req);
+    //  new
+    void handle_attach_req(const s1ap::AttachReq& attach_req);
     void handle_dl_throughput(const nas::DownlinkThr& dl_througput);
 
 private:
@@ -32,7 +32,7 @@ private:
 protected:
     IUeManager& ue_manager_;
     IServer& sender_;
-    std::unique_ptr<IClient> client_;
+    std::unordered_map<int, std::unique_ptr<IClient>> ues_;
 };
 
 }

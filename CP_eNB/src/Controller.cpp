@@ -21,14 +21,15 @@ Controller::Controller(IUeManager& ue_manager, IServer& sender):
 
 bool Controller::connect_ue(int ue_id, int port)
 {
-    client_ = std::make_unique<ZMQClient>();
+    auto ue = std::make_unique<ZMQClient>(port);
     
     Message<rrc::AttachReq> request;
     request->set_id(ue_id);
-    client_->send(request);
+    ue->send(request);
     
-    auto message = client_->receive();
+    auto message = ue->receive();
     const rrc::AttachResp* resp =  static_cast<rrc::AttachResp*>(message.get());
+    ues_[ue_id] = std::move(ue);
     return resp->status() == rrc::AttachResp_Status_OK;
 }
 
@@ -40,10 +41,10 @@ void Controller::handle_dl_throughput(const nas::DownlinkThr& dl_througput)
     nas->set_id(dl_througput.id());
     nas->set_data(dl_througput.data());
     
-    client_->send(nas);
+    ues_[dl_througput.id()]->send(nas);
 }
 
-void Controller::handle_s1_attach_req(const s1ap::AttachReq& attach_req)
+void Controller::handle_attach_req(const s1ap::AttachReq& attach_req)
 {
     dbg() << "Processing S1::AttachReq";
     
@@ -52,42 +53,6 @@ void Controller::handle_s1_attach_req(const s1ap::AttachReq& attach_req)
     Message<s1ap::AttachResp> response;
     response->set_id(attach_req.id());
     response->set_status(connected_ue ? s1ap::AttachResp::OK : s1ap::AttachResp::NOK);
-    
-    sender_.send(response);
-}
-
-void Controller::handle_detach_req(const rrc::DetachReq& detach_req)
-{
-    dbg() << "Processing: DetachReq";
-    const auto id = detach_req.id();
-    Message<rrc::DetachResp> response;
-    response->set_id(id);
-    
-    if(ue_manager_.remove_ue(id)){
-        response->set_status(rrc::DetachResp::OK);
-    }else{
-        response->set_status(rrc::DetachResp::NOK);
-    }
-   
-    sender_.send(response);
-}
-
-void Controller::handle_attach_req(const rrc::AttachReq& attach_req)
-{
-    dbg() << "Processing: AttachReq";
-    const auto id = attach_req.id();
-    Message<rrc::AttachResp> response;
-    response->set_id(id);
-    
-    bool is_ue_aleady_attach = ue_manager_.is_ue(id);
-    if(is_ue_aleady_attach){
-        response->set_status(rrc::AttachResp::NOK);
-    }
-    else{
-        auto context = UeContext{ id };
-        ue_manager_.add_ue(std::make_unique<UeContext>(context));
-        response->set_status(rrc::AttachResp::OK);
-    }
     
     sender_.send(response);
 }

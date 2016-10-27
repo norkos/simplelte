@@ -13,10 +13,8 @@ namespace enb
 Listener::Listener(IUeManager& ue_manager, ICommunicationFactory& communication): 
             server_(communication.createServer()),  
             controller_(std::make_unique<Controller>(ue_manager, *server_))
-{
-    registerMessage(*controller_, &Controller::handle_s1_attach_req);
+{    
     registerMessage(*controller_, &Controller::handle_attach_req);
-    registerMessage(*controller_, &Controller::handle_detach_req);
     registerMessage(*controller_, &Controller::handle_dl_throughput);
 }
 

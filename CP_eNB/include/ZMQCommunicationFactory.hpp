@@ -11,7 +11,7 @@ class ZMQCommunicationFactory: public ICommunicationFactory{
 public:
     virtual ~ZMQCommunicationFactory() = default;
     virtual std::unique_ptr<IServer> createServer();
-    virtual std::unique_ptr<IClient> createClient();
+    virtual std::unique_ptr<IClient> createClient(int port);
 
 };
 

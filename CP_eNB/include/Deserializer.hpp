@@ -88,7 +88,7 @@ private:
     };
     
     TypedDeserializer<rrc::RRC, 
-                      rrc::AttachResp, rrc::DetachReq> rrc_deserializer_; //todo memory improvement ;)
+                      rrc::AttachResp> rrc_deserializer_; //todo memory improvement ;)
 
     TypedDeserializer<s1ap::S1AP, 
                       s1ap::AttachReq> s1ap_deserializer_;

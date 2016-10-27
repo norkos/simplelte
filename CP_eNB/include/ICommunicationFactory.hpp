@@ -12,7 +12,7 @@ class ICommunicationFactory{
 public:
     virtual ~ICommunicationFactory() = default;
     virtual std::unique_ptr<IServer> createServer() = 0;
-    virtual std::unique_ptr<IClient> createClient() = 0;
+    virtual std::unique_ptr<IClient> createClient(int port) = 0;
 };
 
 }

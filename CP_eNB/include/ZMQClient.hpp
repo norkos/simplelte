@@ -10,7 +10,7 @@ namespace enb
 class ZMQClient : public IClient
 {
 public:
-    ZMQClient();
+    ZMQClient(int port);
     
     ZMQClient(ZMQClient&& server) = delete;
     ZMQClient(const ZMQClient&) = delete;

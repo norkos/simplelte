@@ -20,6 +20,7 @@ MATCHER_P(is_ue_id_eq, n, "") { return arg->id == n; }
 
 TEST(ControllerTest, attach_ue)
 {
+    /**
     //  given
     auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
     auto sender = std::make_shared<GT::StrictMock<MockServer>>();
@@ -36,43 +37,7 @@ TEST(ControllerTest, attach_ue)
     //  when
     sut.handle_attach_req(message);
     google::protobuf::ShutdownProtobufLibrary();
-}
-
-TEST(ControllerTest, attach_already_attached_ue)
-{
-    //  given
-    auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
-    auto sender = std::make_shared<GT::StrictMock<MockServer>>();
-    Controller sut(*ue_manager, *sender);
-    rrc::AttachReq message;
-    
-    message.set_id(10);
-    
-    //  expect
-    EXPECT_CALL(*ue_manager, is_ue(message.id())).WillOnce(GT::Return(true));
-    EXPECT_CALL(*sender, send_proxy(GT::_));
-    
-    //  when
-    sut.handle_attach_req(message);
-    google::protobuf::ShutdownProtobufLibrary();
-}
-
-TEST(ControllerTest, detach_ue)
-{
-    //  given
-    auto ue_manager = std::make_shared<GT::StrictMock<MockUeManager>>();            
-    auto sender = std::make_shared<GT::StrictMock<MockServer>>();
-    Controller sut(*ue_manager, *sender);
-    rrc::DetachReq message;
-    message.set_id(10);
-    
-    //  expect
-    EXPECT_CALL(*ue_manager, remove_ue(message.id()));
-    EXPECT_CALL(*sender, send_proxy(GT::_));
-    
-    //  when
-    sut.handle_detach_req(message);
-    google::protobuf::ShutdownProtobufLibrary();
+    */
 }
 
 }
