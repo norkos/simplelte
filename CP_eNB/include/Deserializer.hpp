@@ -88,10 +88,10 @@ private:
     };
     
     TypedDeserializer<rrc::RRC, 
-                      rrc::AttachResp> rrc_deserializer_; //todo memory improvement ;)
+                      rrc::AttachResp, rrc::DetachResp> rrc_deserializer_; //todo memory improvement ;)
 
     TypedDeserializer<s1ap::S1AP, 
-                      s1ap::AttachReq> s1ap_deserializer_;
+                      s1ap::AttachReq, s1ap::DetachReq> s1ap_deserializer_;
                       
     TypedDeserializer<nas::NAS, 
                       nas::DownlinkThr> nas_deserializer_;
