@@ -1,43 +1,10 @@
-from subprocess import Popen
 import pytest
 import zmq
 import lte_pb2
 import rrc_pb2
 import s1ap_pb2
-
-mme_port = 5555;
-
-@pytest.fixture(scope='function')
-def create_eNB(request):
-    proc = Popen('build/CP_eNB/src/hwserver')
-    
-    def tear_down():
-        proc.kill()
-    
-    request.addfinalizer(tear_down)
-
-@pytest.fixture(scope='function')
-def create_mme(request):
-    context = zmq.Context()
-    mme = context.socket(zmq.DEALER)
-    port = getattr(request.module, "mme_port")
-    mme.connect("tcp://localhost:%s" % port)
-    mme.RCVTIMEO = 1000
-    
-    def tear_down():
-        mme.close()
-    
-    request.addfinalizer(tear_down)
-    
-    return mme
-
-def create_ue(port):
-    context = zmq.Context()
-    ue = context.socket(zmq.DEALER)
-    ue.bind("tcp://*:%s" % port)
-    ue.RCVTIMEO = 1000
-    
-    return ue, port, port
+from fixtures import create_eNB, create_mme
+from ue_functions import create_ue
 
 def test_dl_throughput_2_ues(create_eNB, create_mme):  
     try:
