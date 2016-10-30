@@ -15,6 +15,7 @@ Listener::Listener(IUeManager& ue_manager, ICommunicationFactory& communication)
             controller_(std::make_unique<Controller>(ue_manager, *server_))
 {    
     registerMessage(*controller_, &Controller::handle_attach_req);
+    registerMessage(*controller_, &Controller::handle_detach_req);
     registerMessage(*controller_, &Controller::handle_dl_throughput);
 }
 

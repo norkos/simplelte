@@ -21,7 +21,7 @@ Controller::Controller(IUeManager& ue_manager, IServer& sender):
 
 bool Controller::connect_ue(int ue_id, int port)
 {
-    auto ue = std::make_unique<ZMQClient>(port);
+    auto ue = std::make_shared<ZMQClient>(port);
     
     Message<rrc::AttachReq> request;
     request->set_id(ue_id);
@@ -31,6 +31,21 @@ bool Controller::connect_ue(int ue_id, int port)
     const rrc::AttachResp* resp =  static_cast<rrc::AttachResp*>(message.get());
     ues_[ue_id] = std::move(ue);
     return resp->status() == rrc::AttachResp_Status_OK;
+}
+
+bool Controller::disconnect_ue(int ue_id)
+{
+    auto ue = ues_[ue_id];
+    
+    Message<rrc::DetachReq> request;
+    request->set_id(ue_id);
+    ue->send(request);
+    
+    auto message = ue->receive();
+    const rrc::DetachResp* resp =  static_cast<rrc::DetachResp*>(message.get());
+    
+    ues_.erase(ue_id);
+    return resp->status() == rrc::DetachResp_Status_OK;
 }
 
 void Controller::handle_dl_throughput(const nas::DownlinkThr& dl_througput)
@@ -53,6 +68,19 @@ void Controller::handle_attach_req(const s1ap::AttachReq& attach_req)
     Message<s1ap::AttachResp> response;
     response->set_id(attach_req.id());
     response->set_status(connected_ue ? s1ap::AttachResp::OK : s1ap::AttachResp::NOK);
+    
+    sender_.send(response);
+}
+
+void Controller::handle_detach_req(const s1ap::DetachReq& detach_req)
+{
+    dbg() << "Processing S1::DetachReq";
+    
+    bool deataech_ue = disconnect_ue(detach_req.id());
+    
+    Message<s1ap::DetachResp> response;
+    response->set_id(detach_req.id());
+    response->set_status(deataech_ue ? s1ap::DetachResp::OK : s1ap::DetachResp::NOK);
     
     sender_.send(response);
 }
