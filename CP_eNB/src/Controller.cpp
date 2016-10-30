@@ -3,25 +3,24 @@
 #include "Message.hpp"
 
 #include "IUeManager.hpp"
+#include "ICommunicationFactory.hpp"
 #include "UeContext.hpp"
 
 #include "IServer.hpp"
-
-#include "ZMQClient.hpp"
 
 namespace lte
 {
 namespace enb
 {
 
-Controller::Controller(IUeManager& ue_manager, IServer& sender):
-    ue_manager_(ue_manager), sender_(sender)
+Controller::Controller(IUeManager& ue_manager, IServer& sender, ICommunicationFactory& communication_factory):
+    ue_manager_(ue_manager), sender_(sender), communication_factory_(communication_factory)
 {
 }
 
 bool Controller::connect_ue(int ue_id, int port)
 {
-    auto ue = std::make_shared<ZMQClient>(port);
+    auto ue = communication_factory_.createClient(port);
     
     Message<rrc::AttachReq> request;
     request->set_id(ue_id);
@@ -29,7 +28,7 @@ bool Controller::connect_ue(int ue_id, int port)
     
     auto message = ue->receive();
     const rrc::AttachResp* resp =  static_cast<rrc::AttachResp*>(message.get());
-    ues_[ue_id] = std::move(ue);
+    ues_[ue_id] = {std::move(ue)};
     return resp->status() == rrc::AttachResp_Status_OK;
 }
 

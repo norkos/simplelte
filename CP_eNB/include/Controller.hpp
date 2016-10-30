@@ -15,11 +15,12 @@ namespace enb
 class IUeManager;
 class IServer;
 class IClient;
+class ICommunicationFactory;
 
 class Controller{
     
 public:
-    Controller(IUeManager& ue_manager, IServer& sender);
+    Controller(IUeManager& ue_manager, IServer& sender, ICommunicationFactory& communication_factory);
     ~Controller();
     
     //  new
@@ -34,6 +35,7 @@ private:
 protected:
     IUeManager& ue_manager_;
     IServer& sender_;
+    ICommunicationFactory& communication_factory_;
     std::unordered_map<int, std::shared_ptr<IClient>> ues_;
 };
 
