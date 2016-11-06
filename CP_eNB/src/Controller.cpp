@@ -7,6 +7,7 @@
 #include "UeContext.hpp"
 
 #include "IServer.hpp"
+#include "FileHandlers.hpp"
 
 namespace lte
 {
@@ -20,7 +21,20 @@ Controller::Controller(IUeManager& ue_manager, IServer& sender, ICommunicationFa
 
 bool Controller::connect_ue(int ue_id, int port)
 {
-    auto ue = communication_factory_.createClient(port);
+    dbg() << "dupa1";
+    showFDInfo();
+    
+    auto ue = communication_factory_.createClient();
+    dbg() << "dupa2";
+    showFDInfo();
+    
+    if(! ue->connect(port))
+    {
+        err() << "Ue: " << ue_id << " for port: " << port << " was not connected";
+        return false;
+    }
+    dbg() << "dupa3";
+    showFDInfo();
     
     Message<rrc::AttachReq> request;
     request->set_id(ue_id);
@@ -29,6 +43,7 @@ bool Controller::connect_ue(int ue_id, int port)
     auto message = ue->receive();
     const rrc::AttachResp* resp =  static_cast<rrc::AttachResp*>(message.get());
     ues_[ue_id] = {std::move(ue)};
+    
     return resp->status() == rrc::AttachResp_Status_OK;
 }
 
@@ -61,7 +76,6 @@ void Controller::handle_dl_throughput(const nas::DownlinkThr& dl_througput)
 void Controller::handle_attach_req(const s1ap::AttachReq& attach_req)
 {
     dbg() << "Processing S1::AttachReq";
-    
     bool connected_ue = connect_ue(attach_req.id(), attach_req.port());
     
     Message<s1ap::AttachResp> response;
