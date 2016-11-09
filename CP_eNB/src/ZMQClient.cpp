@@ -1,6 +1,5 @@
 #include "ZMQClient.hpp"
 #include "Deserializer.hpp"
-#include "FileHandlers.hpp"
 #include <Logger.hpp>
 
 namespace lte
@@ -8,30 +7,16 @@ namespace lte
 namespace enb
 {
 
-ZMQClient::ZMQClient() 
-{
-    dbg() << "Before context ";
-    showFDInfo();
-    context_.reset(new zmq::context_t(1));
-        
-    dbg() << "Before socket ";
-    showFDInfo();
-    
-    socket_.reset(new zmq::socket_t(*context_, ZMQ_DEALER));
-    
-    dbg() << "After socket ";
-    showFDInfo();
+ZMQClient::ZMQClient(zmq::context_t& context) 
+{    
+    socket_.reset(new zmq::socket_t(context, ZMQ_DEALER));
 }
 
 bool ZMQClient::connect(int port)
 {
     const std::string connection = "tcp://localhost:" + std::to_string(port);
     try{
-        dbg() << "Before connecting: " << connection;
-        showFDInfo();
         socket_->connect (connection.c_str());
-        dbg() << "After connecting: " << connection;
-        showFDInfo();
     } catch( std::exception& e)
     {
         err() << "Error for connection string [" << connection << "]: " << e.what();

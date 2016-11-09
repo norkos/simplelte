@@ -11,7 +11,7 @@ namespace enb
 class ZMQClient : public IClient
 {
 public:
-    ZMQClient();
+    ZMQClient(zmq::context_t& context);
     
     ZMQClient(ZMQClient&& server) = delete;
     ZMQClient(const ZMQClient&) = delete;
@@ -23,7 +23,6 @@ public:
     bool connect(int port) override;
     
 private:
-    std::unique_ptr<zmq::context_t> context_;
     std::unique_ptr<zmq::socket_t> socket_;
 };
 

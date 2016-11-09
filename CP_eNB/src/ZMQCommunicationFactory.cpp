@@ -15,7 +15,7 @@ std::unique_ptr<IServer> ZMQCommunicationFactory::createServer()
 
 std::unique_ptr<IClient> ZMQCommunicationFactory::createClient()
 {
-    return std::make_unique<ZMQClient>();
+    return std::make_unique<ZMQClient>(context_);
 }
 
 }

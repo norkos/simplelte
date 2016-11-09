@@ -20,8 +20,14 @@ def test_dl_throughput(create_eNB, create_mme):
         print "Attaching UEs"
         for ue, ue_port, ue_id in ues:
             attach_ue(ue, mme, ue_id, ue_port)
-                
+        
+        data = "x" * 100
+        
+        for i in xrange(0, 100):
+            for ue, ue_port, ue_id in ues:
+                dl_througput(ue, mme, ue_id, data)
+        
     finally:
         for ue, ue_port, ue_id in ues:
-            #detach_ue(ue, mme, ue_id)
+            detach_ue(ue, mme, ue_id)
             ue.close()

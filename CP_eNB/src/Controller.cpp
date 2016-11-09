@@ -7,7 +7,6 @@
 #include "UeContext.hpp"
 
 #include "IServer.hpp"
-#include "FileHandlers.hpp"
 
 namespace lte
 {
@@ -20,21 +19,14 @@ Controller::Controller(IUeManager& ue_manager, IServer& sender, ICommunicationFa
 }
 
 bool Controller::connect_ue(int ue_id, int port)
-{
-    dbg() << "dupa1";
-    showFDInfo();
-    
+{   
     auto ue = communication_factory_.createClient();
-    dbg() << "dupa2";
-    showFDInfo();
     
     if(! ue->connect(port))
     {
         err() << "Ue: " << ue_id << " for port: " << port << " was not connected";
         return false;
     }
-    dbg() << "dupa3";
-    showFDInfo();
     
     Message<rrc::AttachReq> request;
     request->set_id(ue_id);
