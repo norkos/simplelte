@@ -3,6 +3,7 @@
 build
 core
 *.kdev*
+*.swp
 
 #python
 .cache

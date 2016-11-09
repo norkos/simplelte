@@ -7,11 +7,22 @@ namespace lte
 namespace enb
 {
 
-ZMQClient::ZMQClient(int port) :
-    context_(zmq::context_t(1)), socket_(zmq::socket_t(context_, ZMQ_DEALER))
+ZMQClient::ZMQClient(zmq::context_t& context) 
+{    
+    socket_.reset(new zmq::socket_t(context, ZMQ_DEALER));
+}
+
+bool ZMQClient::connect(int port)
 {
     const std::string connection = "tcp://localhost:" + std::to_string(port);
-    socket_.connect (connection.c_str());
+    try{
+        socket_->connect (connection.c_str());
+    } catch( std::exception& e)
+    {
+        err() << "Error for connection string [" << connection << "]: " << e.what();
+        return false;
+    }
+    return true;
 }
 
 void ZMQClient::send(std::unique_ptr<util::Message> msg)
@@ -23,13 +34,13 @@ void ZMQClient::send(std::unique_ptr<util::Message> msg)
     memcpy((void*)result.data(),  message.c_str(), message.size());
         
     dbg() << "Sending: \n" << *msg;
-    socket_.send (result);
+    socket_->send (result);
 }
 
 std::unique_ptr< util::Message > ZMQClient::receive()
 {
     zmq::message_t request;
-    socket_.recv (&request);
+    socket_->recv (&request);
     Deserializer deserializer;
     auto result = deserializer.deserialize(request);
     
@@ -45,7 +56,7 @@ std::unique_ptr< util::Message > ZMQClient::receive()
 
 ZMQClient::~ZMQClient()
 {
-    socket_.close();
+    socket_->close();
 }
 
 }

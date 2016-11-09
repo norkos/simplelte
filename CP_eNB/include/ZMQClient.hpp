@@ -1,5 +1,6 @@
 #pragma once
 #include <zmq.hpp>
+#include <memory>
 #include "IClient.hpp"
 
 namespace lte
@@ -10,7 +11,7 @@ namespace enb
 class ZMQClient : public IClient
 {
 public:
-    ZMQClient(int port);
+    ZMQClient(zmq::context_t& context);
     
     ZMQClient(ZMQClient&& server) = delete;
     ZMQClient(const ZMQClient&) = delete;
@@ -19,10 +20,10 @@ public:
     virtual ~ZMQClient();
     void send(std::unique_ptr<util::Message>) override;
     std::unique_ptr<util::Message> receive() override;
+    bool connect(int port) override;
     
 private:
-    zmq::context_t context_;
-    zmq::socket_t socket_;
+    std::unique_ptr<zmq::socket_t> socket_;
 };
 
 }
