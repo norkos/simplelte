@@ -1,1 +1,1 @@
-add_library(utils SHARED MessageHandler.cpp)
+add_library(utils SHARED FileHandlers.cpp MessageHandler.cpp)

@@ -1,3 +1,5 @@
+// https://oroboro.com/file-handle-leaks-server/ 
+
 #pragma once
 #include <iostream>
 #include <unistd.h>
@@ -6,17 +8,18 @@
 #include <string.h>     
 #include <Logger.hpp>
 
-using namespace lte;
-#define s32 int
-
-void showFDInfo( s32 fd )
+namespace lte
+{
+namespace common
+{
+void showFDInfo( const auto& fd )
 {
    char buf[256];
  
-   s32 fd_flags = fcntl( fd, F_GETFD ); 
+   auto fd_flags = fcntl( fd, F_GETFD ); 
    if ( fd_flags == -1 ) return;
  
-   s32 fl_flags = fcntl( fd, F_GETFL ); 
+   auto fl_flags = fcntl( fd, F_GETFL ); 
    if ( fl_flags == -1 ) return;
  
    char path[256];
@@ -72,13 +75,15 @@ void showFDInfo( s32 fd )
 
 void showFDInfo()
 {
-   s32 numHandles = getdtablesize();
+   const auto numHandles = getdtablesize();
  
-   for ( s32 i = 0; i < numHandles; i++ )
+   for ( auto i = 0; i < numHandles; i++ )
    {
-      s32 fd_flags = fcntl( i, F_GETFD ); 
+      auto fd_flags = fcntl( i, F_GETFD ); 
       if ( fd_flags == -1 ) continue;
  
       showFDInfo( i );
    }
+}
+}
 }
