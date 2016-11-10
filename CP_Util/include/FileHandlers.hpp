@@ -12,7 +12,7 @@ namespace lte
 {
 namespace common
 {
-void showFDInfo( const auto& fd )
+void showFDInfo( int fd )
 {
    char buf[256];
  
