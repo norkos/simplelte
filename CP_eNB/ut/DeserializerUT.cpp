@@ -96,6 +96,42 @@ TEST(DeserializerS1AP, attach_req)
     ASSERT_TRUE(typeid(*result) == typeid(*payload));
 }
 
+TEST(DeserializerS1AP, detach_req)
+{
+    Deserializer sut;
+    
+    //  given
+    s1ap::DetachReq* payload = new s1ap::DetachReq();
+    payload->set_id(1);
+    auto wrapper = create_wrapped_message(payload, &s1ap::S1AP::set_allocated_detach_req);
+    auto message = create_message(*wrapper);
+  
+    //  when
+    auto result = sut.deserialize(*message);
+    
+    //  then
+    ASSERT_TRUE(result != nullptr);
+    ASSERT_TRUE(typeid(*result) == typeid(*payload));
+}
+
+TEST(DeserializerRRC, detach_resp)
+{
+    Deserializer sut;
+    
+    //  given
+    rrc::DetachResp* payload = new rrc::DetachResp();
+    payload->set_id(1);
+    payload->set_status(rrc::DetachResp_Status_OK);
+    auto wrapper = create_wrapped_message(payload, &rrc::RRC::set_allocated_detach_resp);
+    auto message = create_message(*wrapper);
+    
+    //  when
+    auto result = sut.deserialize(*message);
+    
+    //  then
+    ASSERT_TRUE(result != nullptr);
+    ASSERT_TRUE(typeid(*result) == typeid(*payload));
+}
 TEST(DeserializerNAS, downlink_thr)
 {
     Deserializer sut;
