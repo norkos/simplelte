@@ -14,8 +14,13 @@ namespace enb
 {
 
 Controller::Controller(IUeManager& ue_manager, IServer& sender, ICommunicationFactory& communication_factory):
-    ue_manager_(ue_manager), sender_(sender), communication_factory_(communication_factory)
+    ue_manager_(ue_manager), sender_(sender), communication_factory_(communication_factory), is_running_(true)
 {
+}
+
+bool Controller::is_running()
+{
+    return is_running_;
 }
 
 bool Controller::connect_ue(int ue_id, int port)
@@ -52,6 +57,12 @@ bool Controller::disconnect_ue(int ue_id)
     
     ues_.erase(ue_id);
     return resp->status() == rrc::DetachResp_Status_OK;
+}
+
+void Controller::handle_shutdown_ind(const s1ap::ShutdownInd& shutdown_ind)
+{
+    dbg() << "Processing: ShutdownInd";
+    is_running_ = false;
 }
 
 void Controller::handle_dl_throughput(const nas::DownlinkThr& dl_througput)

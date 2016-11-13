@@ -17,19 +17,29 @@ Listener::Listener(IUeManager& ue_manager, ICommunicationFactory& communication)
     registerMessage(*controller_, &Controller::handle_attach_req);
     registerMessage(*controller_, &Controller::handle_detach_req);
     registerMessage(*controller_, &Controller::handle_dl_throughput);
+    registerMessage(*controller_, &Controller::handle_shutdown_ind);
 }
 
-void Listener::listen()
+void Listener::run()
 {
-  dbg() << "Listening";
-  auto message = server_->receive();
-  if(message == nullptr)
+  while(controller_->is_running())
   {
-      err() << "Skipping handling of not known message";
-      return;
+    dbg() << "Listening";
+    auto message = server_->receive();
+
+    if(message == nullptr)
+    {
+        err() << "Skipping handling of not known message";
+        continue;
+    }
+    
+    if(!handleMessage(*message))
+    {
+        err() << "Message not handled properly: "<< *message;
+    }
   }
-  handleMessage(*message);
 }
+
 
 Listener::~Listener()
 {

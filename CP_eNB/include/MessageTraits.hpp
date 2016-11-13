@@ -10,6 +10,7 @@ template<typename T>
 struct MessageTraits {
 };
 
+
 template<>
 struct MessageTraits<rrc::RRC>
 {
@@ -128,6 +129,16 @@ struct MessageTraits<s1ap::DetachResp>
     static constexpr decltype (auto) exists = &s1ap::S1AP::has_detach_resp;
     static constexpr decltype (auto) to = &s1ap::S1AP::set_allocated_detach_resp;
     static constexpr decltype (auto) from = &s1ap::S1AP::release_detach_resp;
+};
+
+template<>
+struct MessageTraits<s1ap::ShutdownInd>
+{
+    using parent = s1ap::S1AP;
+    using type = s1ap::ShutdownInd;
+    static constexpr decltype (auto) exists = &s1ap::S1AP::has_shutdown_ind;
+    static constexpr decltype (auto) to = &s1ap::S1AP::set_allocated_shutdown_ind;
+    static constexpr decltype (auto) from = &s1ap::S1AP::release_shutdown_ind;
 };
 
 }

@@ -86,7 +86,7 @@ inline Logger<FilePolicy> err(const char* file_name, int line) // RVOs
 }
 }
 
-#define dbg() util::logger::dbg(__FILE__, __LINE__)
-#define err() util::logger::err(__FILE__, __LINE__)
+#define dbg() lte::util::logger::dbg(__FILE__, __LINE__)
+#define err() lte::util::logger::err(__FILE__, __LINE__)
 
 }

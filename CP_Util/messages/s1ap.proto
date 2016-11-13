@@ -1,5 +1,9 @@
 package lte.s1ap;
 
+message ShutdownInd {
+    required int32 id = 1;
+}
+
 message AttachReq {
     required int32 id = 1;
     required int32 port = 2;
@@ -34,4 +38,5 @@ message S1AP{
     optional AttachResp attach_resp = 2;
     optional DetachReq  detach_req  = 3;
     optional DetachResp detach_resp = 4;
+    optional ShutdownInd shutdown_ind = 5;
 }

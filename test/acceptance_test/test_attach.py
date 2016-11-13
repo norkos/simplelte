@@ -4,7 +4,7 @@ import lte_pb2
 import rrc_pb2
 import s1ap_pb2
 from fixtures import create_eNB, create_mme
-from ue_functions import create_ue
+from ue_functions import create_ue, attach_ue
 
 def test_attach_request(create_eNB, create_mme):  
     mme = create_mme
@@ -34,6 +34,10 @@ def test_attach_request(create_eNB, create_mme):
         assert ue_id == mme_resp.id
         assert s1ap_pb2.AttachResp.OK == mme_resp.status
 
+        shutdown_ind = lte_pb2.ASN1()
+        shutdown_ind.s1ap.shutdown_ind.id = 1
+        mme.send(shutdown_ind.SerializeToString())
+        
     finally:
         ue.close()
 
@@ -65,6 +69,10 @@ def test_attach_request_nok(create_eNB, create_mme):
         
         assert ue_id == mme_resp.id
         assert s1ap_pb2.AttachResp.NOK == mme_resp.status
+        
+        shutdown_ind = lte_pb2.ASN1()
+        shutdown_ind.s1ap.shutdown_ind.id = 1
+        mme.send(shutdown_ind.SerializeToString())
         
     finally:
         ue.close()

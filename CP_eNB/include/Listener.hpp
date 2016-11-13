@@ -26,7 +26,7 @@ public:
     Listener& operator=(const Listener&) = delete;
     
     virtual ~Listener();
-    void listen();
+    void run();
   
 private:
     std::unique_ptr<IServer> server_;

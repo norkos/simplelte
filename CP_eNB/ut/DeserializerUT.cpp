@@ -96,6 +96,23 @@ TEST(DeserializerS1AP, attach_req)
     ASSERT_TRUE(typeid(*result) == typeid(*payload));
 }
 
+TEST(DeserializerS1AP, shutdown_ind)
+{
+    Deserializer sut;
+    
+    //  given
+    s1ap::ShutdownInd* payload = new s1ap::ShutdownInd();
+    auto wrapper = create_wrapped_message(payload, &s1ap::S1AP::set_allocated_shutdown_ind);
+    auto message = create_message(*wrapper);
+  
+    //  when
+    auto result = sut.deserialize(*message);
+    
+    //  then
+    ASSERT_TRUE(result != nullptr);
+    ASSERT_TRUE(typeid(*result) == typeid(*payload));
+}
+
 TEST(DeserializerS1AP, detach_req)
 {
     Deserializer sut;
