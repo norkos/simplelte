@@ -3,3 +3,6 @@ sleep 1
 py.test test/acceptance_test/memory_leaks.py
 sleep 1
 cat build/memory.out
+[ ! -s build/memory.out ] || exit 1
+
+

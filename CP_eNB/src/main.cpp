@@ -14,8 +14,7 @@ int main ()
 
     dbg() << "Starting application";
     auto ue_manager = std::make_unique<UeManager>();
-    //std::unique_ptr<ICommunicationFactory> factory = std::make_unique<ZMQCommunicationFactory>();
-    ICommunicationFactory* factory = new ZMQCommunicationFactory();
+    std::unique_ptr<ICommunicationFactory> factory = std::make_unique<ZMQCommunicationFactory>();
     Listener listener(*ue_manager, *factory);
     listener.run();
     
