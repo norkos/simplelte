@@ -11,7 +11,7 @@ import sys
 #http://stackoverflow.com/questions/880557/socket-accept-too-many-open-files
 
 def test_multi_ues(create_mme):
-    proc = Popen(["./build/CP_eNB/src/hwserver"])
+    #proc = Popen(["./build/CP_eNB/src/hwserver"])
     mme = create_mme
     data = 'x' * 100
     ues = []
