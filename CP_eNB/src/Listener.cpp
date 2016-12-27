@@ -10,9 +10,9 @@ namespace lte
 namespace enb
 {
 
-Listener::Listener(IUeManager& ue_manager, ICommunicationFactory& communication): 
+Listener::Listener(ICommunicationFactory& communication): 
             server_(communication.createServer()),  
-            controller_(std::make_unique<Controller>(ue_manager, *server_, communication))
+            controller_(std::make_unique<Controller>(*server_, communication))
 {    
     registerMessage(*controller_, &Controller::handle_attach_req);
     registerMessage(*controller_, &Controller::handle_detach_req);

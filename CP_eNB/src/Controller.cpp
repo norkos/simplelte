@@ -13,8 +13,8 @@ namespace lte
 namespace enb
 {
 
-Controller::Controller(IUeManager& ue_manager, IServer& sender, ICommunicationFactory& communication_factory):
-    ue_manager_(ue_manager), sender_(sender), communication_factory_(communication_factory), is_running_(true)
+Controller::Controller(IServer& sender, ICommunicationFactory& communication_factory):
+    sender_(sender), communication_factory_(communication_factory), is_running_(true)
 {
 }
 

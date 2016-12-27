@@ -10,7 +10,6 @@ namespace lte
 namespace enb
 {
 
-class ISender;
 class IUeManager;
 class IServer;
 class Controller;
@@ -20,7 +19,7 @@ class Listener : public util::MessageHandler<util::Message>
 {
 
 public:
-    Listener(IUeManager& ue_manager, ICommunicationFactory& communication);
+    Listener(ICommunicationFactory& communication);
     
     Listener(const Listener&) = delete;
     Listener& operator=(const Listener&) = delete;
