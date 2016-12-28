@@ -22,7 +22,6 @@ public:
     Controller(IServer& sender, ICommunicationFactory& communication_factory);
     ~Controller();
     
-    //  new
     void handle_attach_req(const s1ap::AttachReq& attach_req);
     void handle_detach_req(const s1ap::DetachReq& detach_req);
     void handle_dl_throughput(const nas::DownlinkThr& dl_througput);

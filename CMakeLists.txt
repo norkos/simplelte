@@ -10,9 +10,10 @@ macro (add_my_external lib_name lib_path)
         DOWNLOAD_COMMAND ""
         SOURCE_DIR ../externals/${lib_path}
         PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${lib_name}
+        BUILD_BYPRODUCTS ${CMAKE_CURRENT_BINARY_DIR}/${lib_name}/src/${lib_name}-build/lib${lib_name}.a
         INSTALL_COMMAND ""
     )
-
+    
     add_library(lib${lib_name} IMPORTED STATIC GLOBAL)
     add_dependencies(lib${lib_name}  ${lib_name})
     ExternalProject_Get_Property( ${lib_name} source_dir binary_dir)
@@ -27,6 +28,8 @@ add_my_external(gtest gtest-1.7.0)
 add_my_external(gmock gmock-1.7.0)
 
 SET(CMAKE_CXX_FLAGS "-g -Wall -std=c++1y -fPIC")
+
+include_directories("externals/sml/include")
 
 add_subdirectory(CP_eNB)
 add_subdirectory(CP_Util)

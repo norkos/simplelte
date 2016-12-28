@@ -1,12 +1,14 @@
-#include <Logger.hpp>
 #include "Controller.hpp"
 #include "Message.hpp"
 
 #include "IUeManager.hpp"
 #include "ICommunicationFactory.hpp"
 #include "UeContext.hpp"
+#include "UeFSM.hpp"
 
 #include "IServer.hpp"
+
+#include <Logger.hpp>
 
 namespace lte
 {
